@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_text.dart';
 import '../../../../core/constants/image_constants.dart';
 import '../../../widget/header/app_header.dart';
+import '../widgets/skill_chip.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -100,7 +101,7 @@ class AboutPage extends StatelessWidget {
                           spacing: 12,
                           runSpacing: 12,
                           children: [
-                            for (final skill in AppText.skills.take(4)) _buildSkillChip(skill),
+                            for (final skill in AppText.skills.take(4)) SkillChip(label: skill),
                           ],
                         ),
 
@@ -189,23 +190,6 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSkillChip(String label) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: const Color(0xFF303030),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        label,
-        style: GoogleFonts.workSans(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
 
   Widget _buildSkillProgress(String skill, int percentage) {
     return Padding(

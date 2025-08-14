@@ -4,6 +4,8 @@ import 'package:rx_project/core/constants/app_text.dart';
 import 'package:rx_project/features/widget/header/app_header.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../../../../core/constants/app_regex.dart';
+
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});
 
@@ -70,7 +72,7 @@ class _ContactPageState extends State<ContactPage> {
               padding: EdgeInsets.symmetric( horizontal: isWide ?120 : 20, vertical: 20),
               child: ScrollConfiguration(
                 behavior: ScrollBehavior().copyWith(scrollbars: false),
-                child:CustomScrollView(
+                child: CustomScrollView(
                 slivers: [
                   AppHeader(),
                   SliverToBoxAdapter(
@@ -150,8 +152,7 @@ class _ContactPageState extends State<ContactPage> {
                                     if (value == null || value.isEmpty) {
                                       return AppText.emailRequired;
                                     }
-                                    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                                    if (!emailRegex.hasMatch(value)) {
+                                    if (!AppRegex.email.hasMatch(value)) {
                                       return AppText.validEmail;
                                     }
                                     return null;
