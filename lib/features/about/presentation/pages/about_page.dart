@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/app_text.dart';
 import '../../../../core/constants/image_constants.dart';
+import '../../../../core/routes/app_router.dart';
 import '../../../widget/header/app_header.dart';
 import '../widgets/skill_chip.dart';
 import '../widgets/skill_progress_bar.dart';
@@ -179,7 +181,9 @@ class AboutPage extends StatelessWidget {
                         const SizedBox(height: 20),
                         Center(
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.goNamed(RouteNames.projects);
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF303030),
                               minimumSize: const Size(160, 40),

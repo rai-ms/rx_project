@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rx_project/features/about/presentation/pages/about_page.dart';
 import 'package:rx_project/features/contact/presentation/pages/contact_page.dart';
 import 'package:rx_project/features/home/presentation/pages/home_page.dart';
+import 'package:rx_project/features/projects/presentation/pages/projects_page.dart';
 import 'package:rx_project/features/resume/presentation/pages/resume_page.dart';
 
 /// A class that holds route names.
@@ -13,6 +14,7 @@ class RouteNames {
   static const String about = '/about';
   static const String resume = '/resume';
   static const String contact = '/contact';
+  static const String projects = '/projects';
 
   /// Private constructor to prevent instantiation.
   const RouteNames._();
@@ -41,6 +43,11 @@ class AppRoutes {
       path: RouteNames.contact,
       name: RouteNames.contact,
       pageBuilder: (ctx, state) => NoTransitionPage(child: ContactPage()),
+    ),
+    GoRoute(
+      path: RouteNames.projects,
+      name: RouteNames.projects,
+      pageBuilder: (ctx, state) => NoTransitionPage(child: ProjectsPage()),
     ),
   ];
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rx_project/features/widget/header/app_header.dart';
 import '../../../../core/constants/image_constants.dart';
 import '../../../../core/constants/app_text.dart';
+import '../../../../core/routes/app_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -124,6 +126,7 @@ class _HomePageState extends State<HomePage> {
                       child: ElevatedButton(
                         onPressed: () {
                           // Action for View My Work button
+                          context.goNamed(RouteNames.projects);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF262626),
@@ -240,7 +243,7 @@ class _HomePageState extends State<HomePage> {
                       child: Center(
                         child: ElevatedButton(
                           onPressed: () {
-
+                            context.goNamed(RouteNames.projects);
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF303030),
