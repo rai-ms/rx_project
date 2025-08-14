@@ -6,87 +6,81 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xFF141414),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Profile Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-              child: Column(
+    return Scaffold(
+      backgroundColor: const Color(0xFF141414),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Profile Section
+              Column(
                 children: [
-                  // Profile Image and Info
-                  Column(
-                    children: [
-                      Container(
-                        width: 128,
-                        height: 128,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: const Color(0xFF474747), width: 2),
-                          image: const DecorationImage(
-                            image: NetworkImage(
-                              'https://lh3.googleusercontent.com/aida-public/AB6AXuAkhAWCrSCyW3o7RlLeFOIpw-EUXd_IIgZ2uDWbFDEU1A5CKA3M2UgjyuEzW2X1Oc5OBNsA-xWvLBcjuBKWev2tUDvodxSDBXT0T5c1AkSa1XPgvmZjyx7FpybTB-7jjmp9a4jh8REx-XszTjadHpAbGVtSrJCdjty9fBeACnC32ITR2AZtBCezcBtnPX4rk6rZ8CpD8m2xE6CftiaoGJYMN6S4f-kf9wyg2x4gxYEc_-O5cZgna7x7gG06yQH3ZT8wBOeEQqXWsZ4',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
+                  // Profile Image
+                  Container(
+                    width: 128,
+                    height: 128,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: const DecorationImage(
+                        image: NetworkImage(
+                          'https://lh3.googleusercontent.com/aida-public/AB6AXuAkhAWCrSCyW3o7RlLeFOIpw-EUXd_IIgZ2uDWbFDEU1A5CKA3M2UgjyuEzW2X1Oc5OBNsA-xWvLBcjuBKWev2tUDvodxSDBXT0T5c1AkSa1XPgvmZjyx7FpybTB-7jjmp9a4jh8REx-XszTjadHpAbGVtSrJCdjty9fBeACnC32ITR2AZtBCezcBtnPX4rk6rZ8CpD8m2xE6CftiaoGJYMN6S4f-kf9wyg2x4gxYEc_-O5cZgna7x7gG06yQH3ZT8wBOeEQqXWsZ4',
                         ),
+                        fit: BoxFit.cover,
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Sophia Bennett',
-                        style: GoogleFonts.workSans(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: -0.015,
-                        ),
-                      ),
-                      Text(
-                        'Product Designer',
-                        style: GoogleFonts.workSans(
-                          color: const Color(0xFFABABAB),
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                      Text(
-                        'Based in San Francisco',
-                        style: GoogleFonts.workSans(
-                          color: const Color(0xFFABABAB),
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
+                  const SizedBox(height: 16),
                   
-                  // About Text
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    child: Text(
-                      "I'm a product designer passionate about creating intuitive and engaging user experiences. With a background in visual communication and a focus on user-centered design, I strive to solve complex problems through simple and elegant solutions.",
-                      style: GoogleFonts.workSans(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        height: 1.5,
-                      ),
-                      textAlign: TextAlign.center,
+                  // Name and Title
+                  Text(
+                    'Sophia Bennett',
+                    style: GoogleFonts.workSans(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -0.015,
+                    ),
+                  ),
+                  Text(
+                    'Product Designer',
+                    style: GoogleFonts.workSans(
+                      color: const Color(0xFFABABAB),
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  Text(
+                    'Based in San Francisco',
+                    style: GoogleFonts.workSans(
+                      color: const Color(0xFFABABAB),
+                      fontSize: 16,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                 ],
               ),
-            ),
-            
-            // Skills Section
-            _buildSectionTitle('Skills'),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Wrap(
+
+              // About Text
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: Text(
+                  "I'm a product designer passionate about creating intuitive and engaging user experiences. With a background in visual communication and a focus on user-centered design, I strive to solve complex problems through simple and elegant solutions.",
+                  style: GoogleFonts.workSans(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+              // Skills Section
+              _buildSectionTitle('Skills'),
+              const SizedBox(height: 12),
+              Wrap(
                 spacing: 12,
                 runSpacing: 12,
                 children: [
@@ -96,39 +90,33 @@ class AboutPage extends StatelessWidget {
                   _buildSkillChip('UI/UX Design'),
                 ],
               ),
-            ),
-            
-            // Skill Bars
-            _buildSkillBar('UI/UX Design', 90, context),
-            _buildSkillBar('Interaction Design', 85, context),
-            _buildSkillBar('Visual Design', 80, context),
-            _buildSkillBar('Prototyping', 75, context),
-            
-            // Experience Section
-            _buildSectionTitle('Experience'),
-            _buildExperienceItem(
-              icon: Icons.work_outline,
-              title: 'Product Designer at Tech Innovators Inc.',
-              period: '2020 - Present',
-            ),
-            _buildExperienceItem(
-              icon: Icons.work_outline,
-              title: 'UI/UX Designer at Creative Solutions Co.',
-              period: '2018 - 2020',
-            ),
-            _buildExperienceItem(
-              icon: Icons.work_outline,
-              title: 'Freelance Designer',
-              period: '2016 - 2018',
-              isLast: true,
-            ),
-            
-            // Projects Section
-            _buildSectionTitle('Projects'),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GridView.count(
+
+              // Skill Progress Bars
+              _buildSkillProgress('UI/UX Design', 90),
+              _buildSkillProgress('Interaction Design', 85),
+              _buildSkillProgress('Visual Design', 80),
+              _buildSkillProgress('Prototyping', 75),
+
+              // Experience Section
+              _buildSectionTitle('Experience'),
+              _buildExperienceItem(
+                title: 'Product Designer at Tech Innovators Inc.',
+                period: '2020 - Present',
+              ),
+              _buildExperienceItem(
+                title: 'UI/UX Designer at Creative Solutions Co.',
+                period: '2018 - 2020',
+              ),
+              _buildExperienceItem(
+                title: 'Freelance Designer',
+                period: '2016 - 2018',
+                isLast: true,
+              ),
+
+              // Projects Section
+              _buildSectionTitle('Projects'),
+              const SizedBox(height: 12),
+              GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 3,
@@ -141,16 +129,10 @@ class AboutPage extends StatelessWidget {
                   _buildProjectCard('Dashboard Design'),
                 ],
               ),
-            ),
-            
-            // View All Projects Button
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+              const SizedBox(height: 20),
+              Center(
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Navigate to projects
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF303030),
                     minimumSize: const Size(160, 40),
@@ -164,104 +146,21 @@ class AboutPage extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 0.015,
                     ),
                   ),
                 ),
               ),
-            ),
-            
-            // Contact Section
-            _buildSectionTitle('Contact'),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: const TextStyle(color: Colors.white),
-                      hintText: 'your.email@example.com',
-                      hintStyle: const TextStyle(color: Color(0xFFABABAB)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF474747)),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF474747)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF474747)),
-                      ),
-                      filled: true,
-                      fillColor: const Color(0xFF212121),
-                      contentPadding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    style: const TextStyle(color: Colors.white),
-                    maxLines: 6,
-                    decoration: InputDecoration(
-                      labelText: 'Message',
-                      labelStyle: const TextStyle(color: Colors.white),
-                      hintText: 'Your message',
-                      hintStyle: const TextStyle(color: Color(0xFFABABAB)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF474747)),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF474747)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(color: Color(0xFF474747)),
-                      ),
-                      filled: true,
-                      fillColor: const Color(0xFF212121),
-                      contentPadding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Send message
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF262626),
-                      minimumSize: const Size(140, 48),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: const Text(
-                      'Send Message',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                ],
-              ),
-            ),
-          ],
+              const SizedBox(height: 40),
+            ],
+          ),
         ),
       ),
     );
   }
-  
+
   Widget _buildSectionTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, top: 24, bottom: 8),
+      padding: const EdgeInsets.only(top: 20, bottom: 12, left: 4, right: 4),
       child: Text(
         title,
         style: GoogleFonts.workSans(
@@ -273,7 +172,7 @@ class AboutPage extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget _buildSkillChip(String label) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -291,10 +190,10 @@ class AboutPage extends StatelessWidget {
       ),
     );
   }
-  
-  Widget _buildSkillBar(String skill, int percentage, BuildContext context) {
+
+  Widget _buildSkillProgress(String skill, int percentage) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -321,19 +220,19 @@ class AboutPage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Container(
-            height: 8,
+            height: 4,
             width: double.infinity,
             decoration: BoxDecoration(
               color: const Color(0xFF474747),
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(2),
             ),
-            child: Align(
+            child: FractionallySizedBox(
               alignment: Alignment.centerLeft,
+              widthFactor: percentage / 100,
               child: Container(
-                width: MediaQuery.of(context).size.width * (percentage / 100),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(2),
                 ),
               ),
             ),
@@ -342,72 +241,71 @@ class AboutPage extends StatelessWidget {
       ),
     );
   }
-  
+
   Widget _buildExperienceItem({
-    required IconData icon,
     required String title,
     required String period,
     bool isLast = false,
   }) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(left: 12, right: 4),
+      child: Column(
         children: [
-          Column(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(icon, color: Colors.white, size: 24),
-              if (!isLast) ...[
-                const SizedBox(height: 8),
-                Container(
-                  width: 2,
-                  height: 40,
-                  color: const Color(0xFF474747),
+              const Icon(
+                Icons.work_outline,
+                color: Colors.white,
+                size: 24,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.workSans(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      period,
+                      style: GoogleFonts.workSans(
+                        color: const Color(0xFFABABAB),
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                    if (!isLast) const SizedBox(height: 16),
+                  ],
                 ),
-              ],
+              ),
             ],
           ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: isLast ? 0 : 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.workSans(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    period,
-                    style: GoogleFonts.workSans(
-                      color: const Color(0xFFABABAB),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          if (!isLast) const Divider(color: Color(0xFF474747), height: 32),
         ],
       ),
     );
   }
-  
+
   Widget _buildProjectCard(String title) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF1E1E1E),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Center(
-        child: Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: const Color(0xFF1E1E1E),
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
           title,
           style: GoogleFonts.workSans(
             color: Colors.white,
@@ -415,7 +313,7 @@ class AboutPage extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-      ),
+      ],
     );
   }
 }

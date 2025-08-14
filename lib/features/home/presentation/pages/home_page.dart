@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rx_project/features/about/presentation/pages/about_page.dart';
-import 'package:rx_project/features/contact/presentation/pages/contact_page.dart';
-import 'package:rx_project/features/resume/presentation/pages/resume_page.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,73 +10,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
-  final PageController _pageController = PageController();
+  int _getCurrentIndex(BuildContext context) {
+    final location = GoRouterState.of(context).uri.path;
+    if (location == '/') return 0;
+    if (location.startsWith('/about')) return 1;
+    if (location.startsWith('/resume')) return 2;
+    if (location.startsWith('/contact')) return 3;
+    return 0;
+  }
 
-  final List<Widget> _pages = const [
-    HomeContent(),
-    AboutPage(),
-    ResumePage(),
-    ContactPage(),
-  ];
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+  void _onItemTapped(int index, BuildContext context) {
+    switch (index) {
+      case 0:
+        context.go('/');
+        break;
+      case 1:
+        context.go('/about');
+        break;
+      case 2:
+        context.go('/resume');
+        break;
+      case 3:
+        context.go('/contact');
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF141414),
-      body: PageView(
-        controller: _pageController,
-        physics: const BouncingScrollPhysics(),
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        children: _pages,
-      ),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: const Color(0xFF1E1E1E),
-        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _currentIndex = index;
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
-            );
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'About',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.work_outline),
-            selectedIcon: Icon(Icons.work),
-            label: 'Resume',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.mail_outline),
-            selectedIcon: Icon(Icons.mail),
-            label: 'Contact',
-          ),
-        ],
-      ),
+      backgroundColor: const Color(0xFF1E1E1E),
+      body: const HomeContent(),
     );
   }
 }
@@ -86,14 +48,11 @@ class _HomePageState extends State<HomePage> {
 class HomeContent extends StatelessWidget {
   const HomeContent({super.key});
 
-  Widget _buildNavLink(BuildContext context, String text, int pageIndex) {
+  Widget _buildNavLink(BuildContext context, String text, String route) {
     return TextButton(
       onPressed: () {
-        // Navigate to the corresponding page
-        final homeState = context.findAncestorStateOfType<_HomePageState>();
-        if (homeState != null) {
-          homeState._pageController.jumpToPage(pageIndex);
-        }
+        // Navigate using Go Router
+        context.go(route);
       },
       style: TextButton.styleFrom(
         padding: EdgeInsets.zero,
@@ -186,22 +145,17 @@ class HomeContent extends StatelessWidget {
                 // Navigation Links
                 Row(
                   children: [
-                    _buildNavLink(context, 'Work', 0),
+                    _buildNavLink(context, 'Work', '/'),
                     const SizedBox(width: 36),
-                    _buildNavLink(context, 'About', 1),
+                    _buildNavLink(context, 'About', '/about'),
                     const SizedBox(width: 36),
-                    _buildNavLink(context, 'Contact', 3),
+                    _buildNavLink(context, 'Contact', '/contact'),
                     const SizedBox(width: 36),
                     // Resume Button
                     ElevatedButton(
                       onPressed: () {
-                        // Navigate to resume page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ResumePage(),
-                          ),
-                        );
+                        // Navigate to resume page using Go Router
+                        context.go('/resume');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF303030),
