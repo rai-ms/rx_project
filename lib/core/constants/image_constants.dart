@@ -11,4 +11,10 @@ class ImageConstants {
   static const String roamApp = '${_basePath}roam-app.webp';
   static const String zitoMedia = '${_basePath}zito-media.webp';
 
+  static const String _projectPath = '${_basePath}projects/';
+  static const String connectRoamBg = '${_projectPath}connect-roam.webp';
+  static const String dwellSpringProjectBg = '${_projectPath}dwell-spring.webp';
+  static const String jarirProjectBg = '${_projectPath}jarir-bookstore-vector-logo.webp';
+  static const String zitoMediaProjectBg = '${_projectPath}zito-media.webp';
+
 }

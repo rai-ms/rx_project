@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../domain/models/project_model.dart';
 
 class ProjectCard extends StatelessWidget {
@@ -27,7 +28,7 @@ class ProjectCard extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap ?? () {
           if (project.projectUrl != null) {
-            // You can add URL launcher logic here if needed
+            launchUrl(Uri.parse(project.projectUrl!));
           }
         },
         child: Container(
@@ -51,7 +52,7 @@ class ProjectCard extends StatelessWidget {
               if (project.imageUrl != null)
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
-                  child: Image.network(
+                  child: Image.asset(
                     project.imageUrl!,
                     width: double.infinity,
                     height: height! * 0.6,

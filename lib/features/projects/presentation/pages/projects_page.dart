@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rx_project/features/widget/header/app_header.dart';
+import '../../../../core/constants/image_constants.dart';
 import '../../domain/models/project_model.dart';
 import '../widgets/project_card.dart';
 
@@ -87,6 +88,7 @@ class ProjectsPage extends StatelessWidget {
   final List<Project> _projects = [
     Project(
       title: 'Connect Roam',
+      imageUrl: ImageConstants.connectRoamBg,
       description: 'A mobile application for managing telecom services with bill payments and data pack management.',
       technologies: [
         'Cubit', 'REST API', 'Hive', 'Adjust', 'Firebase Storage',
@@ -100,10 +102,11 @@ class ProjectsPage extends StatelessWidget {
         'Customer support chat',
         'Usage analytics',
       ],
-      projectUrl: 'https://example.com/telecom-app',
+      projectUrl: "https://roam.virginconnect.com/"
     ),
     Project(
       title: 'DwellSpring',
+      imageUrl:  ImageConstants.dwellSpringProjectBg,
       description: 'A full-featured e-commerce application with product catalog, cart, and payment integration.',
       technologies: [
         'Bloc', 'just_audio' , 'Tap Payments', 'Hive', 'Secure Storage',
@@ -116,10 +119,11 @@ class ProjectsPage extends StatelessWidget {
         'Payment processing',
         'Order tracking',
       ],
-      projectUrl: 'https://example.com/ecommerce-app',
+      projectUrl: "https://dwellspring.io/",
     ),
     Project(
       title: 'Jarir Bookstore',
+      imageUrl: ImageConstants.jarirProjectBg,
       description: 'An online bookstore application with a wide range of books, user reviews, and purchase options.',
       technologies: [
         'Flutter', 'GetX', 'SQLite', 'Firebase Analytics',
@@ -131,9 +135,11 @@ class ProjectsPage extends StatelessWidget {
         'Playlist management',
         'Audio equalizer',
       ],
+      projectUrl: "https://www.jarir.com/"
     ),
     Project(
       title: 'ZitoMedia',
+      imageUrl: ImageConstants.zitoMediaProjectBg,
       description: 'A music streaming application that allows users to listen to their favorite tracks online and offline.',
       technologies: [
         'Flutter', 'Provider', 'Health Kit', 'Firebase',
@@ -145,6 +151,7 @@ class ProjectsPage extends StatelessWidget {
         'Custom workout plans',
         'Health data sync',
       ],
+      projectUrl: "https://www.zitomedia.net/"
     ),
   ];
 }
