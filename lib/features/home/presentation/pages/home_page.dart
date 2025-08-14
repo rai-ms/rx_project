@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/constants/image_constants.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -205,7 +207,7 @@ class HomeContent extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                   image: const DecorationImage(
                                     image: AssetImage(
-                                      "assets/images/profile_image.png",
+                                      ImageConstants.profileImage
                                     ),
                                     fit: BoxFit.cover,
                                   ),
@@ -230,7 +232,7 @@ class HomeContent extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8),
                                       image: const DecorationImage(
                                         image: AssetImage(
-                                          "assets/images/profile_image.png",
+                                          ImageConstants.profileImage
                                         ),
                                         fit: BoxFit.cover,
                                       ),

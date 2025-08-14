@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/constants/image_constants.dart';
+
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
@@ -25,7 +27,7 @@ class AboutPage extends StatelessWidget {
                       shape: BoxShape.circle,
                       image: const DecorationImage(
                         image: AssetImage(
-                          "assets/images/profile_image.png",
+                          ImageConstants.profileImage
                         ),
                         fit: BoxFit.cover,
                       ),
