@@ -64,141 +64,152 @@ class _ContactPageState extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          AppHeader(),
-          SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Get in Touch',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                _buildContactInfo(
-                  context,
-                  icon: Icons.email,
-                  title: 'Email',
-                  subtitle: 'john.doe@example.com',
-                  onTap: () => _launchURL('mailto:john.doe@example.com'),
-                ),
-                _buildContactInfo(
-                  context,
-                  icon: Icons.phone,
-                  title: 'Phone',
-                  subtitle: '+1 (555) 123-4567',
-                  onTap: () => _launchURL('tel:+15551234567'),
-                ),
-                _buildContactInfo(
-                  context,
-                  icon: Icons.link,
-                  title: 'LinkedIn',
-                  subtitle: 'linkedin.com/in/johndoe',
-                  onTap: () => _launchURL('https://linkedin.com/in/johndoe'),
-                ),
-                _buildContactInfo(
-                  context,
-                  icon: Icons.code,
-                  title: 'GitHub',
-                  subtitle: 'github.com/johndoe',
-                  onTap: () => _launchURL('https://github.com/johndoe'),
-                ),
-                const SizedBox(height: 16),
-                Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+      body: LayoutBuilder(
+          builder: (context, constraints) {
+            final isWide = constraints.maxWidth >= 864;
+            return Padding(
+              padding: EdgeInsets.symmetric( horizontal: isWide ?120 : 20, vertical: 20),
+              child: ScrollConfiguration(
+                behavior: ScrollBehavior().copyWith(scrollbars: false),
+                child:CustomScrollView(
+                slivers: [
+                  AppHeader(),
+                  SliverToBoxAdapter(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Or send me a message:',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: _nameController,
-                          decoration: const InputDecoration(
-                            labelText: 'Name',
-                            border: OutlineInputBorder(),
+                        const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Text(
+                            'Get in Touch',
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your name';
-                            }
-                            return null;
-                          },
+                        ),
+                        _buildContactInfo(
+                          context,
+                          icon: Icons.email,
+                          title: 'Email',
+                          subtitle: 'ashishraimse@gmail.com',
+                          onTap: () => _launchURL('mailto:ashishraimse@gmail.com'),
+                        ),
+                        _buildContactInfo(
+                          context,
+                          icon: Icons.phone,
+                          title: 'Phone',
+                          subtitle: '+91 7310131004',
+                          onTap: () => _launchURL('tel:+917310131004'),
+                        ),
+                        _buildContactInfo(
+                          context,
+                          icon: Icons.link,
+                          title: 'LinkedIn',
+                          subtitle: 'https://www.linkedin.com/in/rai-ms/',
+                          onTap: () => _launchURL('https://www.linkedin.com/in/rai-ms/'),
+                        ),
+                        _buildContactInfo(
+                          context,
+                          icon: Icons.code,
+                          title: 'GitHub',
+                          subtitle: 'github.com/rai-ms',
+                          onTap: () => _launchURL('https://github.com/rai-ms'),
                         ),
                         const SizedBox(height: 16),
-                        TextFormField(
-                          controller: _emailController,
-                          decoration: const InputDecoration(
-                            labelText: 'Email',
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                            if (!emailRegex.hasMatch(value)) {
-                              return 'Please enter a valid email address';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        TextFormField(
-                          controller: _messageController,
-                          maxLines: 5,
-                          decoration: const InputDecoration(
-                            labelText: 'Message',
-                            border: OutlineInputBorder(),
-                            alignLabelWithHint: true,
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your message';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 16),
-                        // if (provider.errorMessage != null)
-                        //   Padding(
-                        //     padding: const EdgeInsets.only(bottom: 16.0),
-                        //     child: Text(
-                        //       provider.errorMessage!,
-                        //       style: const TextStyle(color: Colors.red),
-                        //     ),
-                        //   ),
-                        // if (provider.isSuccess)
-                        //   const Padding(
-                        //     padding: EdgeInsets.only(bottom: 16.0),
-                        //     child: Text(
-                        //       'Message sent successfully!',
-                        //       style: TextStyle(color: Colors.green),
-                        //     ),
-                        //   ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed:_submitForm,
-                            child: Text('Send Message'),
+                        Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Or send me a message:',
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 16),
+                                TextFormField(
+                                  controller: _nameController,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Name',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your name';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                TextFormField(
+                                  controller: _emailController,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Email',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your email';
+                                    }
+                                    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                                    if (!emailRegex.hasMatch(value)) {
+                                      return 'Please enter a valid email address';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                TextFormField(
+                                  controller: _messageController,
+                                  maxLines: 5,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Message',
+                                    border: OutlineInputBorder(),
+                                    alignLabelWithHint: true,
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your message';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 16),
+                                // if (provider.errorMessage != null)
+                                //   Padding(
+                                //     padding: const EdgeInsets.only(bottom: 16.0),
+                                //     child: Text(
+                                //       provider.errorMessage!,
+                                //       style: const TextStyle(color: Colors.red),
+                                //     ),
+                                //   ),
+                                // if (provider.isSuccess)
+                                //   const Padding(
+                                //     padding: EdgeInsets.only(bottom: 16.0),
+                                //     child: Text(
+                                //       'Message sent successfully!',
+                                //       style: TextStyle(color: Colors.green),
+                                //     ),
+                                //   ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed:_submitForm,
+                                    child: Text('Send Message'),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          );
+        }
       ),
     );
   }

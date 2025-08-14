@@ -25,22 +25,22 @@ class AppRoutes {
     GoRoute(
       path: RouteNames.home,
       name: RouteNames.home,
-      builder: (context, state) => const HomePage(),
+      pageBuilder: (ctx, state) => NoTransitionPage(child: HomePage())
     ),
     GoRoute(
       path: RouteNames.about,
       name: RouteNames.about,
-      builder: (context, state) => const AboutPage(),
+      pageBuilder: (ctx, state) => NoTransitionPage(child: AboutPage())
     ),
     GoRoute(
       path: RouteNames.resume,
       name: RouteNames.resume,
-      builder: (context, state) => const ResumePage(),
+      pageBuilder: (ctx, state) => NoTransitionPage(child: ResumePage()),
     ),
     GoRoute(
       path: RouteNames.contact,
       name: RouteNames.contact,
-      builder: (context, state) => const ContactPage(),
+      pageBuilder: (ctx, state) => NoTransitionPage(child: ContactPage()),
     ),
   ];
 

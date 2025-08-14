@@ -1,7 +1,3 @@
-/// App Text Constants
-/// This file contains all the text strings used in the application.
-/// This makes it easier to update and manage text throughout the app.
-
 class AppText {
   // App Title
   static const String appTitle = 'Portfolio';

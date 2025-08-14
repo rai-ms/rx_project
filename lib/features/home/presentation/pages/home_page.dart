@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               image: DecorationImage(
-                image: NetworkImage(imageUrl),
+                image: AssetImage(imageUrl),
                 fit: BoxFit.fill,
               ),
             ),
@@ -154,13 +154,16 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildExperienceSection() {
     return SliverToBoxAdapter(
-      child: Text(
-        '2 years of experience building scalable, cross-platform applications',
-        style: GoogleFonts.workSans(
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.normal,
-          height: 1.5,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Text(
+          'Flutter Developer with 2+ years of experience building scalable, cross-platform applications using Flutter and Dart.',
+          style: GoogleFonts.workSans(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
+            height: 1.5,
+          ),
         ),
       ),
     );
@@ -170,7 +173,6 @@ class _HomePageState extends State<HomePage> {
     return SliverLayoutBuilder(
       builder: (context, constraints) {
         final crossAxisCount = (constraints.crossAxisExtent / 300).floor().clamp(1, 3);
-
         return SliverGrid(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
@@ -180,19 +182,19 @@ class _HomePageState extends State<HomePage> {
           ),
           delegate: SliverChildListDelegate([
             _buildProjectCard(
-              'Project Alpha',
-              'A mobile app for fitness enthusiasts',
-              'https://lh3.googleusercontent.com/aida-public/AB6AXuCU8PpvPzAePRVOfCKqgWsx89teW5QBo88r22v3PRsrtw2owtV1Guogry_oFc0d-TJRZnSR_OFzc8FiVZSG3phBm7fbUinK2WOkqH5Bl8OUk9JzLGaIXlA0JtrJ-JCotZsaqloMC_pHMUZyGgDAWi5dJjoqk4ep1dBwiU38uITdt1yEAf2B6gJVKqbikLzyWJbAdaxn9I7CUsJjC1r84yZXj8ilLlmQo4dgNOB4uYV3wrSn6jXUMxlUqxUwBv6JIHYR9VBBhsXlugw',
+              'Connect Roam',
+              'Virgin Connect Roam is a mobile application that provides travel eSIM solutions for staying connected while traveling. It allows users to access data plans in over 190 countries without incurring roaming fees. The app, developed by Beyond ONE, offers features like instant eSIM activation, flexible data plans (1GB to 20GB), and 5G speed where available.',
+              ImageConstants.roamApp,
             ),
             _buildProjectCard(
-              'Project Beta',
-              'A web platform for online learning',
-              'https://lh3.googleusercontent.com/aida-public/AB6AXuCKeizBqxW8MnSnadXQy35c_tL1Sm6oRi3BoQ9Mn7q9Gklm4y-9rkcE0Y4TTUQeOTEfylzpDC-7CkrcaSbHUvkyHacD33bB_6AModR9VmkZ_6QqScmZ-DMN25xl_7F2XHBdumVJ_LQZMb4l9C1PCkiOF2m3dfRzHNXq0GXVRWlud-r7Oc2SyarmRK8g2Fh_wXvgaB82hkOTk3z3qflw2UY24wPK-Y4E61aDneBb8lFg3wskFKPBpDZZBJFy0M2d4pEouK-sX3KvDsU',
+              'Dwell Spring',
+              'Reclaim your rest with Dwellspring. In today’s world, finding peaceful moments can feel impossible. We provide essential tools for restoration that put a world of soothing sounds at your fingertips. While rest might feel like an elusive dream, it’s closer than you think.',
+              ImageConstants.dwellSpring,
             ),
             _buildProjectCard(
-              'Project Gamma',
-              'An e-commerce site for sustainable products',
-              'https://lh3.googleusercontent.com/aida-public/AB6AXuDhE02s4WRdJyEyCE0R8LSYyw18bqws08zDuqhuiiO0Qva5fxusYcLQU-JAPUp7JROVRL40Da4IawDeuklaCHFfF1DX0cepZMmcgXXagHDGuz9LvlC0zDA_G5vNb9sqJGh_1DoqX7iWycA6zsQ1sOmS2DFTFFs7rUfIGfn6Uo-MJWSqP1I2c0qMuI-iwqMjp-PMloLV7c0qkY3CpmD4GoL8oWweYex0wd_2N9l2sZPqSt-ZqXSh7xVux_aIxS--7M99XFwWGG_QSho',
+              'Jarir Bookstore',
+              'Jarir Reader is a free application available on smart devices, it allows you to buy Jarir Bookstore publications and top Arabic titles from the best Arabic publishers.',
+              ImageConstants.jarir,
             ),
           ]),
         );
@@ -208,56 +210,59 @@ class _HomePageState extends State<HomePage> {
           final isWide = constraints.maxWidth >= 864;
           return Padding(
             padding: EdgeInsets.symmetric( horizontal: isWide ?120 : 20, vertical: 20),
-            child: CustomScrollView(
-              slivers: [
-                const AppHeader(),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    child: Text(
-                      'Featured Projects',
-                      style: GoogleFonts.workSans(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        height: 1.1,
-                        letterSpacing: -0.015,
-                      ),
-                    ),
-                  ),
-                ),
-                _buildProfileSection(isWide),
-                _buildExperienceSection(),
-                _buildProjectsSection(),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 40, top: 20),
-                    child: Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Action for View All Projects button
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF303030),
-                          minimumSize: const Size(160, 40),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: const Text(
-                          'View All Projects',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.015,
-                          ),
+            child: ScrollConfiguration(
+              behavior: ScrollBehavior().copyWith(scrollbars: false),
+              child:  CustomScrollView(
+                slivers: [
+                  const AppHeader(),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                      child: Text(
+                        'Featured Projects',
+                        style: GoogleFonts.workSans(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          height: 1.1,
+                          letterSpacing: -0.015,
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  _buildProfileSection(isWide),
+                  _buildExperienceSection(),
+                  _buildProjectsSection(),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 40, top: 20),
+                      child: Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF303030),
+                            minimumSize: const Size(160, 40),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          child: const Text(
+                            'View All Projects',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.015,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }
