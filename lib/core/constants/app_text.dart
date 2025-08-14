@@ -29,7 +29,7 @@ class AppText {
   static const String aboutTitle = 'Software Developer';
   static const String aboutJobTitle = 'Software Developer';
   static const String aboutLocation = 'Based in Noida, India';
-  static const String aboutBio = "I'm a product designer passionate about creating intuitive and engaging user experiences. With a background in visual communication and a focus on user-centered design, I strive to solve complex problems through simple and elegant solutions.";
+  static const String aboutBio = "I’m a Flutter developer passionate about crafting seamless, high-performance apps across mobile and web. With expertise in state management, clean architecture, and modern frameworks, I focus on delivering scalable solutions that combine elegant design with robust functionality.";
   
   // Skills Section
   static const String skillsTitle = 'Skills';

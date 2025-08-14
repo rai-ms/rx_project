@@ -5,6 +5,10 @@ import '../../../../core/constants/app_text.dart';
 import '../../../../core/constants/image_constants.dart';
 import '../../../widget/header/app_header.dart';
 import '../widgets/skill_chip.dart';
+import '../widgets/skill_progress_bar.dart';
+import '../widgets/experience_item.dart';
+import '../widgets/section_title.dart';
+import '../widgets/project_card.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -95,40 +99,71 @@ class AboutPage extends StatelessWidget {
                         ),
 
                         // Skills Section
-                        _buildSectionTitle(AppText.skillsTitle),
+                        SectionTitle(title: AppText.skillsTitle),
                         const SizedBox(height: 12),
-                        Wrap(
-                          spacing: 12,
-                          runSpacing: 12,
+                        ConstrainedBox(
+                          constraints: BoxConstraints(
+                              maxWidth: 500
+                          ),
+                          child:  Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Wrap(
+                                spacing: 12,
+                                runSpacing: 12,
+                                children: [
+                                  for (final skill in AppText.skills.take(4)) SkillChip(label: skill),
+                                ],
+                              ),
+                              // Skill Progress Bars
+                              SkillProgressBar(skill: AppText.uiUxDesign, percentage: 90),
+                              SkillProgressBar(skill: AppText.interactionDesign, percentage: 85),
+                              SkillProgressBar(skill: AppText.visualDesign, percentage: 80),
+                              SkillProgressBar(skill: AppText.prototyping, percentage: 75),
+                            ],
+                          ),
+                        ),
+
+
+                        // Experience Section
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            for (final skill in AppText.skills.take(4)) SkillChip(label: skill),
+                            Flexible(
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    maxWidth: 400
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SectionTitle(title: AppText.experienceTitle),
+                                    ExperienceItem(
+                                      title: AppText.exp1Title,
+                                      period: AppText.exp1Period,
+                                    ),
+                                    ExperienceItem(
+                                      title: AppText.exp2Title,
+                                      period: AppText.exp2Period,
+                                    ),
+                                    ExperienceItem(
+                                      title: AppText.exp3Title,
+                                      period: AppText.exp3Period,
+                                      isLast: true,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
 
-                        // Skill Progress Bars
-                        _buildSkillProgress(AppText.uiUxDesign, 90),
-                        _buildSkillProgress(AppText.interactionDesign, 85),
-                        _buildSkillProgress(AppText.visualDesign, 80),
-                        _buildSkillProgress(AppText.prototyping, 75),
-
-                        // Experience Section
-                        _buildSectionTitle(AppText.experienceTitle),
-                        _buildExperienceItem(
-                          title: AppText.exp1Title,
-                          period: AppText.exp1Period,
-                        ),
-                        _buildExperienceItem(
-                          title: AppText.exp2Title,
-                          period: AppText.exp2Period,
-                        ),
-                        _buildExperienceItem(
-                          title: AppText.exp3Title,
-                          period: AppText.exp3Period,
-                          isLast: true,
-                        ),
-
                         // Projects Section
-                        _buildSectionTitle(AppText.projectsTitle),
+                        SectionTitle(title: AppText.projectsTitle),
                         const SizedBox(height: 12),
                         GridView.count(
                           shrinkWrap: true,
@@ -138,7 +173,7 @@ class AboutPage extends StatelessWidget {
                           mainAxisSpacing: 12,
                           childAspectRatio: 1,
                           children: [
-                            for (final project in AppText.projectTitles) _buildProjectCard(project),
+                            for (final project in AppText.projectTitles) ProjectCard(title: project),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -175,145 +210,5 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 12, left: 4, right: 4),
-      child: Text(
-        title,
-        style: GoogleFonts.workSans(
-          color: Colors.white,
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          letterSpacing: -0.015,
-        ),
-      ),
-    );
-  }
 
-
-  Widget _buildSkillProgress(String skill, int percentage) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                skill,
-                style: GoogleFonts.workSans(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                '$percentage%',
-                style: GoogleFonts.workSans(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Container(
-            height: 4,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: const Color(0xFF474747),
-              borderRadius: BorderRadius.circular(2),
-            ),
-            child: FractionallySizedBox(
-              alignment: Alignment.centerLeft,
-              widthFactor: percentage / 100,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildExperienceItem({
-    required String title,
-    required String period,
-    bool isLast = false,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 12, right: 4),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.work_outline,
-                color: Colors.white,
-                size: 24,
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: GoogleFonts.workSans(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      period,
-                      style: GoogleFonts.workSans(
-                        color: const Color(0xFFABABAB),
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    if (!isLast) const SizedBox(height: 16),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          if (!isLast) const Divider(color: Color(0xFF474747), height: 32),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProjectCard(String title) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: const Color(0xFF1E1E1E),
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        const SizedBox(height: 12),
-        Text(
-          title,
-          style: GoogleFonts.workSans(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
 }

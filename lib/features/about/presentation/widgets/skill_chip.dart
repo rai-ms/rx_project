@@ -33,7 +33,6 @@ class _SkillChipState extends State<SkillChip>
   late AnimationController _animationController;
   final List<Color> _borderColors = [
     Colors.blue,
-    Colors.purple,
     Colors.cyan,
   ];
   Color _currentBorderColor = Colors.transparent;
@@ -98,7 +97,7 @@ class _SkillChipState extends State<SkillChip>
           boxShadow: _isHovered
               ? [
                   BoxShadow(
-                    color: _currentBorderColor.withOpacity(0.3),
+                    color: _currentBorderColor.withValues(alpha: 0.3),
                     blurRadius: 8,
                     spreadRadius: 2,
                   )
@@ -117,3 +116,4 @@ class _SkillChipState extends State<SkillChip>
     );
   }
 }
+
