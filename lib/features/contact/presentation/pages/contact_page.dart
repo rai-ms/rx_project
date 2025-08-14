@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rx_project/core/constants/app_text.dart';
 import 'package:rx_project/features/widget/header/app_header.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import '../widgets/contact_info_card.dart';
 
 import '../../../../core/constants/app_regex.dart';
 
@@ -33,24 +34,6 @@ class _ContactPageState extends State<ContactPage> {
     }
   }
 
-  Widget _buildContactInfo(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required VoidCallback onTap,
-  }) {
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: ListTile(
-        leading: Icon(icon, size: 32),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
-        onTap: onTap,
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      ),
-    );
-  }
 
   Future<void> _submitForm() async {
     if (_formKey.currentState?.validate() ?? false) {
@@ -86,29 +69,25 @@ class _ContactPageState extends State<ContactPage> {
                             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        _buildContactInfo(
-                          context,
+                        ContactInfoCard(
                           icon: Icons.email,
                           title: AppText.emailLabel,
                           subtitle: AppText.email,
                           onTap: () => _launchURL('mailto:${AppText.email}'),
                         ),
-                        _buildContactInfo(
-                          context,
+                        ContactInfoCard(
                           icon: Icons.phone,
                           title: AppText.phoneLabel,
                           subtitle: AppText.phone,
                           onTap: () => _launchURL('tel:${AppText.phone}'),
                         ),
-                        _buildContactInfo(
-                          context,
+                        ContactInfoCard(
                           icon: Icons.link,
                           title: AppText.linkedInLabel,
                           subtitle: AppText.linkedin,
                           onTap: () => _launchURL(AppText.linkedin),
                         ),
-                        _buildContactInfo(
-                          context,
+                        ContactInfoCard(
                           icon: Icons.code,
                           title: AppText.gitHubLabel,
                           subtitle: AppText.github,
