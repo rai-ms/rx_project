@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rx_project/core/error/failures.dart';
 import 'package:rx_project/features/contact/domain/usecases/send_message_use_case.dart';
 
 class ContactProvider with ChangeNotifier {

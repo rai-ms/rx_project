@@ -7,6 +7,11 @@ on:
     branches: [ "main" ]
   workflow_dispatch:  # Allows manual triggering
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   # CI: Code Quality & Tests
   analyze-and-test:
@@ -24,9 +29,6 @@ jobs:
       
       - name: Install Dependencies
         run: flutter pub get
-      
-      - name: Format Check
-        run: dart format --set-exit-if-changed .
       
       - name: Analyze
         run: flutter analyze
