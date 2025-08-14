@@ -36,35 +36,38 @@ jobs:
     needs: analyze-and-test  # Only deploy if tests pass
     if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           cache: true
           cache-key: 'flutter-cache'
-      
+
       - name: Install Dependencies
         run: flutter pub get
-      
+
       - name: Build Web
         run: flutter build web --release --base-href "/rx_project/"
-      
+
+      - name: Remove CNAME (no custom domain)
+        run: rm -f build/web/CNAME
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
         id: pages
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './build/web'
-      
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
