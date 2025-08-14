@@ -77,6 +77,9 @@ class AppText {
   static const String orSendMessage = 'Or send me a message:';
   static const String nameLabel = 'Name';
   static const String emailLabel = 'Email';
+  static const String linkedInLabel = 'LinkedIn';
+  static const String gitHubLabel = 'GitHub';
+  static const String phoneLabel = 'Phone';
   static const String messageLabel = 'Message';
   static const String sendMessage = 'Send Message';
   static const String messageSent = 'Message sent successfully!';
