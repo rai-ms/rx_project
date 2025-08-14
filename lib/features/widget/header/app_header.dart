@@ -1,11 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rx_project/core/routes/app_router.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/app_text.dart';
 
 class AppHeader extends StatelessWidget {
   const AppHeader({super.key});
@@ -27,6 +26,9 @@ class AppHeader extends StatelessWidget {
           children: [
             // Logo and Title
             InkWell(
+              splashFactory: InkSplash.splashFactory,
+              highlightColor: AppColors.transparent,
+              focusColor: AppColors.transparent,
               onTap: (){
                 context.go(RouteNames.home);
               },
@@ -35,7 +37,7 @@ class AppHeader extends StatelessWidget {
                   const Icon(Icons.memory, color: Colors.white, size: 20),
                   const SizedBox(width: 16),
                   Text(
-                    'Portfolio',
+                    AppText.appTitle,
                     style: GoogleFonts.workSans(
                       color: Colors.white,
                       fontSize: 18,
@@ -52,11 +54,11 @@ class AppHeader extends StatelessWidget {
             if (MediaQuery.of(context).size.width > 600)
               Row(
                 children: [
-                  _buildNavLink(context, 'Home', RouteNames.home),
+                  _buildNavLink(context, AppText.navWork, RouteNames.home),
                   const SizedBox(width: 36),
-                  _buildNavLink(context, 'About', RouteNames.about),
+                  _buildNavLink(context, AppText.navAbout, RouteNames.about),
                   const SizedBox(width: 36),
-                  _buildNavLink(context, 'Contact', RouteNames.contact),
+                  _buildNavLink(context, AppText.navContact, RouteNames.contact),
                   const SizedBox(width: 36),
                   // Resume Button
                   ElevatedButton(
@@ -68,8 +70,8 @@ class AppHeader extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: const Text(
-                      'Resume',
+                    child: Text(
+                      AppText.navResume,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,

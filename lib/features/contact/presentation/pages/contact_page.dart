@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:rx_project/core/constants/app_text.dart';
 import 'package:rx_project/features/widget/header/app_header.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -79,7 +80,7 @@ class _ContactPageState extends State<ContactPage> {
                         const Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
-                            'Get in Touch',
+                            AppText.getInTouch,
                             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -87,29 +88,29 @@ class _ContactPageState extends State<ContactPage> {
                           context,
                           icon: Icons.email,
                           title: 'Email',
-                          subtitle: 'ashishraimse@gmail.com',
-                          onTap: () => _launchURL('mailto:ashishraimse@gmail.com'),
+                          subtitle: AppText.email,
+                          onTap: () => _launchURL('mailto:${AppText.email}'),
                         ),
                         _buildContactInfo(
                           context,
                           icon: Icons.phone,
                           title: 'Phone',
-                          subtitle: '+91 7310131004',
-                          onTap: () => _launchURL('tel:+917310131004'),
+                          subtitle: AppText.phone,
+                          onTap: () => _launchURL('tel:${AppText.phone}'),
                         ),
                         _buildContactInfo(
                           context,
                           icon: Icons.link,
                           title: 'LinkedIn',
-                          subtitle: 'https://www.linkedin.com/in/rai-ms/',
-                          onTap: () => _launchURL('https://www.linkedin.com/in/rai-ms/'),
+                          subtitle: AppText.linkedin,
+                          onTap: () => _launchURL(AppText.linkedin),
                         ),
                         _buildContactInfo(
                           context,
                           icon: Icons.code,
                           title: 'GitHub',
-                          subtitle: 'github.com/rai-ms',
-                          onTap: () => _launchURL('https://github.com/rai-ms'),
+                          subtitle: AppText.github,
+                          onTap: () => _launchURL(AppText.github),
                         ),
                         const SizedBox(height: 16),
                         Form(
@@ -120,19 +121,19 @@ class _ContactPageState extends State<ContactPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Or send me a message:',
+                                  AppText.orSendMessage,
                                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 16),
                                 TextFormField(
                                   controller: _nameController,
                                   decoration: const InputDecoration(
-                                    labelText: 'Name',
+                                    labelText: AppText.nameLabel,
                                     border: OutlineInputBorder(),
                                   ),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter your name';
+                                      return AppText.nameRequired;
                                     }
                                     return null;
                                   },
@@ -141,17 +142,17 @@ class _ContactPageState extends State<ContactPage> {
                                 TextFormField(
                                   controller: _emailController,
                                   decoration: const InputDecoration(
-                                    labelText: 'Email',
+                                    labelText: AppText.emailLabel,
                                     border: OutlineInputBorder(),
                                   ),
                                   keyboardType: TextInputType.emailAddress,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter your email';
+                                      return AppText.emailRequired;
                                     }
                                     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                                     if (!emailRegex.hasMatch(value)) {
-                                      return 'Please enter a valid email address';
+                                      return AppText.validEmail;
                                     }
                                     return null;
                                   },
@@ -161,13 +162,13 @@ class _ContactPageState extends State<ContactPage> {
                                   controller: _messageController,
                                   maxLines: 5,
                                   decoration: const InputDecoration(
-                                    labelText: 'Message',
+                                    labelText: AppText.messageLabel,
                                     border: OutlineInputBorder(),
                                     alignLabelWithHint: true,
                                   ),
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Please enter your message';
+                                      return AppText.messageRequired;
                                     }
                                     return null;
                                   },
@@ -185,7 +186,7 @@ class _ContactPageState extends State<ContactPage> {
                                 //   const Padding(
                                 //     padding: EdgeInsets.only(bottom: 16.0),
                                 //     child: Text(
-                                //       'Message sent successfully!',
+                                // AppText.messageSent,
                                 //       style: TextStyle(color: Colors.green),
                                 //     ),
                                 //   ),
@@ -193,7 +194,7 @@ class _ContactPageState extends State<ContactPage> {
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed:_submitForm,
-                                    child: Text('Send Message'),
+                                    child: Text(AppText.sendMessage),
                                   ),
                                 ),
                               ],

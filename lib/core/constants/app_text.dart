@@ -70,10 +70,10 @@ class AppText {
 
   // Contact Page
   static const String getInTouch = 'Get in Touch';
-  static const String email = 'john.doe@example.com';
-  static const String phone = '+1 (555) 123-4567';
-  static const String linkedin = 'linkedin.com/in/johndoe';
-  static const String github = 'github.com/johndoe';
+  static const String email = 'ashishraimse@gmail.com';
+  static const String phone = '+917310131004';
+  static const String linkedin = 'https://www.linkedin.com/in/rai-ms/';
+  static const String github = 'https://github.com/rai-ms';
   static const String orSendMessage = 'Or send me a message:';
   static const String nameLabel = 'Name';
   static const String emailLabel = 'Email';
