@@ -12,6 +12,11 @@ permissions:
   pages: write
   id-token: write
 
+# 🛑 Concurrency to cancel previous runs for the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # CI: Code Quality & Tests
   analyze-and-test:
