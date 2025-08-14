@@ -4,73 +4,94 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../core/utils/app_colors.dart';
+
 class AppHeader extends StatelessWidget {
   const AppHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+    return SliverAppBar(
+      backgroundColor: Colors.transparent,
+      floating: false,
+      automaticallyImplyLeading: false,
+      toolbarHeight: 72,
+      flexibleSpace: Container(
         decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Color(0xFF303030))),
+          border: Border(
+            bottom: BorderSide(
+              color: AppColors.darkCharcoal
+            )
+          ),
         ),
-        child: Row(
-          children: [
-            // Logo and Title
-            Row(
-              children: [
-                const Icon(Icons.memory, color: Colors.white, size: 20),
-                const SizedBox(width: 16),
-                Text(
-                  'Portfolio',
-                  style: GoogleFonts.workSans(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    height: 1.2,
-                    letterSpacing: -0.015 * 18,
-                  ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            // Navigation Links
-            Row(
-              children: [
-                _buildNavLink(context, 'Work', '/'),
-                const SizedBox(width: 36),
-                _buildNavLink(context, 'About', '/about'),
-                const SizedBox(width: 36),
-                _buildNavLink(context, 'Contact', '/contact'),
-                const SizedBox(width: 36),
-                // Resume Button
-                ElevatedButton(
-                  onPressed: () {
-                    // Navigate to resume page using Go Router
-                    context.go('/resume');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF303030),
-                    minimumSize: const Size(84, 40),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Text(
-                    'Resume',
-                    style: TextStyle(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+          child: Row(
+            children: [
+              // Logo and Title
+              Row(
+                children: [
+                  const Icon(Icons.memory, color: Colors.white, size: 20),
+                  const SizedBox(width: 16),
+                  Text(
+                    'Portfolio',
+                    style: GoogleFonts.workSans(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 0.015,
+                      height: 1.2,
+                      letterSpacing: -0.015 * 18,
                     ),
                   ),
+                ],
+              ),
+              const Spacer(),
+              // Navigation Links - Hide on small screens
+              if (MediaQuery.of(context).size.width > 600) 
+                Row(
+                  children: [
+                    _buildNavLink(context, 'Work', '/'),
+                    const SizedBox(width: 36),
+                    _buildNavLink(context, 'About', '/about'),
+                    const SizedBox(width: 36),
+                    _buildNavLink(context, 'Contact', '/contact'),
+                    const SizedBox(width: 36),
+                    // Resume Button
+                    ElevatedButton(
+                      onPressed: () => context.go('/resume'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF303030),
+                        minimumSize: const Size(84, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        'Resume',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.015,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              else
+                // Show menu button on small screens
+                IconButton(
+                  icon: const Icon(Icons.menu, color: Colors.white),
+                  onPressed: () {
+                    // Handle menu button press (you can show a drawer or bottom sheet)
+                    Scaffold.of(context).openEndDrawer();
+                  },
                 ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
-      );
+      ),
+    );
   }
 
 
