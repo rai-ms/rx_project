@@ -12,14 +12,12 @@ class ProjectsPage extends StatelessWidget {
       backgroundColor: const Color(0xFF0A0A0A),
       body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
-            child: AppHeader(),
-          ),
+          AppHeader(),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     'My Projects',
