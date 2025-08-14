@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/constants/app_text.dart';
 import '../../../../core/constants/image_constants.dart';
 import '../../../widget/header/app_header.dart';
 
@@ -18,7 +19,7 @@ class AboutPage extends StatelessWidget {
               padding: EdgeInsets.symmetric( horizontal: isWide ?120 : 20, vertical: 20),
               child: ScrollConfiguration(
                 behavior: ScrollBehavior().copyWith(scrollbars: false),
-                child:CustomScrollView(
+                child: CustomScrollView(
                 slivers: [
                   const AppHeader(),
                   SliverToBoxAdapter(
@@ -49,7 +50,7 @@ class AboutPage extends StatelessWidget {
 
                               // Name and Title
                               Text(
-                                'Ashish Rai',
+                                AppText.aboutName,
                                 style: GoogleFonts.workSans(
                                   color: Colors.white,
                                   fontSize: 22,
@@ -58,7 +59,7 @@ class AboutPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Software Developer',
+                                AppText.aboutJobTitle,
                                 style: GoogleFonts.workSans(
                                   color: const Color(0xFFABABAB),
                                   fontSize: 16,
@@ -66,7 +67,7 @@ class AboutPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Based in Noida, India',
+                                AppText.aboutLocation,
                                 style: GoogleFonts.workSans(
                                   color: const Color(0xFFABABAB),
                                   fontSize: 16,
@@ -81,7 +82,7 @@ class AboutPage extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 24),
                           child: Text(
-                            "I'm a product designer passionate about creating intuitive and engaging user experiences. With a background in visual communication and a focus on user-centered design, I strive to solve complex problems through simple and elegant solutions.",
+                            AppText.aboutBio,
                             style: GoogleFonts.workSans(
                               color: Colors.white,
                               fontSize: 16,
@@ -93,43 +94,40 @@ class AboutPage extends StatelessWidget {
                         ),
 
                         // Skills Section
-                        _buildSectionTitle('Skills'),
+                        _buildSectionTitle(AppText.skillsTitle),
                         const SizedBox(height: 12),
                         Wrap(
                           spacing: 12,
                           runSpacing: 12,
                           children: [
-                            _buildSkillChip('Flutter'),
-                            _buildSkillChip('Dart'),
-                            _buildSkillChip('Firebase'),
-                            _buildSkillChip('UI/UX Design'),
+                            for (final skill in AppText.skills.take(4)) _buildSkillChip(skill),
                           ],
                         ),
 
                         // Skill Progress Bars
-                        _buildSkillProgress('UI/UX Design', 90),
-                        _buildSkillProgress('Interaction Design', 85),
-                        _buildSkillProgress('Visual Design', 80),
-                        _buildSkillProgress('Prototyping', 75),
+                        _buildSkillProgress(AppText.uiUxDesign, 90),
+                        _buildSkillProgress(AppText.interactionDesign, 85),
+                        _buildSkillProgress(AppText.visualDesign, 80),
+                        _buildSkillProgress(AppText.prototyping, 75),
 
                         // Experience Section
-                        _buildSectionTitle('Experience'),
+                        _buildSectionTitle(AppText.experienceTitle),
                         _buildExperienceItem(
-                          title: 'Product Designer at Tech Innovators Inc.',
-                          period: '2020 - Present',
+                          title: AppText.exp1Title,
+                          period: AppText.exp1Period,
                         ),
                         _buildExperienceItem(
-                          title: 'UI/UX Designer at Creative Solutions Co.',
-                          period: '2018 - 2020',
+                          title: AppText.exp2Title,
+                          period: AppText.exp2Period,
                         ),
                         _buildExperienceItem(
-                          title: 'Freelance Designer',
-                          period: '2016 - 2018',
+                          title: AppText.exp3Title,
+                          period: AppText.exp3Period,
                           isLast: true,
                         ),
 
                         // Projects Section
-                        _buildSectionTitle('Projects'),
+                        _buildSectionTitle(AppText.projectsTitle),
                         const SizedBox(height: 12),
                         GridView.count(
                           shrinkWrap: true,
@@ -139,9 +137,7 @@ class AboutPage extends StatelessWidget {
                           mainAxisSpacing: 12,
                           childAspectRatio: 1,
                           children: [
-                            _buildProjectCard('Mobile App Redesign'),
-                            _buildProjectCard('E-commerce Website'),
-                            _buildProjectCard('Dashboard Design'),
+                            for (final project in AppText.projectTitles) _buildProjectCard(project),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -156,7 +152,7 @@ class AboutPage extends StatelessWidget {
                               ),
                             ),
                             child: const Text(
-                              'View All Projects',
+                              AppText.viewAllProjectsButton,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,

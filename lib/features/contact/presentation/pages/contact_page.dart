@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:rx_project/features/widget/header/app_header.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../providers/contact_provider.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({super.key});

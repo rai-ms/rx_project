@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rx_project/features/widget/header/app_header.dart';
 import '../../../../core/constants/image_constants.dart';
+import '../../../../core/constants/app_text.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                     Text(
-                      'Ashish Rai',
+                      AppText.homeTitle,
                       style: GoogleFonts.workSans(
                         color: Colors.white,
                         fontSize: 48,
@@ -109,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Flutter Developer',
+                      AppText.homeSubtitle,
                       style: GoogleFonts.workSans(
                         color: Colors.white,
                         fontSize: 16,
@@ -132,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         child: const Text(
-                          'View My Work',
+                          AppText.viewWorkButton,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -157,7 +158,7 @@ class _HomePageState extends State<HomePage> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Text(
-          'Flutter Developer with 2+ years of experience building scalable, cross-platform applications using Flutter and Dart.',
+          AppText.experienceText,
           style: GoogleFonts.workSans(
             color: Colors.white,
             fontSize: 16,
@@ -182,18 +183,18 @@ class _HomePageState extends State<HomePage> {
           ),
           delegate: SliverChildListDelegate([
             _buildProjectCard(
-              'Connect Roam',
-              'Virgin Connect Roam is a mobile application that provides travel eSIM solutions for staying connected while traveling. It allows users to access data plans in over 190 countries without incurring roaming fees. The app, developed by Beyond ONE, offers features like instant eSIM activation, flexible data plans (1GB to 20GB), and 5G speed where available.',
+              AppText.projectConnectRoamTitle,
+              AppText.projectConnectRoamDesc,
               ImageConstants.roamApp,
             ),
             _buildProjectCard(
-              'Dwell Spring',
-              'Reclaim your rest with Dwellspring. In today’s world, finding peaceful moments can feel impossible. We provide essential tools for restoration that put a world of soothing sounds at your fingertips. While rest might feel like an elusive dream, it’s closer than you think.',
+              AppText.projectDwellSpringTitle,
+              AppText.projectDwellSpringDesc,
               ImageConstants.dwellSpring,
             ),
             _buildProjectCard(
-              'Jarir Bookstore',
-              'Jarir Reader is a free application available on smart devices, it allows you to buy Jarir Bookstore publications and top Arabic titles from the best Arabic publishers.',
+              AppText.projectJarirTitle,
+              AppText.projectJarirDesc,
               ImageConstants.jarir,
             ),
           ]),
@@ -219,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: Text(
-                        'Featured Projects',
+                        AppText.featuredProjects,
                         style: GoogleFonts.workSans(
                           color: Colors.white,
                           fontSize: 22,
@@ -249,7 +250,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           child: const Text(
-                            'View All Projects',
+                            AppText.viewAllProjects,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
