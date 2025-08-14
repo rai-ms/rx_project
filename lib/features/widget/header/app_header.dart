@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rx_project/core/routes/app_router.dart';
 
 import '../../../core/utils/app_colors.dart';
 
@@ -29,36 +30,41 @@ class AppHeader extends StatelessWidget {
           child: Row(
             children: [
               // Logo and Title
-              Row(
-                children: [
-                  const Icon(Icons.memory, color: Colors.white, size: 20),
-                  const SizedBox(width: 16),
-                  Text(
-                    'Portfolio',
-                    style: GoogleFonts.workSans(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      height: 1.2,
-                      letterSpacing: -0.015 * 18,
+              InkWell(
+                onTap: (){
+                  context.go(RouteNames.home);
+                },
+                child: Row(
+                  children: [
+                    const Icon(Icons.memory, color: Colors.white, size: 20),
+                    const SizedBox(width: 16),
+                    Text(
+                      'Portfolio',
+                      style: GoogleFonts.workSans(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        height: 1.2,
+                        letterSpacing: -0.015 * 18,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const Spacer(),
               // Navigation Links - Hide on small screens
               if (MediaQuery.of(context).size.width > 600) 
                 Row(
                   children: [
-                    _buildNavLink(context, 'Work', '/'),
+                    _buildNavLink(context, 'Home', RouteNames.home),
                     const SizedBox(width: 36),
-                    _buildNavLink(context, 'About', '/about'),
+                    _buildNavLink(context, 'About', RouteNames.about),
                     const SizedBox(width: 36),
-                    _buildNavLink(context, 'Contact', '/contact'),
+                    _buildNavLink(context, 'Contact', RouteNames.contact),
                     const SizedBox(width: 36),
                     // Resume Button
                     ElevatedButton(
-                      onPressed: () => context.go('/resume'),
+                      onPressed: () => context.go(RouteNames.resume),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF303030),
                         minimumSize: const Size(84, 40),
