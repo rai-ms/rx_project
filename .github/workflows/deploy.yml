@@ -1,0 +1,89 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Automatic deployment on push to main branch
+  push:
+    branches: [ main ]
+  
+  # Manual deployment trigger
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+# Set the permissions for the job
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    environment: 
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Flutter 🚀
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+          cache-key: 'flutter-cache'
+      
+      - name: Install Dependencies 📦
+        run: flutter pub get
+      
+      - name: Build Web 🌐
+        run: flutter build web --release --base-href "/rx_project/"
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        id: pages
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build/web'
+      
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4
+        # Only run on main branch or manual trigger
+        if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+
+  notify:
+    name: Notify
+    needs: build-and-deploy
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deployment Status
+        if: needs.build-and-deploy.result == 'success'
+        run: |
+          echo "Deployment successful!"
+          echo "URL: ${{ needs.build-and-deploy.outputs.page_url }}"
+      
+      - name: Deployment Failed
+        if: needs.build-and-deploy.result != 'success'
+        run: |
+          echo "Deployment failed! Check the logs for details."
+          exit 1
