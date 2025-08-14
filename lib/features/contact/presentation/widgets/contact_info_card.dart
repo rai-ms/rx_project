@@ -124,69 +124,74 @@ class _ContactInfoCardState extends State<ContactInfoCard>
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(4.0);
+    final borderRadius = BorderRadius.circular(8.0);
 
-    return MouseRegion(
-      onEnter: (_) => _handleHover(true),
-      onExit: (_) => _handleHover(false),
-      child: Card(
-        margin: widget.margin ??
-            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        elevation: _isHovered ? 4.0 : 1.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: borderRadius,
-          side: BorderSide(
-            color: _isHovered ? _currentBorderColor : Colors.transparent,
-            width: 1,
-          ),
-        ),
-        child: InkWell(
-          onTap: widget.onTap,
-          borderRadius: borderRadius,
-          hoverColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            decoration: BoxDecoration(
-              borderRadius: borderRadius,
-              // Subtle glow that matches the current border color while hovered.
-              gradient: _isHovered
-                  ? LinearGradient(
-                colors: [
-                  _currentBorderColor.withOpacity(0.10),
-                  Colors.transparent,
-                ],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              )
-                  : null,
+    return  ConstrainedBox(
+      constraints: BoxConstraints(
+          maxWidth: 500
+      ),
+      child:MouseRegion(
+        onEnter: (_) => _handleHover(true),
+        onExit: (_) => _handleHover(false),
+        child: Card(
+          margin: widget.margin ??
+              const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          elevation: _isHovered ? 4.0 : 1.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius,
+            side: BorderSide(
+              color: _isHovered ? _currentBorderColor : Colors.transparent,
+              width: 1,
             ),
-            child: ListTile(
-              leading: Icon(
-                widget.icon,
-                size: widget.iconSize,
-                color: _isHovered ? _currentBorderColor : null,
+          ),
+          child: InkWell(
+            onTap: widget.onTap,
+            borderRadius: borderRadius,
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              decoration: BoxDecoration(
+                borderRadius: borderRadius,
+                // Subtle glow that matches the current border color while hovered.
+                gradient: _isHovered
+                    ? LinearGradient(
+                  colors: [
+                    _currentBorderColor.withOpacity(0.10),
+                    Colors.transparent,
+                  ],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                )
+                    : null,
               ),
-              title: Text(
-                widget.title,
-                style: (widget.titleStyle ??
-                    const TextStyle(fontWeight: FontWeight.bold))
-                    .copyWith(
+              child: ListTile(
+                leading: Icon(
+                  widget.icon,
+                  size: widget.iconSize,
                   color: _isHovered ? _currentBorderColor : null,
                 ),
-              ),
-              subtitle: Text(
-                widget.subtitle,
-                style: widget.subtitleStyle,
-              ),
-              trailing: Icon(
-                Icons.arrow_forward_ios,
-                size: widget.trailingIconSize,
-                color: _isHovered ? _currentBorderColor : null,
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8.0,
+                title: Text(
+                  widget.title,
+                  style: (widget.titleStyle ??
+                      const TextStyle(fontWeight: FontWeight.bold))
+                      .copyWith(
+                    color: _isHovered ? _currentBorderColor : null,
+                  ),
+                ),
+                subtitle: Text(
+                  widget.subtitle,
+                  style: widget.subtitleStyle,
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  size: widget.trailingIconSize,
+                  color: _isHovered ? _currentBorderColor : null,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8.0,
+                ),
               ),
             ),
           ),

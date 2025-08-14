@@ -134,7 +134,7 @@ class AboutPage extends StatelessWidget {
                             Flexible(
                               child: ConstrainedBox(
                                 constraints: BoxConstraints(
-                                    maxWidth: 400
+                                    maxWidth: 500
                                 ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
