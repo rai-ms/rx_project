@@ -2,26 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rx_project/core/routes/app_router.dart';
-
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_text.dart';
 
 class AppHeader extends StatelessWidget {
-  const AppHeader({super.key});
+  const AppHeader({super.key, required this.padding});
+
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: AppColors.transparent,
+      backgroundColor: const Color(0xFF0A0A0A),
       floating: true,
-      pinned: false,
-      snap: false,
-      stretch: true,
-      foregroundColor: AppColors.transparent,
+      forceElevated: true,
+      foregroundColor: const Color(0xFF0A0A0A),
       automaticallyImplyLeading: false,
       toolbarHeight: 72,
-      flexibleSpace: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF0A0A0A),
+        ),
+        padding: padding,
         child: Row(
           children: [
             // Logo and Title

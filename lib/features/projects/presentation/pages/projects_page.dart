@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rx_project/features/widget/header/app_header.dart';
+import 'package:rx_project/features/widget/common/app_scaffold.dart';
 import '../../../../core/constants/image_constants.dart';
 import '../../domain/models/project_model.dart';
 import '../widgets/project_card.dart';
@@ -10,78 +10,59 @@ class ProjectsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF0A0A0A),
-      body: LayoutBuilder(
-          builder: (context, constraints) {
-            final isWide = constraints.maxWidth >= 864;
-            return Padding(
-              padding: EdgeInsets.symmetric( horizontal: isWide ?120 : 20, vertical: 20),
-              child: ScrollConfiguration(
-                behavior: ScrollBehavior().copyWith(scrollbars: false),
-                child:  CustomScrollView(
-                slivers: [
-                  AppHeader(),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'My Projects',
-                            style: GoogleFonts.workSans(
-                              color: Colors.white,
-                              fontSize: 36,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: -0.5,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'A collection of my recent work and projects',
-                            style: GoogleFonts.workSans(
-                              color: Colors.grey[400],
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(height: 40),
-                        ],
-                      ),
-                    ),
+    return AppScaffold(
+      sliverListBuilder: (ctx, isWide) {
+        return [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'My Projects',
+                  style: GoogleFonts.workSans(
+                    color: Colors.white,
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: -0.5,
                   ),
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                    sliver: SliverGrid(
-                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 400,
-                        mainAxisSpacing: 16.0,
-                        crossAxisSpacing: 16.0,
-                        childAspectRatio: 0.8,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final project = _projects[index];
-                          return ProjectCard(
-                            project: project,
-                            onTap: () {
-                              // Handle project tap
-                            },
-                          );
-                        },
-                        childCount: _projects.length,
-                      ),
-                    ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'A collection of my recent work and projects',
+                  style: GoogleFonts.workSans(
+                    color: Colors.grey[400],
+                    fontSize: 16,
                   ),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 60),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 40),
+              ],
             ),
-          );
-        }
-      ),
+          ),
+          SliverGrid(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 400,
+              mainAxisSpacing: 16.0,
+              crossAxisSpacing: 16.0,
+              childAspectRatio: 0.8,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                final project = _projects[index];
+                return ProjectCard(
+                  project: project,
+                  onTap: () {
+                    // Handle project tap
+                  },
+                );
+              },
+              childCount: _projects.length,
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 60),
+          ),
+        ];
+      },
     );
   }
 

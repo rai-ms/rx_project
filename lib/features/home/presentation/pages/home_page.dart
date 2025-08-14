@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rx_project/features/widget/header/app_header.dart';
 import '../../../../core/constants/image_constants.dart';
 import '../../../../core/constants/app_text.dart';
 import '../../../../core/routes/app_router.dart';
+import '../../../widget/common/app_scaffold.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -208,69 +208,57 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(
-          builder: (context, constraints) {
-          final isWide = constraints.maxWidth >= 864;
-          return Padding(
-            padding: EdgeInsets.symmetric( horizontal: isWide ?120 : 20, vertical: 20),
-            child: ScrollConfiguration(
-              behavior: ScrollBehavior().copyWith(scrollbars: false),
-              child:  CustomScrollView(
-                slivers: [
-                  const AppHeader(),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                      child: Text(
-                        AppText.featuredProjects,
-                        style: GoogleFonts.workSans(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          height: 1.1,
-                          letterSpacing: -0.015,
-                        ),
-                      ),
-                    ),
-                  ),
-                  _buildProfileSection(isWide),
-                  _buildExperienceSection(),
-                  _buildProjectsSection(),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 40, top: 20),
-                      child: Center(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            context.goNamed(RouteNames.projects);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF303030),
-                            minimumSize: const Size(160, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: const Text(
-                            AppText.viewAllProjects,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.015,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+    return AppScaffold(
+      sliverListBuilder: (_, isWide){
+        return [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Text(
+                AppText.featuredProjects,
+                style: GoogleFonts.workSans(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  height: 1.1,
+                  letterSpacing: -0.015,
+                ),
               ),
             ),
-          );
-        }
-      ),
+          ),
+          _buildProfileSection(isWide),
+          _buildExperienceSection(),
+          _buildProjectsSection(),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 40, top: 20),
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    context.goNamed(RouteNames.projects);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF303030),
+                    minimumSize: const Size(160, 40),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
+                    AppText.viewAllProjects,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.015,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ];
+      },
     );
   }
 }

@@ -157,7 +157,7 @@ class _ContactInfoCardState extends State<ContactInfoCard>
                 gradient: _isHovered
                     ? LinearGradient(
                   colors: [
-                    _currentBorderColor.withOpacity(0.10),
+                    _currentBorderColor.withValues(alpha: 0.10),
                     Colors.transparent,
                   ],
                   begin: Alignment.centerLeft,

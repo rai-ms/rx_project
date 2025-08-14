@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rx_project/core/constants/app_text.dart';
-import 'package:rx_project/features/widget/header/app_header.dart';
+import 'package:rx_project/features/widget/common/app_scaffold.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../widgets/contact_info_card.dart';
 
@@ -47,159 +47,147 @@ class _ContactPageState extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(
-          builder: (context, constraints) {
-            final isWide = constraints.maxWidth >= 864;
-            return Padding(
-              padding: EdgeInsets.symmetric( horizontal: isWide ?120 : 20, vertical: 20),
-              child: ScrollConfiguration(
-                behavior: ScrollBehavior().copyWith(scrollbars: false),
-                child: CustomScrollView(
-                slivers: [
-                  AppHeader(),
-                  SliverToBoxAdapter(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(16.0),
-                          child: Text(
-                            AppText.getInTouch,
-                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    return AppScaffold(
+      sliverListBuilder: (ctx, isWide){
+        return [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                    AppText.getInTouch,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Wrap(
+                  children: [
+                    ContactInfoCard(
+                      icon: Icons.email,
+                      title: AppText.emailLabel,
+                      subtitle: AppText.email,
+                      onTap: () => _launchURL('mailto:${AppText.email}'),
+                    ),
+                    ContactInfoCard(
+                      icon: Icons.phone,
+                      title: AppText.phoneLabel,
+                      subtitle: AppText.phone,
+                      onTap: () => _launchURL('tel:${AppText.phone}'),
+                    ),
+                    ContactInfoCard(
+                      icon: Icons.link,
+                      title: AppText.linkedInLabel,
+                      subtitle: AppText.linkedin,
+                      onTap: () => _launchURL(AppText.linkedin),
+                    ),
+                    ContactInfoCard(
+                      icon: Icons.code,
+                      title: AppText.gitHubLabel,
+                      subtitle: AppText.github,
+                      onTap: () => _launchURL(AppText.github),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                      maxWidth: 500
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            AppText.orSendMessage,
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        Wrap(
-                          children: [
-                            ContactInfoCard(
-                              icon: Icons.email,
-                              title: AppText.emailLabel,
-                              subtitle: AppText.email,
-                              onTap: () => _launchURL('mailto:${AppText.email}'),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: _nameController,
+                            decoration: const InputDecoration(
+                              labelText: AppText.nameLabel,
+                              border: OutlineInputBorder(),
                             ),
-                            ContactInfoCard(
-                              icon: Icons.phone,
-                              title: AppText.phoneLabel,
-                              subtitle: AppText.phone,
-                              onTap: () => _launchURL('tel:${AppText.phone}'),
-                            ),
-                            ContactInfoCard(
-                              icon: Icons.link,
-                              title: AppText.linkedInLabel,
-                              subtitle: AppText.linkedin,
-                              onTap: () => _launchURL(AppText.linkedin),
-                            ),
-                            ContactInfoCard(
-                              icon: Icons.code,
-                              title: AppText.gitHubLabel,
-                              subtitle: AppText.github,
-                              onTap: () => _launchURL(AppText.github),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                              maxWidth: 500
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return AppText.nameRequired;
+                              }
+                              return null;
+                            },
                           ),
-                          child: Form(
-                            key: _formKey,
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    AppText.orSendMessage,
-                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  TextFormField(
-                                    controller: _nameController,
-                                    decoration: const InputDecoration(
-                                      labelText: AppText.nameLabel,
-                                      border: OutlineInputBorder(),
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return AppText.nameRequired;
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  TextFormField(
-                                    controller: _emailController,
-                                    decoration: const InputDecoration(
-                                      labelText: AppText.emailLabel,
-                                      border: OutlineInputBorder(),
-                                    ),
-                                    keyboardType: TextInputType.emailAddress,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return AppText.emailRequired;
-                                      }
-                                      if (!AppRegex.email.hasMatch(value)) {
-                                        return AppText.validEmail;
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  TextFormField(
-                                    controller: _messageController,
-                                    maxLines: 5,
-                                    decoration: const InputDecoration(
-                                      labelText: AppText.messageLabel,
-                                      border: OutlineInputBorder(),
-                                      alignLabelWithHint: true,
-                                    ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return AppText.messageRequired;
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                  const SizedBox(height: 16),
-                                  // if (provider.errorMessage != null)
-                                  //   Padding(
-                                  //     padding: const EdgeInsets.only(bottom: 16.0),
-                                  //     child: Text(
-                                  //       provider.errorMessage!,
-                                  //       style: const TextStyle(color: Colors.red),
-                                  //     ),
-                                  //   ),
-                                  // if (provider.isSuccess)
-                                  //   const Padding(
-                                  //     padding: EdgeInsets.only(bottom: 16.0),
-                                  //     child: Text(
-                                  // AppText.messageSent,
-                                  //       style: TextStyle(color: Colors.green),
-                                  //     ),
-                                  //   ),
-                                  SizedBox(
-                                    width: double.infinity,
-                                    height: 45,
-                                    child: ElevatedButton(
-                                      onPressed: _submitForm,
-                                      child: Text(AppText.sendMessage),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: _emailController,
+                            decoration: const InputDecoration(
+                              labelText: AppText.emailLabel,
+                              border: OutlineInputBorder(),
+                            ),
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return AppText.emailRequired;
+                              }
+                              if (!AppRegex.email.hasMatch(value)) {
+                                return AppText.validEmail;
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          TextFormField(
+                            controller: _messageController,
+                            maxLines: 5,
+                            decoration: const InputDecoration(
+                              labelText: AppText.messageLabel,
+                              border: OutlineInputBorder(),
+                              alignLabelWithHint: true,
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return AppText.messageRequired;
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          // if (provider.errorMessage != null)
+                          //   Padding(
+                          //     padding: const EdgeInsets.only(bottom: 16.0),
+                          //     child: Text(
+                          //       provider.errorMessage!,
+                          //       style: const TextStyle(color: Colors.red),
+                          //     ),
+                          //   ),
+                          // if (provider.isSuccess)
+                          //   const Padding(
+                          //     padding: EdgeInsets.only(bottom: 16.0),
+                          //     child: Text(
+                          // AppText.messageSent,
+                          //       style: TextStyle(color: Colors.green),
+                          //     ),
+                          //   ),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 45,
+                            child: ElevatedButton(
+                              onPressed: _submitForm,
+                              child: Text(AppText.sendMessage),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          );
-        }
-      ),
+          ),
+        ];
+      }
     );
   }
 }

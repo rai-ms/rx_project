@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pdfx/pdfx.dart';
-import '../../../widget/header/app_header.dart';
+import 'package:rx_project/features/widget/common/app_scaffold.dart';
 
 class ResumePage extends StatefulWidget {
   const ResumePage({super.key});
@@ -44,51 +44,38 @@ class _ResumePageState extends State<ResumePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(
-          builder: (context, constraints) {
-            final isWide = constraints.maxWidth >= 864;
-            return Padding(
-              padding: EdgeInsets.symmetric( horizontal: isWide ?120 : 20, vertical: 20),
-              child: ScrollConfiguration(
-              behavior: ScrollBehavior().copyWith(scrollbars: false),
-              child: CustomScrollView(
-                shrinkWrap: true,
-                slivers: [
-                  const AppHeader(),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        'My Resume',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: _isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : _errorMessage != null
-                        ? Center(child: Text(_errorMessage!))
-                        : Container(
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      margin: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade300),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: PdfView(
-                        controller: _pdfController,
-                      ),
-                    ),
-                  ),
-                ],
+    return AppScaffold(
+      sliverListBuilder: (ctx, isWide) {
+        return [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'My Resume',
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
-          );
-        }
-      ),
+          ),
+          SliverToBoxAdapter(
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : _errorMessage != null
+                ? Center(child: Text(_errorMessage!))
+                : Container(
+              height: MediaQuery.of(context).size.height * 0.8,
+              width: MediaQuery.of(context).size.width * 0.6,
+              margin: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey.shade300),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: PdfView(
+                controller: _pdfController,
+              ),
+            ),
+          ),
+        ];
+      },
     );
   }
 }
