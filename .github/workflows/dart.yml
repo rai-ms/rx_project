@@ -1,0 +1,74 @@
+name: Dart CI & CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  # CI: Code Quality & Tests
+  analyze-and-test:
+    name: Analyze & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+          cache-key: 'flutter-cache'
+      
+      - name: Install Dependencies
+        run: flutter pub get
+      
+      - name: Format Check
+        run: flutter format --set-exit-if-changed .
+      
+      - name: Analyze
+        run: flutter analyze
+      
+      - name: Run Tests
+        run: flutter test
+
+  # CD: Deploy to GitHub Pages
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: analyze-and-test  # Only deploy if tests pass
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: 
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+          cache-key: 'flutter-cache'
+      
+      - name: Install Dependencies
+        run: flutter pub get
+      
+      - name: Build Web
+        run: flutter build web --release --base-href "/rx_project/"
+      
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        id: pages
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './build/web'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
