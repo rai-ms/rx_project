@@ -9,5 +9,6 @@ class ImageConstants {
   static const String jarir = '${_basePath}jarir.webp';
   static const String dwellSpring = '${_basePath}dwell-spring.webp';
   static const String roamApp = '${_basePath}roam-app.webp';
+  static const String zitoMedia = '${_basePath}zito-media.webp';
 
 }

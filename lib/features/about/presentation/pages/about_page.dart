@@ -142,14 +142,14 @@ class AboutPage extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     SectionTitle(title: AppText.experienceTitle),
-                                    ExperienceItem(
-                                      title: AppText.exp1Title,
-                                      period: AppText.exp1Period,
-                                    ),
-                                    ExperienceItem(
-                                      title: AppText.exp2Title,
-                                      period: AppText.exp2Period,
-                                    ),
+                                    // ExperienceItem(
+                                    //   title: AppText.exp1Title,
+                                    //   period: AppText.exp1Period,
+                                    // ),
+                                    // ExperienceItem(
+                                    //   title: AppText.exp2Title,
+                                    //   period: AppText.exp2Period,
+                                    // ),
                                     ExperienceItem(
                                       title: AppText.exp3Title,
                                       period: AppText.exp3Period,

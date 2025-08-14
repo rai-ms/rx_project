@@ -56,16 +56,16 @@ class AppText {
   static const String exp1Period = '2020 - Present';
   static const String exp2Title = 'UI/UX Designer at Creative Solutions Co.';
   static const String exp2Period = '2018 - 2020';
-  static const String exp3Title = 'Freelance Designer';
-  static const String exp3Period = '2016 - 2018';
+  static const String exp3Title = 'Flutter Developer @Appinventiv';
+  static const String exp3Period = '2023 - Present';
   
   // Projects Section
   static const String projectsTitle = 'Projects';
   static const String viewAllProjectsButton = 'View All Projects';
   static const List<String> projectTitles = [
-    'Mobile App Redesign',
-    'E-commerce Website',
-    'Dashboard Design',
+    'Telecom Mobile App (2)',
+    'E-Commerce App (1)',
+    'Music App (1)',
   ];
 
   // Contact Page
