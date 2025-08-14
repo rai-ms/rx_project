@@ -1,55 +1,55 @@
-import 'package:flutter/material.dart';
-import 'package:rx_project/features/contact/domain/usecases/send_message_use_case.dart';
+// import 'package:flutter/material.dart';
+// import 'package:rx_project/features/contact/domain/usecases/send_message_use_case.dart';
 
-class ContactProvider with ChangeNotifier {
-  final SendMessageUseCase sendMessageUseCase;
+// class ContactProvider with ChangeNotifier {
+//   final SendMessageUseCase sendMessageUseCase;
   
-  ContactProvider({required this.sendMessageUseCase});
+//   ContactProvider({required this.sendMessageUseCase});
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+//   bool _isLoading = false;
+//   bool get isLoading => _isLoading;
 
-  String? _errorMessage;
-  String? get errorMessage => _errorMessage;
+//   String? _errorMessage;
+//   String? get errorMessage => _errorMessage;
 
-  bool _isSuccess = false;
-  bool get isSuccess => _isSuccess;
+//   bool _isSuccess = false;
+//   bool get isSuccess => _isSuccess;
 
-  Future<void> sendMessage({
-    required String name,
-    required String email,
-    required String message,
-  }) async {
-    _isLoading = true;
-    _errorMessage = null;
-    _isSuccess = false;
-    notifyListeners();
+//   Future<void> sendMessage({
+//     required String name,
+//     required String email,
+//     required String message,
+//   }) async {
+//     _isLoading = true;
+//     _errorMessage = null;
+//     _isSuccess = false;
+//     notifyListeners();
 
-    final result = await sendMessageUseCase(
-      name: name,
-      email: email,
-      message: message,
-    );
+//     final result = await sendMessageUseCase(
+//       name: name,
+//       email: email,
+//       message: message,
+//     );
 
-    _isLoading = false;
+//     _isLoading = false;
 
-    result.fold(
-      (failure) {
-        _errorMessage = failure.message;
-        _isSuccess = false;
-      },
-      (_) {
-        _isSuccess = true;
-      },
-    );
+//     result.fold(
+//       (failure) {
+//         _errorMessage = failure.message;
+//         _isSuccess = false;
+//       },
+//       (_) {
+//         _isSuccess = true;
+//       },
+//     );
 
-    notifyListeners();
-  }
+//     notifyListeners();
+//   }
 
-  void reset() {
-    _isLoading = false;
-    _errorMessage = null;
-    _isSuccess = false;
-    notifyListeners();
-  }
-}
+//   void reset() {
+//     _isLoading = false;
+//     _errorMessage = null;
+//     _isSuccess = false;
+//     notifyListeners();
+//   }
+// }
