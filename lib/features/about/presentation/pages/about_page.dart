@@ -24,8 +24,8 @@ class AboutPage extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: const DecorationImage(
-                        image: NetworkImage(
-                          'https://lh3.googleusercontent.com/aida-public/AB6AXuAkhAWCrSCyW3o7RlLeFOIpw-EUXd_IIgZ2uDWbFDEU1A5CKA3M2UgjyuEzW2X1Oc5OBNsA-xWvLBcjuBKWev2tUDvodxSDBXT0T5c1AkSa1XPgvmZjyx7FpybTB-7jjmp9a4jh8REx-XszTjadHpAbGVtSrJCdjty9fBeACnC32ITR2AZtBCezcBtnPX4rk6rZ8CpD8m2xE6CftiaoGJYMN6S4f-kf9wyg2x4gxYEc_-O5cZgna7x7gG06yQH3ZT8wBOeEQqXWsZ4',
+                        image: AssetImage(
+                          "assets/images/profile_image.png",
                         ),
                         fit: BoxFit.cover,
                       ),

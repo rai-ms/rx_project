@@ -229,8 +229,8 @@ class HomeContent extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                       image: const DecorationImage(
-                                        image: NetworkImage(
-                                          'https://lh3.googleusercontent.com/aida-public/AB6AXuBWW2ak_K_AXiu79OwCNYHQFmGgiRj_3SZcMORMuovkqlsNVWyy6_CeUIAHzojzkvIhZDM0bj5XlFOM-wYjOWLK8BHNkFKVfNM3uZyGwR0hjPGFfTg4PP-gfxtkwkbco_RrBjqGad_wk3nhG6MPxxDBptB87jjbpGJLQpdWISWfk0dsZFFSSfBQB-U6iRhn7ayJxUFqKyvA1MvTmA2Edhn6HaAS20UW3LyOBTj1-ViN29k_y9JE2gS3a5m4lhiNiLeGrUMU3mQnLxo',
+                                        image: AssetImage(
+                                          "assets/images/profile_image.png",
                                         ),
                                         fit: BoxFit.cover,
                                       ),
