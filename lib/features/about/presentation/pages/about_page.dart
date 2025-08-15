@@ -165,7 +165,7 @@ class AboutPage extends StatelessWidget {
                   mainAxisSpacing: 12,
                   childAspectRatio: 1,
                   children: [
-                    for (final project in AppText.projectTitles) ProjectCard(title: project),
+                    for (final project in AppText.projectTitles) SkillCard(title: project),
                   ],
                 ),
                 const SizedBox(height: 20),

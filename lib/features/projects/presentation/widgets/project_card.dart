@@ -26,13 +26,16 @@ class ProjectCard extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: onTap ?? () {
-          if (project.projectUrl != null) {
-            launchUrl(Uri.parse(project.projectUrl!));
-          }
-        },
+        onTap:
+            onTap ??
+            () {
+              if (project.projectUrl != null) {
+                launchUrl(Uri.parse(project.projectUrl!));
+              }
+            },
         child: Container(
           width: width,
+          height: 200,
           margin: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
             color: cardColor,
@@ -51,13 +54,16 @@ class ProjectCard extends StatelessWidget {
               // Project Image
               if (project.imageUrl != null)
                 ClipRRect(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(12.0),
+                  ),
                   child: Image.asset(
                     project.imageUrl!,
                     width: double.infinity,
                     height: height! * 0.6,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => _buildPlaceholderIcon(),
+                    errorBuilder: (context, error, stackTrace) =>
+                        _buildPlaceholderIcon(),
                   ),
                 )
               else
@@ -65,11 +71,13 @@ class ProjectCard extends StatelessWidget {
                   height: height! * 0.6,
                   decoration: BoxDecoration(
                     color: Colors.grey[900],
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(12.0),
+                    ),
                   ),
                   child: _buildPlaceholderIcon(),
                 ),
-              
+
               // Project Info
               Expanded(
                 child: Padding(
@@ -88,9 +96,9 @@ class ProjectCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      
+
                       const SizedBox(height: 8),
-                      
+
                       // Description
                       Text(
                         project.description,
@@ -101,29 +109,30 @@ class ProjectCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      
+
                       const SizedBox(height: 12),
-                      
+
                       // Technologies
                       if (project.technologies.isNotEmpty)
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 4,
-                          children: project.technologies.take(7).map((tech) => Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(
-                              color: Colors.blue.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              tech,
-                              style: GoogleFonts.workSans(
-                                color: Colors.blue[200],
-                                fontSize: 12,
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 4,
+                            children: project.technologies.take(7).map((tech) => Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: Colors.blue.withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(4),
                               ),
-                            ),
-                          )).toList(),
-                        ),
+                              child: Text(
+                                tech,
+                                style: GoogleFonts.workSans(
+                                  color: Colors.blue[200],
+                                  fontSize: 12,
+                                ),
+                              ),
+                            )
+                            ).toList(),
+                          ),
                     ],
                   ),
                 ),
@@ -137,11 +146,9 @@ class ProjectCard extends StatelessWidget {
 
   Widget _buildPlaceholderIcon() {
     return Center(
-      child: Icon(
-        Icons.work_outline,
-        size: 48,
-        color: Colors.grey[700],
-      ),
+      child: Icon(Icons.work_outline, size: 48, color: Colors.grey[700]),
     );
   }
 }
+
+

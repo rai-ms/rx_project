@@ -43,7 +43,7 @@ class ProjectsPage extends StatelessWidget {
               maxCrossAxisExtent: 400,
               mainAxisSpacing: 16.0,
               crossAxisSpacing: 16.0,
-              childAspectRatio: 0.8,
+              childAspectRatio: 0.7,
             ),
             delegate: SliverChildBuilderDelegate(
               (context, index) {

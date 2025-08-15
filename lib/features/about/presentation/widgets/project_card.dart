@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProjectCard extends StatelessWidget {
+class SkillCard extends StatelessWidget {
   final String title;
   final String? imageUrl;
   final Color backgroundColor;
@@ -16,7 +16,7 @@ class ProjectCard extends StatelessWidget {
   final BoxFit? fit;
   final List<Widget>? actions;
 
-  const ProjectCard({
+  const SkillCard({
     super.key,
     required this.title,
     this.imageUrl,
