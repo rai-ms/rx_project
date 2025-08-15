@@ -66,10 +66,8 @@ class AppHeader extends StatelessWidget {
                   _buildNavLink(context, AppText.navAbout, RouteNames.about),
                   const SizedBox(width: 36),
                   _buildNavLink(context, AppText.navContact, RouteNames.contact),
-                  if (isAdmin) ...[
-                    const SizedBox(width: 36),
-                    _buildAdminButton(context),
-                  ],
+                  const SizedBox(width: 36),
+                  _buildAdminButton(context),
                   const SizedBox(width: 36),
                   // Resume Button
                   ElevatedButton(

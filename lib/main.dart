@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'app.dart';
+import 'core/services/di/injector.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -13,6 +14,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   usePathUrlStrategy();
+  await InjectorService.service.init();
   runApp(const MyApp());
 }
 

@@ -8,9 +8,20 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:firebase_storage/firebase_storage.dart' as _i457;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import '../../../features/admin/data/datasources/profile_remote_data_source.dart'
+    as _i702;
+import '../../../features/admin/data/repositories/profile_repository_impl.dart'
+    as _i816;
+import '../../../features/admin/domain/data_source/profile_remote_data_source.dart'
+    as _i592;
+import '../../../features/admin/domain/repository/profile_repository.dart'
+    as _i375;
+import '../../../features/admin/domain/use_case/profile_pic_use_case.dart'
+    as _i510;
 import '../../base/base_client/base_api_micro.dart' as _i609;
 import '../../handler/state_request_handler.dart' as _i140;
 import '../api_service/api_micro_dispatcher.dart' as _i778;
@@ -66,5 +77,13 @@ _i174.GetIt injectAllData(
         gh<_i609.UploadApiMicro>(),
         gh<_i609.UploadStreamApiMicro>(),
       ));
+  gh.lazySingleton<_i592.ProfileRemoteDataSource>(
+      () => _i702.ProfileRemoteDataSourceImpl(gh<_i457.FirebaseStorage>()));
+  gh.lazySingleton<_i375.ProfileRepository>(
+      () => _i816.ProfileRepositoryImpl(gh<_i592.ProfileRemoteDataSource>()));
+  gh.factory<_i510.UpdateProfilePicUseCase>(
+      () => _i510.UpdateProfilePicUseCase(gh<_i375.ProfileRepository>()));
+  gh.factory<_i510.GetProfilePicUrlUseCase>(
+      () => _i510.GetProfilePicUrlUseCase(gh<_i375.ProfileRepository>()));
   return getIt;
 }
