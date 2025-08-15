@@ -109,7 +109,7 @@ class ProjectCard extends StatelessWidget {
                         Wrap(
                           spacing: 8,
                           runSpacing: 4,
-                          children: project.technologies.map((tech) => Container(
+                          children: project.technologies.take(7).map((tech) => Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
                               color: Colors.blue.withValues(alpha: 0.2),

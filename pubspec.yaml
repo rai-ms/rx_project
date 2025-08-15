@@ -62,6 +62,8 @@ dependencies:
   # Local Storage (optional, for future use)
   shared_preferences: ^2.2.2
 
+  firebase_core: ^4.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
