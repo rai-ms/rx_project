@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDNnvog2bRuG8uoQh6YzJlTmQ4AOS5MFC8',
-    appId: '1:774746305982:web:ffd4d7f716d8b2b6a4b5ef',
-    messagingSenderId: '774746305982',
-    projectId: 'rx-project-75f17',
-    authDomain: 'rx-project-75f17.firebaseapp.com',
-    storageBucket: 'rx-project-75f17.firebasestorage.app',
-    measurementId: 'G-X17ECVVWMP',
+    apiKey: 'AIzaSyAGuMr9N5x3z2E51ksqQdaS9iRG_EBLoUk',
+    appId: '1:572035052129:web:38e091378886623267f020',
+    messagingSenderId: '572035052129',
+    projectId: 'groupchat-e7063',
+    authDomain: 'groupchat-e7063.firebaseapp.com',
+    storageBucket: 'groupchat-e7063.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAyKsowXjR41l5RfTdhAoQt_P6rC7k4HOQ',
-    appId: '1:774746305982:android:d0d7703a9aa390b1a4b5ef',
-    messagingSenderId: '774746305982',
-    projectId: 'rx-project-75f17',
-    storageBucket: 'rx-project-75f17.firebasestorage.app',
+    apiKey: 'AIzaSyD5eNc7PTlDFduq-GGWhrhucejKTCDzWx4',
+    appId: '1:572035052129:android:aa9168b994268e8a67f020',
+    messagingSenderId: '572035052129',
+    projectId: 'groupchat-e7063',
+    storageBucket: 'groupchat-e7063.appspot.com',
   );
 
 }

@@ -3,13 +3,12 @@ importScripts("https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js
 importScripts("https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js");
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDNnvog2bRuG8uoQh6YzJlTmQ4AOS5MFC8",
-  authDomain: "rx-project-75f17.firebaseapp.com",
-  projectId: "rx-project-75f17",
-  storageBucket: "rx-project-75f17.firebasestorage.app",
-  messagingSenderId: "774746305982",
-  appId: "1:774746305982:web:a6cf87b41431215fa4b5ef",
-  measurementId: "G-89CY3XF7HT"
+  apiKey: "AIzaSyAGuMr9N5x3z2E51ksqQdaS9iRG_EBLoUk",
+  authDomain: "groupchat-e7063.firebaseapp.com",
+  projectId: "groupchat-e7063",
+  storageBucket: "groupchat-e7063.appspot.com",
+  messagingSenderId: "572035052129",
+  appId: "1:572035052129:web:297bc6072067b6da67f020"
 };
 
 // Initialize Firebase

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "774746305982",
-    "project_id": "rx-project-75f17",
-    "storage_bucket": "rx-project-75f17.firebasestorage.app"
+    "project_number": "572035052129",
+    "project_id": "groupchat-e7063",
+    "storage_bucket": "groupchat-e7063.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:774746305982:android:d0d7703a9aa390b1a4b5ef",
+        "mobilesdk_app_id": "1:572035052129:android:aa9168b994268e8a67f020",
         "android_client_info": {
           "package_name": "com.example.rx_project"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAyKsowXjR41l5RfTdhAoQt_P6rC7k4HOQ"
+          "current_key": "AIzaSyD5eNc7PTlDFduq-GGWhrhucejKTCDzWx4"
         }
       ],
       "services": {
