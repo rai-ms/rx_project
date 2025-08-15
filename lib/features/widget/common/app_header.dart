@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rx_project/core/constants/app_colors.dart';
+import 'package:rx_project/core/constants/app_text.dart';
 import 'package:rx_project/core/routes/app_router.dart';
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/app_text.dart';
 
 class AppHeader extends StatelessWidget {
-  const AppHeader({super.key, required this.padding});
+  const AppHeader({
+    super.key, 
+    required this.padding,
+    this.isAdmin = false,
+  });
 
   final EdgeInsets padding;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +66,10 @@ class AppHeader extends StatelessWidget {
                   _buildNavLink(context, AppText.navAbout, RouteNames.about),
                   const SizedBox(width: 36),
                   _buildNavLink(context, AppText.navContact, RouteNames.contact),
+                  if (isAdmin) ...[
+                    const SizedBox(width: 36),
+                    _buildAdminButton(context),
+                  ],
                   const SizedBox(width: 36),
                   // Resume Button
                   ElevatedButton(
@@ -118,6 +127,41 @@ class AppHeader extends StatelessWidget {
           fontWeight: FontWeight.w500,
           height: 1.4,
         ),
+      ),
+    );
+  }
+
+  Widget _buildAdminButton(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        // Navigate to admin dashboard or show admin options
+        context.go(RouteNames.admin);
+      },
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        backgroundColor: Colors.purple.withOpacity(0.1),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(color: Colors.purple, width: 1),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.admin_panel_settings, 
+            color: Colors.purple, 
+            size: 16,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            'Admin',
+            style: GoogleFonts.workSans(
+              color: Colors.purple,
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rx_project/core/services/auth_service.dart';
 import 'package:rx_project/features/about/presentation/pages/about_page.dart';
+import 'package:rx_project/features/admin/presentation/pages/admin_dashboard.dart';
+import 'package:rx_project/features/auth/presentation/pages/login_page.dart';
 import 'package:rx_project/features/contact/presentation/pages/contact_page.dart';
 import 'package:rx_project/features/home/presentation/pages/home_page.dart';
 import 'package:rx_project/features/projects/presentation/pages/projects_page.dart';
@@ -15,6 +18,8 @@ class RouteNames {
   static const String resume = '/resume';
   static const String contact = '/contact';
   static const String projects = '/projects';
+  static const String admin = '/admin';
+  static const String login = '/login';
 
   /// Private constructor to prevent instantiation.
   const RouteNames._();
@@ -48,6 +53,25 @@ class AppRoutes {
       path: RouteNames.projects,
       name: RouteNames.projects,
       pageBuilder: (ctx, state) => NoTransitionPage(child: ProjectsPage()),
+    ),
+    GoRoute(
+      path: RouteNames.login,
+      name: RouteNames.login,
+      pageBuilder: (ctx, state) => NoTransitionPage(child: const LoginPage()),
+    ),
+    GoRoute(
+      path: RouteNames.admin,
+      name: RouteNames.admin,
+      pageBuilder: (ctx, state) => NoTransitionPage(
+        child: const AdminDashboard(),
+      ),
+      redirect: (context, state) {
+        final authService = AuthService();
+        if (!authService.isAdmin) {
+          return RouteNames.login;
+        }
+        return null;
+      },
     ),
   ];
 

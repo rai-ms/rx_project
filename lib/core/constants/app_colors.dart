@@ -48,6 +48,10 @@ class AppColors {
   static const Color honeyDew = Color(0xFFEBFAF3);
   static const Color azureishWhite = Color(0xFFDAF0E6);
   static const Color etonBlue = Color(0xFF89BDA5);
+  
+  // Admin Dashboard Colors
+  static const Color darkGrey = Color(0xFF1E1E1E);
+  static const Color primary = Color(0xFF6C63FF); // Purple accent color for admin UI
   static const Color metallicSilver = Color(0xFF9AB0AB);
   static const Color azureColor = Color(0xFFEEFCFD);
   static const Color walterColor = Color(0xFFCAFBFF);

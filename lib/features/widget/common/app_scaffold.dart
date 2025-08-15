@@ -5,8 +5,14 @@ import 'package:flutter/material.dart';
 import 'app_header.dart';
 
 class AppScaffold extends StatelessWidget {
-  const AppScaffold({super.key, required this.sliverListBuilder});
+  const AppScaffold({
+    super.key, 
+    required this.sliverListBuilder,
+    this.isAdmin = false,
+  });
+  
   final SliverListBuilder sliverListBuilder;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,10 @@ class AppScaffold extends StatelessWidget {
             behavior: ScrollBehavior().copyWith(scrollbars: false),
             child: CustomScrollView(
               slivers: [
-                AppHeader(padding: padding(isWide)),
+                AppHeader(
+                  padding: padding(isWide),
+                  isAdmin: isAdmin,
+                ),
                 ...sliverListBuilder(context, isWide).map(
                   (widget) => SliverPadding(
                     padding: padding(isWide),
