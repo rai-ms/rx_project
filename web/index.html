@@ -2,21 +2,66 @@
 <html>
 <head>
   <base href="$FLUTTER_BASE_HREF">
-
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="Ashish Rai - Flutter Developer Portfolio">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-messaging-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDNnvog2bRuG8uoQh6YzJlTmQ4AOS5MFC8",
+      authDomain: "rx-project-75f17.firebaseapp.com",
+      projectId: "rx-project-75f17",
+      storageBucket: "rx-project-75f17.firebasestorage.app",
+      messagingSenderId: "774746305982",
+      appId: "1:774746305982:web:a6cf87b41431215fa4b5ef",
+      measurementId: "G-89CY3XF7HT"
+    };
+    
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const analytics = firebase.analytics();
+    const messaging = firebase.messaging();
+    
+    // Request notification permission
+    function requestNotificationPermission() {
+      console.log('Requesting permission...');
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          console.log('Notification permission granted.');
+          // Get FCM token
+          messaging.getToken({vapidKey: 'YOUR_VAPID_KEY'}).then((currentToken) => {
+            if (currentToken) {
+              console.log('FCM Token:', currentToken);
+              // Send the token to your server
+            } else {
+              console.log('No registration token available.');
+            }
+          }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+          });
+        } else {
+          console.log('Unable to get permission to notify.');
+        }
+      });
+    }
+    
+    // Call this function when your app starts
+    requestNotificationPermission();
+  </script>
 
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="manifest" href="manifest.json">
   <link rel="shortcut icon" href="favicon.ico">
   <meta name="theme-color" content="#ffffff">
 
   <title>Ashish Rai Portfolio</title>
-  <link rel="manifest" href="manifest.json">
 </head>
 <body>
   <!-- Rest of your body content remains the same -->
