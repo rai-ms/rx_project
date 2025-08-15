@@ -3,15 +3,14 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rx_project/features/admin/domain/data_source/user_profile_remote_data_source.dart';
 import 'package:rx_project/features/admin/data/model/request/user_profile_model.dart';
-
 import '../../../../core/error/failures.dart' show Failure, ServerFailure, NotFoundFailure;
 
 @LazySingleton(as: UserProfileRemoteDataSource)
 class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
-  final FirebaseFirestore _firestore;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   static const String _collection = 'user_profiles';
 
-  UserProfileRemoteDataSourceImpl(this._firestore);
+  UserProfileRemoteDataSourceImpl();
 
   @override
   Future<Either<Failure, UserProfileModel>> createUserProfile(
@@ -20,7 +19,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
       await _firestore
           .collection(_collection)
           .doc(userProfile.id)
-          .set(userProfile.toJson());
+          .set(userProfile.toJson(), SetOptions(merge: true));
       return Right(userProfile);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
