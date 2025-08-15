@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rx_project/core/services/auth_service.dart';
+import 'package:rx_project/core/services/firebase_service/auth_service.dart';
 import 'package:rx_project/features/about/presentation/pages/about_page.dart';
 import 'package:rx_project/features/admin/presentation/pages/admin_dashboard.dart';
 import 'package:rx_project/features/auth/presentation/pages/login_page.dart';

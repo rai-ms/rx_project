@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "appTitle": "RX Project",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "A simple hello world message"
+  }
+}

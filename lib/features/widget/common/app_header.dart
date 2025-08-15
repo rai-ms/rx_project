@@ -139,7 +139,7 @@ class AppHeader extends StatelessWidget {
       },
       style: TextButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        backgroundColor: Colors.purple.withOpacity(0.1),
+        backgroundColor: Colors.purple.withValues(alpha: 0.1),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: const BorderSide(color: Colors.purple, width: 1),
