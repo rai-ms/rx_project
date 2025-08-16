@@ -16,9 +16,10 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
   Future<Either<Failure, UserProfileModel>> createUserProfile(
       UserProfileModel userProfile) async {
     try {
+      print("asj,bkajdfsvkjsdkj vkjsd fvkj");
       await _firestore
           .collection(_collection)
-          .doc(userProfile.id)
+          .doc("1025980200000")
           .set(userProfile.toJson(), SetOptions(merge: true));
       return Right(userProfile);
     } catch (e) {
@@ -69,7 +70,7 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
     try {
       await _firestore
           .collection(_collection)
-          .doc(userProfile.id)
+          .doc("1025980200000")
           .update(userProfile.toJson());
       return Right(userProfile);
     } catch (e) {

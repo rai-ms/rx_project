@@ -8,6 +8,7 @@ import 'package:rx_project/features/admin/presentation/widgets/home/custom_form_
 import '../../../data/model/request/user_profile_model.dart';
 
 part 'home_controller_mixin.dart';
+part 'home_listeners_mixin.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -16,19 +17,13 @@ class HomeTab extends StatefulWidget {
   State<HomeTab> createState() => _HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> with HomeControllerMixin<HomeTab> {
+class _HomeTabState extends State<HomeTab> with HomeControllerMixin<HomeTab>, _HomeListenersMixin<HomeTab> {
 
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<ProfileManageBloc, ProfileManageState>(
-      listener: (context, state) {
-        if (state.error != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error!)),
-          );
-        }
-      },
+      listener: _profileListener,
       child: Container(
         color: AppColors.darkGrey,
         child: Padding(

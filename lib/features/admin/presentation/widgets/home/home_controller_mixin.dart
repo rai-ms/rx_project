@@ -83,17 +83,30 @@ mixin HomeControllerMixin<T extends StatefulWidget> on State<T> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      if (_profileManageBloc.state.data?.id == null) {
-        _profileManageBloc.add(CreateUserEvent(
-            userProfile: UserProfileModel()
-        )
+      // if (_profileManageBloc.state.data?.id == null) {
+      //   _profileManageBloc.add(CreateUserEvent(
+      //       userProfile: UserProfileModel()
+      //   )
+      // );
+      // } else {
+      //
+      // }
+
+      _profileManageBloc.add(UpdateUserEvent(
+          userProfile: UserProfileModel(
+            address: addressController.text,
+            bio: bioController.text,
+            email: emailController.text,
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            phoneNumber: phoneNumberController.text,
+            profilePictureUrl: profilePictureUrlController.text,
+            role: roleController.text,
+          ).createdNew()
+      )
       );
-      } else {
-        _profileManageBloc.add(UpdateUserEvent(
-            userProfile: UserProfileModel()
-          )
-        );
-      }
+
+
     }
   }
 

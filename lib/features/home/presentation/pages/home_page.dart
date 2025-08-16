@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder;
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rx_project/features/admin/presentation/manager/profile_manage_bloc/profile_manage_bloc.dart';
 import '../../../../core/constants/image_constants.dart';
 import '../../../../core/constants/app_text.dart';
 import '../../../../core/routes/app_router.dart';
@@ -57,40 +59,24 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildProfileSection(bool isWide) {
     return SliverToBoxAdapter(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final isWide = constraints.maxWidth >= 864;
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: isWide? 120: 80, vertical: 40),
-            child: Flex(
-              direction: isWide ? Axis.horizontal : Axis.vertical,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Profile Image
-                if (isWide) ...[
-                  Container(
-                    height: 200,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: const DecorationImage(
-                        image: AssetImage(ImageConstants.profileImage),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 32),
-                ],
-                // Profile Info
-                Column(
-                  mainAxisSize: MainAxisSize.min,
+      child: BlocBuilder<ProfileManageBloc, ProfileManageState>(
+        builder: (ctx, ProfileManageState profileState) {
+          var user = profileState.data;
+          return LayoutBuilder(
+            builder: (ctx2, constraints) {
+              final isWide = constraints.maxWidth >= 864;
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: isWide ? 120 : 80, vertical: 40),
+                child: Flex(
+                  direction: isWide ? Axis.horizontal : Axis.vertical,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    if (!isWide) ...[
+                    // Profile Image
+                    if (isWide) ...[
                       Container(
                         height: 200,
                         width: 200,
-                        margin: const EdgeInsets.only(bottom: 24),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           image: const DecorationImage(
@@ -99,57 +85,79 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
+                      const SizedBox(width: 32),
                     ],
-                    Text(
-                      AppText.homeTitle,
-                      style: GoogleFonts.workSans(
-                        color: Colors.white,
-                        fontSize: 48,
-                        fontWeight: FontWeight.w900,
-                        height: 1.1,
-                        letterSpacing: -0.033,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      AppText.homeSubtitle,
-                      style: GoogleFonts.workSans(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        height: 1.5,
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                    SizedBox(
-                      width: 340,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Action for View My Work button
-                          context.goNamed(RouteNames.projects);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF262626),
-                          minimumSize: const Size.fromHeight(48),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                    // Profile Info
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if (!isWide) ...[
+                          Container(
+                            height: 200,
+                            width: 200,
+                            margin: const EdgeInsets.only(bottom: 24),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              image: const DecorationImage(
+                                image: AssetImage(ImageConstants.profileImage),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ],
+                        Text(
+                          user?.fullName ?? AppText.homeTitle,
+                          style: GoogleFonts.workSans(
+                            color: Colors.white,
+                            fontSize: 48,
+                            fontWeight: FontWeight.w900,
+                            height: 1.1,
+                            letterSpacing: -0.033,
                           ),
                         ),
-                        child: const Text(
-                          AppText.viewWorkButton,
-                          style: TextStyle(
+                        const SizedBox(height: 8),
+                        Text(
+                          user?.role ?? AppText.homeSubtitle,
+                          style: GoogleFonts.workSans(
                             color: Colors.white,
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.015,
+                            fontWeight: FontWeight.normal,
+                            height: 1.5,
                           ),
                         ),
-                      ),
+                        const SizedBox(height: 32),
+                        SizedBox(
+                          width: 340,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Action for View My Work button
+                              context.goNamed(RouteNames.projects);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF262626),
+                              minimumSize: const Size.fromHeight(48),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: const Text(
+                              AppText.viewWorkButton,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.015,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              );
+            },
           );
         },
       ),
@@ -158,17 +166,21 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildExperienceSection() {
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Text(
-          AppText.experienceText,
-          style: GoogleFonts.workSans(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.normal,
-            height: 1.5,
-          ),
-        ),
+      child: BlocBuilder<ProfileManageBloc, ProfileManageState>(
+        builder: (ctx, ProfileManageState profileState) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              profileState.data?.bio ?? AppText.experienceText,
+              style: GoogleFonts.workSans(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.normal,
+                height: 1.5,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -176,7 +188,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildProjectsSection() {
     return SliverLayoutBuilder(
       builder: (context, constraints) {
-        final crossAxisCount = (constraints.crossAxisExtent / 300).floor().clamp(1, 3);
+        final crossAxisCount = (constraints.crossAxisExtent / 300)
+            .floor()
+            .clamp(1, 3);
         return SliverGrid(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
@@ -209,7 +223,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      sliverListBuilder: (_, isWide){
+      sliverListBuilder: (_, isWide) {
         return [
           SliverToBoxAdapter(
             child: Padding(
