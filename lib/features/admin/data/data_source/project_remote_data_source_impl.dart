@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart' show LazySingleton;
 import 'package:rx_project/core/error/failures.dart';
 import 'package:rx_project/features/admin/domain/model/request/home_project_model.dart';
+import '../../../../core/base/logger/app_logger_impl.dart';
 import '../../domain/data_source/project_remote_data_source.dart' show ProjectRemoteDataSource;
 
 @LazySingleton(as: ProjectRemoteDataSource)
@@ -78,18 +79,17 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }) async {
     try {
       final XFile imageFile = file;
-      final String fileName = '${DateTime.now().millisecondsSinceEpoch}_${imageFile.name}';
+      final String fileName = '${DateTime.now().millisecondsSinceEpoch}_${imageFile.name.replaceAll(" ", "_")}';
       final String path = 'projects/${projectId ?? 'temp'}/$fileName';
-      
-      final ref = storage.ref().child(path);
-      final uploadTask = ref.putFile(File(imageFile.path));
-      final snapshot = await uploadTask.whenComplete(() => null);
-      final downloadUrl = await snapshot.ref.getDownloadURL();
-      
+      log.d("image path is $path");
+      var ref = storage.ref().child(path);
+      await ref.putData(await file.readAsBytes());
+      var downloadUrl = await ref.getDownloadURL();
       return Right(downloadUrl);
     } on FirebaseException catch (e) {
       return Left(ServerFailure( e.message ?? 'Failed to upload image'));
     } catch (e) {
+      log.e("Error uploading image: $e");
       return Left(ServerFailure( 'Failed to process image'));
     }
   }

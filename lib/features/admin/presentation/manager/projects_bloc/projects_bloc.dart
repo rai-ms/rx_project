@@ -65,8 +65,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
 
   FVoid _addProject(AddProjectsEvent event, Emitter<ProjectsState> emit) async {
     emit(state.copyWith(state: state.loading, event: event));
-    final result = await _createProjectUseCase(params: event.project);
-
+    final result = await _createProjectUseCase(params: event.project.copyWith(imageUrl: state.selectedImageUrl));
     result.fold(
       (failure) {
         log.e("AddProjectUseCase failure: ${failure.message}");
@@ -143,7 +142,25 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
         emit(
           state.copyWith(selectedImageUrl: imageUrl, isUploadingImage: false),
         );
+        _addProject(event.addProjectsEvent, emit);
       },
     );
+  }
+
+  Future<String?> uploadImageUrl(XFile file, String? projectId) async {
+    final result = await _uploadProjectImageUseCase(
+      params: UploadImageParams(file: file, projectId: projectId),
+    );
+    String? link;
+    result.fold(
+          (failure) {
+        log.e("UploadProjectImageUseCase failure: ${failure.message}");
+      },
+          (imageUrl) {
+        log.d("UploadProjectImageUseCase success: $imageUrl");
+        link = imageUrl;
+      },
+    );
+    return link;
   }
 }

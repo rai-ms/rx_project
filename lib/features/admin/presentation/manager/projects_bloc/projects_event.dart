@@ -30,5 +30,6 @@ class DeleteProjectsEvent extends ProjectsEvent {
 class UploadProjectImageEvent extends ProjectsEvent {
   final String projectId;
   final XFile file;
-  const UploadProjectImageEvent({required this.projectId, required this.file});
+  final AddProjectsEvent addProjectsEvent;
+  const UploadProjectImageEvent({required this.projectId, required this.file, required this.addProjectsEvent});
 }

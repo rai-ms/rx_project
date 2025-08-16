@@ -70,7 +70,7 @@ class UploadProjectImageUseCase
     extends UseCase<Either<Failure, String>, UploadImageParams> {
   final ProjectRepository repository;
 
-  UploadProjectImageUseCase(this.repository);
+  const UploadProjectImageUseCase(this.repository);
 
   @override
   Future<Either<Failure, String>> call({required

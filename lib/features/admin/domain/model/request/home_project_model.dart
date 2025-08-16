@@ -1,5 +1,7 @@
 
 
+import '../../../../../core/base/logger/app_logger_impl.dart';
+
 class HomeProjectModel {
   final String? id;
   final String? name;
@@ -16,6 +18,7 @@ class HomeProjectModel {
   });
 
   factory HomeProjectModel.fromJson(Map<String, dynamic> json) {
+    log.d("HomeProjectModel fromJson: $json");
     return HomeProjectModel(
       id: json['id'],
       name: json['name'],

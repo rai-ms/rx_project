@@ -43,7 +43,6 @@ mixin HomeControllerMixin<T extends StatefulWidget> on State<T> {
     bioController.dispose();
     roleController.dispose();
     profilePictureUrlController.dispose();
-    
     super.dispose();
   }
 

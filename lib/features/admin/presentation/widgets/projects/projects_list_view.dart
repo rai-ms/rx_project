@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rx_project/features/admin/presentation/manager/projects_bloc/projects_bloc.dart';
+import '../../../../../core/base/logger/app_logger_impl.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text.dart';
 import '../../../domain/model/request/home_project_model.dart';
@@ -99,6 +100,7 @@ class _ProjectCard extends StatelessWidget {
   }
 
   Widget _buildImage(String? imageUrl) {
+    log.d("image url is $imageUrl");
     if (imageUrl == null || imageUrl.isEmpty) {
       return Container(
         width: 60,

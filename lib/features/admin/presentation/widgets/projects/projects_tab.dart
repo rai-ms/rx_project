@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rx_project/features/admin/domain/model/request/home_project_model.dart' show HomeProjectModel;
 import 'package:rx_project/features/admin/presentation/widgets/projects/project_form_dialog.dart';
 import 'package:rx_project/features/admin/presentation/widgets/projects/projects_list_view.dart';
-
 import '../../manager/projects_bloc/projects_bloc.dart';
 
 
@@ -24,14 +24,7 @@ class _ProjectsTabState extends State<ProjectsTab> {
         Expanded(
           child: BlocBuilder<ProjectsBloc, ProjectsState>(
             builder: (context, state) {
-              if (state.isLoading) {
-                return CircularProgressIndicator();
-              } else if (state.isSuccess) {
-                return ProjectsListView(
-                  projects: state.data ?? [],
-                );
-              }
-              else{
+             if(state.isFailed){
                 return Center(
                   child: Text(
                     'Failed to load projects',
@@ -39,22 +32,41 @@ class _ProjectsTabState extends State<ProjectsTab> {
                   ),
                 );
               }
+             return Column(
+               children: [
+                 ProjectsListView(
+                   projects: state.data ?? [],
+                 ),
+                 if(state.isLoading )Center(child: CircularProgressIndicator())
+               ],
+             );
             }
           ),
         ),
         IconButton(
-          onPressed: (){
-            showCupertinoDialog(
+          onPressed: () async {
+            var model = await showCupertinoDialog(
               context: context,
               builder: (ctx) => ProjectFormDialog(
                 onImageUpload: (){},
-                onSubmit: (model){
-                  context.read<ProjectsBloc>().add(
-                    AddProjectsEvent(project: model)
-                  );
+                onSubmit: (model, file){
+                  if(file != null) {
+                    // context.read<ProjectsBloc>().add(
+                    //   UploadProjectImageEvent(file: file, addProjectsEvent: AddProjectsEvent(project: model), projectId: model.id ?? "")
+                    // );
+                    // context.read<ProjectsBloc>().add(
+                    //     AddProjectsEvent(project: model)
+                    // );
+                  }
                 }
               )
             );
+
+            if(model is HomeProjectModel && context.mounted) {
+              context.read<ProjectsBloc>().add(
+                AddProjectsEvent(project: model)
+            );
+            }
           }, icon: Icon(Icons.add)
         )
       ],

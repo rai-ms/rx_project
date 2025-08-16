@@ -108,6 +108,7 @@ class AppText {
   static const String addProject = 'Add Project';
   static const String editProject = 'Edit Project';
   static const String projectName = 'Project Name';
+  static const String imageLink = 'Image Link';
   static const String projectDescription = 'Description';
   static const String uploadImage = 'Upload Image';
   static const String noProjects = 'No projects found';

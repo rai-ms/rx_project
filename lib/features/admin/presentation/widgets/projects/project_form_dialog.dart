@@ -1,13 +1,17 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_for_web/image_picker_for_web.dart';
+import 'package:rx_project/features/admin/presentation/manager/projects_bloc/projects_bloc.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text.dart';
 import '../../../domain/model/request/home_project_model.dart';
 
 class ProjectFormDialog extends StatefulWidget {
   final HomeProjectModel? project;
-  final Function(HomeProjectModel) onSubmit;
+  final Function(HomeProjectModel, XFile?) onSubmit;
   final Function() onImageUpload;
   final String? imageUrl;
   final bool isLoading;
@@ -30,14 +34,17 @@ class ProjectFormDialog extends StatefulWidget {
 class _ProjectFormDialogState extends State<ProjectFormDialog> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
+  late TextEditingController _imageLink;
   late TextEditingController _descriptionController;
   final ValueNotifier<String?> _imageUrl = ValueNotifier<String?>(null);
-  Uint8List? localImageBytes; // store picked image in memory (web safe)
+  Uint8List? localImageBytes;
+  XFile? file;
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.project?.name ?? '');
+    _imageLink = TextEditingController(text: widget.project?.imageUrl ?? '');
     _descriptionController =
         TextEditingController(text: widget.project?.description ?? '');
     _imageUrl.value = widget.imageUrl ?? widget.project?.imageUrl;
@@ -58,32 +65,38 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
     super.dispose();
   }
 
+
+  Future<XFile?> getFile() async {
+    XFile? pickedFile = await ImagePickerPlugin().getImageFromSource(source: ImageSource.gallery);
+    return pickedFile;
+  }
+
+
   Future<void> _pickImage() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 85,
-    );
+    final pickedFile = await getFile();
 
     if (pickedFile != null) {
       localImageBytes = await pickedFile.readAsBytes();
-      _imageUrl.value = null; // reset any old network URL
+      file = pickedFile;
       widget.onImageUpload();
-      setState(() {}); // refresh preview
+      setState(() {
+
+      });
     }
   }
 
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
       final project = HomeProjectModel(
-        id: widget.project?.id,
+        id: widget.project?.id ?? DateTime.now().millisecondsSinceEpoch.toString(),
         name: _nameController.text.trim(),
         description: _descriptionController.text.trim(),
-        // save remote URL if exists, else leave null
-        imageUrl: _imageUrl.value,
+        imageUrl: _imageLink.text,
         status: widget.project?.status ?? 'active',
       );
-      widget.onSubmit(project);
+      // widget.onSubmit(project, file);
+     context.pop(project);
     }
   }
 
@@ -117,6 +130,20 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
                     },
                   ),
                 ),
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _imageLink,
+                decoration: const InputDecoration(
+                  labelText: AppText.imageLink,
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return AppText.fieldRequired;
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
