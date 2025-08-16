@@ -29,7 +29,6 @@ mixin HomeControllerMixin<T extends StatefulWidget> on State<T> {
     roleController = TextEditingController();
     profilePictureUrlController = TextEditingController();
     _profileManageBloc = context.read<ProfileManageBloc>();
-    _profileManageBloc.add(LoadUserProfileEvent());
     super.initState();
   }
 
