@@ -5,7 +5,7 @@ import 'package:rx_project/core/utils/app_type_def.dart';
 import 'base_micro_service.dart';
 
 @singleton
-class GetApiMicro<T> with BaseMicro {
+class GetApiMicro with BaseMicro {
   Future<Response> call({
     Map<String, dynamic>? queryParam,
     required String endPoint,

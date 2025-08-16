@@ -34,4 +34,23 @@ class HomeProjectModel {
       'status': status,
     };
   }
+
+  // Write copyWith
+  HomeProjectModel copyWith({
+    String? id,
+    String? name,
+    String? description,
+    String? imageUrl,
+    String? status,
+  }) {
+    return HomeProjectModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      imageUrl: imageUrl ?? this.imageUrl,
+      status: status ?? this.status,
+    );
+  }
+
+
 }

@@ -6,23 +6,19 @@ abstract class AppException implements Exception {
 }
 
 class ServerException extends AppException {
-  const ServerException(String message, [StackTrace? stackTrace])
-      : super(message, stackTrace);
+  const ServerException(super.message, [super.stackTrace]);
 }
 
 class CacheException extends AppException {
-  const CacheException([String message = 'Cache error', StackTrace? stackTrace])
-      : super(message, stackTrace);
+  const CacheException([super.message = 'Cache error', super.stackTrace]);
 }
 
 class NetworkException extends AppException {
-  const NetworkException([String message = 'No internet connection', StackTrace? stackTrace])
-      : super(message, stackTrace);
+  const NetworkException([super.message = 'No internet connection', super.stackTrace]);
 }
 
 class UnauthorizedException extends AppException {
-  const UnauthorizedException([String message = 'Unauthorized', StackTrace? stackTrace])
-      : super(message, stackTrace);
+  const UnauthorizedException([super.message = 'Unauthorized', super.stackTrace]);
 }
 
 class ValidationException extends AppException {

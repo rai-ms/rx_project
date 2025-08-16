@@ -8,20 +8,25 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:firebase_storage/firebase_storage.dart' as _i457;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
-import '../../../features/admin/data/datasources/profile_remote_data_source.dart'
-    as _i702;
-import '../../../features/admin/data/datasources/user_profile_remote_data_source_impl.dart'
-    as _i1013;
+import '../../../features/admin/data/data_source/profile_remote_data_source.dart'
+    as _i415;
+import '../../../features/admin/data/data_source/project_remote_data_source_impl.dart'
+    as _i274;
+import '../../../features/admin/data/data_source/user_profile_remote_data_source_impl.dart'
+    as _i78;
 import '../../../features/admin/data/repositories/profile_repository_impl.dart'
     as _i816;
 import '../../../features/admin/data/repositories/user_profile_repository_impl.dart'
     as _i647;
+import '../../../features/admin/data/repository/project_repository_impl.dart'
+    as _i365;
 import '../../../features/admin/domain/data_source/profile_remote_data_source.dart'
     as _i592;
+import '../../../features/admin/domain/data_source/project_remote_data_source.dart'
+    as _i1065;
 import '../../../features/admin/domain/data_source/user_profile_remote_data_source.dart'
     as _i885;
 import '../../../features/admin/domain/repository/profile_repository.dart'
@@ -67,7 +72,7 @@ _i174.GetIt injectAllData(
     environmentFilter,
   );
   gh.factory<_i855.HomeManageBloc>(() => _i855.HomeManageBloc());
-  gh.singleton<_i609.GetApiMicro<dynamic>>(() => _i609.GetApiMicro<dynamic>());
+  gh.singleton<_i609.GetApiMicro>(() => _i609.GetApiMicro());
   gh.singleton<_i609.PostApiMicro>(() => _i609.PostApiMicro());
   gh.singleton<_i609.PatchApiMicro>(() => _i609.PatchApiMicro());
   gh.singleton<_i609.PutApiMicro>(() => _i609.PutApiMicro());
@@ -84,14 +89,12 @@ _i174.GetIt injectAllData(
       () => _i140.StateRequestHandler());
   gh.lazySingleton<_i119.StorageService>(() => _i119.StorageService());
   gh.lazySingleton<_i892.SmallApiDispatcher>(() => _i892.SmallApiDispatcher());
-  gh.lazySingleton<_i829.SecureStorageSource>(
-      () => _i167.SecureStorageService());
-  gh.lazySingleton<_i885.UserProfileRemoteDataSource>(
-      () => _i1013.UserProfileRemoteDataSourceImpl());
-  gh.lazySingleton<_i561.AuthStorageService>(
-      () => _i561.AuthStorageServiceImpl(gh<_i829.SecureStorageSource>()));
+  gh.lazySingleton<_i1065.ProjectRemoteDataSource>(
+      () => _i274.ProjectRemoteDataSourceImpl());
+  gh.lazySingleton<_i713.ProjectRepository>(() => _i365.ProjectRepositoryImpl(
+      remoteDataSource: gh<_i1065.ProjectRemoteDataSource>()));
   gh.lazySingleton<_i778.ApiDispatcher>(() => _i778.ApiDispatcher(
-        gh<_i609.GetApiMicro<dynamic>>(),
+        gh<_i609.GetApiMicro>(),
         gh<_i609.PostApiMicro>(),
         gh<_i609.PutApiMicro>(),
         gh<_i609.PatchApiMicro>(),
@@ -102,10 +105,22 @@ _i174.GetIt injectAllData(
         gh<_i609.UploadApiMicro>(),
         gh<_i609.UploadStreamApiMicro>(),
       ));
+  gh.lazySingleton<_i885.UserProfileRemoteDataSource>(
+      () => _i78.UserProfileRemoteDataSourceImpl());
+  gh.lazySingleton<_i592.ProfileRemoteDataSource>(
+      () => _i415.ProfileRemoteDataSourceImpl());
+  gh.lazySingleton<_i829.SecureStorageSource>(
+      () => _i167.SecureStorageService());
+  gh.lazySingleton<_i375.ProfileRepository>(
+      () => _i816.ProfileRepositoryImpl(gh<_i592.ProfileRemoteDataSource>()));
+  gh.lazySingleton<_i561.AuthStorageService>(
+      () => _i561.AuthStorageServiceImpl(gh<_i829.SecureStorageSource>()));
+  gh.factory<_i510.UpdateProfilePicUseCase>(
+      () => _i510.UpdateProfilePicUseCase(gh<_i375.ProfileRepository>()));
+  gh.factory<_i510.GetProfilePicUrlUseCase>(
+      () => _i510.GetProfilePicUrlUseCase(gh<_i375.ProfileRepository>()));
   gh.lazySingleton<_i258.UserProfileRepository>(() =>
       _i647.UserProfileRepositoryImpl(gh<_i885.UserProfileRemoteDataSource>()));
-  gh.lazySingleton<_i592.ProfileRemoteDataSource>(
-      () => _i702.ProfileRemoteDataSourceImpl(gh<_i457.FirebaseStorage>()));
   gh.factory<_i547.GetProjectsUseCase>(
       () => _i547.GetProjectsUseCase(gh<_i713.ProjectRepository>()));
   gh.factory<_i547.CreateProjectUseCase>(
@@ -126,8 +141,6 @@ _i174.GetIt injectAllData(
       () => _i596.UpdateUserProfileUseCase(gh<_i258.UserProfileRepository>()));
   gh.factory<_i596.DeleteUserProfileUseCase>(
       () => _i596.DeleteUserProfileUseCase(gh<_i258.UserProfileRepository>()));
-  gh.lazySingleton<_i375.ProfileRepository>(
-      () => _i816.ProfileRepositoryImpl(gh<_i592.ProfileRemoteDataSource>()));
   gh.factory<_i977.ProjectsBloc>(() => _i977.ProjectsBloc(
         gh<_i547.CreateProjectUseCase>(),
         gh<_i547.GetProjectsUseCase>(),
@@ -135,10 +148,6 @@ _i174.GetIt injectAllData(
         gh<_i547.DeleteProjectUseCase>(),
         gh<_i547.UploadProjectImageUseCase>(),
       ));
-  gh.factory<_i510.UpdateProfilePicUseCase>(
-      () => _i510.UpdateProfilePicUseCase(gh<_i375.ProfileRepository>()));
-  gh.factory<_i510.GetProfilePicUrlUseCase>(
-      () => _i510.GetProfilePicUrlUseCase(gh<_i375.ProfileRepository>()));
   gh.factory<_i253.ProfileManageBloc>(() => _i253.ProfileManageBloc(
         gh<_i596.CreateUserProfileUseCase>(),
         gh<_i596.DeleteUserProfileUseCase>(),

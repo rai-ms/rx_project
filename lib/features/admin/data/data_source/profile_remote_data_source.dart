@@ -8,9 +8,9 @@ import '../../domain/data_source/profile_remote_data_source.dart';
 
 @LazySingleton(as: ProfileRemoteDataSource)
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
-  final FirebaseStorage _firebaseStorage;
+  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
-  const ProfileRemoteDataSourceImpl(this._firebaseStorage);
+  ProfileRemoteDataSourceImpl();
 
   @override
   Future<String> uploadProfilePicture(String localFilePath, String userId) async {

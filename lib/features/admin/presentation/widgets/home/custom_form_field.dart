@@ -13,7 +13,7 @@ class CustomFormField extends StatelessWidget {
   final bool enabled;
 
   const CustomFormField({
-    Key? key,
+    super.key,
     required this.label,
     required this.field,
     this.keyboardType,
@@ -23,7 +23,7 @@ class CustomFormField extends StatelessWidget {
     this.onSaved,
     this.validator,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

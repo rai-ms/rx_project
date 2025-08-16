@@ -16,7 +16,6 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
   Future<Either<Failure, UserProfileModel>> createUserProfile(
       UserProfileModel userProfile) async {
     try {
-      print("asj,bkajdfsvkjsdkj vkjsd fvkj");
       await _firestore
           .collection(_collection)
           .doc("1025980200000")
