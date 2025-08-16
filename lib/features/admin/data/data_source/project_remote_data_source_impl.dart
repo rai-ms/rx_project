@@ -32,12 +32,9 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, HomeProjectModel>> createProject(
-      HomeProjectModel project) async {
+  Future<Either<Failure, HomeProjectModel>> createProject(HomeProjectModel project) async {
     try {
-      final docRef = await firestore.collection(collectionName).add(
-            project.toJson(),
-          );
+      final docRef = await firestore.collection(collectionName).add(project.toJson());
       final createdProject = project.copyWith(id: docRef.id);
       return Right(createdProject);
     } on FirebaseException catch (e) {
@@ -48,8 +45,7 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, HomeProjectModel>> updateProject(
-      HomeProjectModel project) async {
+  Future<Either<Failure, HomeProjectModel>> updateProject(HomeProjectModel project) async {
     try {
       await firestore
           .collection(collectionName)

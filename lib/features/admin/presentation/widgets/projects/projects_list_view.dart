@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rx_project/features/admin/presentation/manager/projects_bloc/projects_bloc.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text.dart';
 import '../../../domain/model/request/home_project_model.dart';
@@ -36,8 +38,11 @@ class ProjectsListView extends StatelessWidget {
           project: project,
           // onEdit: () => onEdit(project),
           onEdit: () {},
-          onDelete: () {},
-          // onDelete: () => onDelete(project.id ?? ''),
+          onDelete: () {
+            context.read<ProjectsBloc>().add(
+                DeleteProjectsEvent(projectId: project.id ?? '')
+            );
+          },
         );
       },
     );
