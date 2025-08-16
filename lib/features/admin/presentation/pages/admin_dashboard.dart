@@ -70,7 +70,7 @@ class _AdminDashboardState extends State<AdminDashboard> with SingleTickerProvid
   Widget build(BuildContext context) {
     return AppScaffold(
       isAdmin: true,
-      sliverListBuilder: (ctx, isWide) {
+      sliverListBuilder: (ctx, isWide, isLoading) {
         return [
           SliverToBoxAdapter(
             child: Column(

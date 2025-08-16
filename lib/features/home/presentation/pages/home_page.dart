@@ -6,6 +6,7 @@ import 'package:rx_project/features/admin/presentation/manager/profile_manage_bl
 import '../../../../core/constants/image_constants.dart';
 import '../../../../core/constants/app_text.dart';
 import '../../../../core/routes/app_router.dart';
+import '../../../../core/utils/size_utils.dart';
 import '../../../widget/common/app_scaffold.dart';
 
 class HomePage extends StatefulWidget {
@@ -229,7 +230,24 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      sliverListBuilder: (_, isWide) {
+      sliverListBuilder: (_, isWide, isLoading) {
+        if(isLoading){
+          return [
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: Space.h,
+                width: Space.w,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ),
+            ),
+          ];
+        }
         return [
           SliverToBoxAdapter(
             child: Padding(

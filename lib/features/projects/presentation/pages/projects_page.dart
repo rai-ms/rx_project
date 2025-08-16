@@ -11,7 +11,7 @@ class ProjectsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      sliverListBuilder: (ctx, isWide) {
+      sliverListBuilder: (ctx, isWide, isLoading) {
         return [
           SliverToBoxAdapter(
             child: Column(
