@@ -1,6 +1,6 @@
 part of 'profile_manage_bloc.dart';
 
-class ProfileManageState extends BlocEventState{
+class ProfileManageState extends BlocEventState<UserProfileModel>{
 
   const ProfileManageState({super.data, super.error, super.event, super.state, super.statusCode});
 
@@ -9,7 +9,7 @@ class ProfileManageState extends BlocEventState{
 
   @override
   ProfileManageState copyWith({
-    Object? data,
+    UserProfileModel? data,
     String? error,
     BlocEvent? event,
     BlocState? state,

@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
+import 'package:rx_project/core/base/logger/app_logger_impl.dart';
 
+@singleton
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -28,7 +31,7 @@ class AuthService {
         password: password,
       );
     } catch (e) {
-      print("Received error during sign in: $e");
+      log.e("Received error during sign in: $e");
       rethrow;
     }
   }

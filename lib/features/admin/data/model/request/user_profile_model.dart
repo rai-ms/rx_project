@@ -92,7 +92,7 @@ class UserProfileModel {
     return copyWith(
       createdAt: DateTime.now().toUtc().toIso8601String(),
       updatedAt: DateTime.now().toUtc().toIso8601String(),
-      id: DateTime(2002,07,07).millisecondsSinceEpoch.toString(), // Temporary ID for new profile
+      id: DateTime(2002,07,07).toUtc().millisecondsSinceEpoch.toString(), // Temporary ID for new profile
     );
   }
 

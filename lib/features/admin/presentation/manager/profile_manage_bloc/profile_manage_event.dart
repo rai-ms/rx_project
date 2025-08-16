@@ -12,10 +12,15 @@ class CreateUserEvent extends ProfileManageEvent {
     required this.userProfile,
   });
 }
+
 class UpdateUserEvent extends ProfileManageEvent {
   final UserProfileModel userProfile;
 
   const UpdateUserEvent({
     required this.userProfile,
   });
+}
+
+class LoadUserProfileEvent extends ProfileManageEvent {
+  const LoadUserProfileEvent();
 }

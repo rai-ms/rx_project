@@ -1,8 +1,13 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rx_project/core/constants/app_colors.dart';
-import 'package:rx_project/features/admin/data/model/request/user_profile_model.dart';
+import 'package:rx_project/features/admin/domain/enums/form_fields_enum.dart';
 import 'package:rx_project/features/admin/presentation/manager/profile_manage_bloc/profile_manage_bloc.dart';
+import 'package:rx_project/features/admin/presentation/widgets/home/custom_form_field.dart';
+import '../../../data/model/request/user_profile_model.dart';
+
+part 'home_controller_mixin.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -11,49 +16,8 @@ class HomeTab extends StatefulWidget {
   State<HomeTab> createState() => _HomeTabState();
 }
 
-class _HomeTabState extends State<HomeTab> {
-  final _formKey = GlobalKey<FormState>();
-  final _profile = UserProfileModel(); // Temporary ID for new profile
-  final Map<String, TextEditingController> _controllers = {};
-  bool _isLoading = false;
+class _HomeTabState extends State<HomeTab> with HomeControllerMixin<HomeTab> {
 
-  @override
-  void initState() {
-    super.initState();
-    // Initialize controllers for each field
-    _controllers['firstName'] = TextEditingController();
-    _controllers['lastName'] = TextEditingController();
-    _controllers['email'] = TextEditingController();
-    _controllers['phoneNumber'] = TextEditingController();
-    _controllers['address'] = TextEditingController();
-    _controllers['bio'] = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    // Dispose all controllers
-    for (var controller in _controllers.values) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState?.validate() ?? false) {
-      _formKey.currentState?.save();
-
-
-      // Create or update profile using the bloc
-      final bloc = context.read<ProfileManageBloc>();
-      if (_profile.id == null) {
-        // Create new profile
-        bloc.add(CreateUserEvent(userProfile: _profile.createdNew()));
-      } else {
-        // Update existing profile
-        bloc.add(UpdateUserEvent(userProfile: _profile));
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,131 +25,120 @@ class _HomeTabState extends State<HomeTab> {
       listener: (context, state) {
         if (state.error != null) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: ${state.error}')),
-          );
-        } else if (state.data != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Profile saved successfully!')),
+            SnackBar(content: Text(state.error!)),
           );
         }
-        setState(() => _isLoading = false);
       },
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: Card(
-          color: AppColors.darkGrey,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    'User Profile',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+      child: Container(
+        color: AppColors.darkGrey,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: BlocBuilder<ProfileManageBloc, ProfileManageState>(
+            builder: (context, ProfileManageState profileState) {
+              return Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _buildTextField(
+                          'First Name',
+                          FormFieldType.firstName,
+                          controller: firstNameController,
+                          initialValue: profileState.data?.firstName
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                          'Last Name',
+                          FormFieldType.lastName,
+                          controller: lastNameController,
+                          initialValue: profileState.data?.lastName
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                          'Email',
+                          FormFieldType.email,
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                          initialValue: profileState.data?.email
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                          'Phone Number',
+                          FormFieldType.phoneNumber,
+                          keyboardType: TextInputType.phone,
+                          controller: phoneNumberController,
+                          initialValue: profileState.data?.phoneNumber
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                          'Address',
+                          FormFieldType.address,
+                          maxLines: 3,
+                          controller: addressController,
+                          initialValue: profileState.data?.address
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                          'Bio',
+                          FormFieldType.bio,
+                          maxLines: 3,
+                          controller: bioController,
+                          initialValue: profileState.data?.bio
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField('Role', FormFieldType.role, controller: roleController,
+                          initialValue: profileState.data?.role),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                          'Profile Picture URL',
+                          FormFieldType.profilePictureUrl,
+                          keyboardType: TextInputType.url,
+                          initialValue: profileState.data?.profilePictureUrl,
+                          controller: profilePictureUrlController
+                      ),
+                      const SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: profileState.isLoading ? null : _submitForm,
+                        child: profileState.isLoading
+                            ? const CircularProgressIndicator()
+                            : const Text('Save Profile'),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  _buildTextField('First Name', 'firstName'),
-                  const SizedBox(height: 12),
-                  _buildTextField('Last Name', 'lastName'),
-                  const SizedBox(height: 12),
-                  _buildTextField(
-                    'Email', 
-                    'email', 
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 12),
-                  _buildTextField(
-                    'Phone Number', 
-                    'phoneNumber', 
-                    keyboardType: TextInputType.phone,
-                  ),
-                  const SizedBox(height: 12),
-                  _buildTextField(
-                    'Address', 
-                    'address', 
-                    keyboardType: TextInputType.streetAddress,
-                  ),
-                  const SizedBox(height: 12),
-                  _buildTextField(
-                    'Bio', 
-                    'bio', 
-                    keyboardType: TextInputType.multiline, 
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _isLoading ? null : _submitForm,
-                    child: _isLoading 
-                        ? const CircularProgressIndicator()
-                        : const Text('Save Profile'),
-                  ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),
     );
   }
-
+  
   Widget _buildTextField(
     String label,
-    String field, {
+    FormFieldType field, {
     TextInputType? keyboardType,
-    int maxLines = 1,
+    int? maxLines,
+    String? initialValue,
+    TextEditingController? controller,
   }) {
-    return TextFormField(
-      controller: _controllers[field],
+    // If we have both controller and initialValue, update the controller's text
+    if (controller != null && initialValue != null) {
+      if (controller.text != initialValue) {
+        controller.text = initialValue;
+      }
+    }
+
+    return CustomFormField(
+      label: label,
+      field: field,
+      controller: controller,
+      initialValue: controller == null ? initialValue : null,
       keyboardType: keyboardType,
       maxLines: maxLines,
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(color: Colors.grey),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blue),
-        ),
-      ),
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please enter $label';
-        }
-        if (field == 'email' && !value.contains('@')) {
-          return 'Please enter a valid email';
-        }
-        return null;
-      },
-      onSaved: (value) {
-        switch (field) {
-          case 'firstName':
-            _profile.firstName = value;
-            break;
-          case 'lastName':
-            _profile.lastName = value;
-            break;
-          case 'email':
-            _profile.email = value;
-            break;
-          case 'phoneNumber':
-            _profile.phoneNumber = value;
-            break;
-          case 'address':
-            _profile.address = value;
-            break;
-          case 'bio':
-            _profile.bio = value;
-            break;
-        }
-      },
+      onSaved: (value) => onSaved(value, field),
     );
   }
 }

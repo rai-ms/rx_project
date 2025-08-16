@@ -32,6 +32,7 @@ class ProfileManageBloc extends Bloc<ProfileManageEvent, ProfileManageState> {
     on<ProfileManageEvent>((event, emit) {});
     on<CreateUserEvent>(_createUserProfile);
     on<UpdateUserEvent>(_updateUserProfile);
+    on<LoadUserProfileEvent>(_loadUserProfile);
   }
 
 
@@ -46,12 +47,12 @@ class ProfileManageBloc extends Bloc<ProfileManageEvent, ProfileManageState> {
       (failure) {
         // Log the value received in failure
         log.e("CreateUserProfileUseCase failure: ${failure.message}");
-        emit(state.copyWith(error: failure.message, state: state.success));
+        emit(state.copyWith(error: failure.message, state: state.failed));
       },
       (userProfile) {
         // Log the value received in success
         log.d("CreateUserProfileUseCase success: ${userProfile.toJson()}");
-        emit(state.copyWith(data: userProfile, state: state.failed));
+        emit(state.copyWith(data: userProfile, state: state.success));
       },
     );
   }
@@ -74,6 +75,32 @@ class ProfileManageBloc extends Bloc<ProfileManageEvent, ProfileManageState> {
       (userProfile) {
         // Log the value received in success
         log.d("UpdateUserProfileUseCase success: ${userProfile.toJson()}");
+        emit(state.copyWith(data: userProfile, state: state.success));
+      },
+    );
+  }
+
+
+  FVoid _loadUserProfile(
+    LoadUserProfileEvent event,
+    Emitter<ProfileManageState> emit,
+  ) async {
+    if(state.data != null && state.isSuccess) {
+      log.d("User profile already exists, updating...");
+      return;
+    }
+    emit(state.copyWith(state: state.loading));
+    final result = await _getUserProfileUseCase(params: "1025980200000");
+    log.d("GetUserProfileUseCase result: ${result.isRight()}");
+    result.fold(
+      (failure) {
+        // Log the value received in failure
+        log.e("GetUserProfileUseCase failure: ${failure.message}");
+        emit(state.copyWith(error: failure.message, state: state.failed));
+      },
+      (userProfile) {
+        // Log the value received in success
+        log.d("GetUserProfileUseCase success: ${userProfile.toJson()}");
         emit(state.copyWith(data: userProfile, state: state.success));
       },
     );
