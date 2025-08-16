@@ -1,35 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:rx_project/core/constants/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rx_project/features/admin/presentation/widgets/projects/projects_list_view.dart';
 
-class ProjectsTab extends StatelessWidget {
+import '../../manager/projects_bloc/projects_bloc.dart';
+
+
+class ProjectsTab extends StatefulWidget {
   const ProjectsTab({super.key});
 
   @override
+  State<ProjectsTab> createState() => _ProjectsTabState();
+}
+
+class _ProjectsTabState extends State<ProjectsTab> {
+
+  @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Card(
-        color: AppColors.darkGrey,
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Projects Section',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(height: 16),
-              Text('Manage your projects here',
-                  style: TextStyle(color: Colors.grey)),
-            ],
-          ),
-        ),
-      ),
+    return BlocBuilder<ProjectsBloc, ProjectsState>(
+      builder: (context, state) {
+        if (state.isLoading) {
+          return CircularProgressIndicator();
+        } else if (state.isSuccess) {
+          return ProjectsListView(
+            projects: state.data ?? [],
+          );
+        }
+        else{
+          return Center(
+            child: Text(
+              'Failed to load projects',
+              style: TextStyle(color: Colors.red, fontSize: 16),
+            ),
+          );
+        }
+      }
     );
   }
 }

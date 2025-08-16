@@ -126,24 +126,25 @@ double deviceWidth = MediaQuery.of(ctx).size.width;
 /// [Space] used to add space between the widgets
 /// for Height used h and for width use w with size
 abstract class Space {
-  static double get h => MediaQuery.sizeOf(ctx).height;
-  static double get w => MediaQuery.sizeOf(ctx).width;
-  static double get padBottom => MediaQuery.of(ctx).viewPadding.bottom;
-  static double get insetsBottom => MediaQuery.of(ctx).viewInsets.bottom;
-  static double get insetsTop => MediaQuery.of(ctx).viewInsets.top;
-  static double get padTop => MediaQuery.of(ctx).viewPadding.top;
+  static bool get isM => !ctx.mounted;
+  static double h(BuildContext context) => MediaQuery.maybeOf(context)?.size.height ?? 0.0;
+  static double w(BuildContext context) => MediaQuery.maybeOf(context)?.size.width ?? 0.0;
+  static double get padBottom => isM? 0: MediaQuery.maybeOf(ctx)?.viewPadding.bottom ?? 0.0;
+  static double get insetsBottom => isM? 0: MediaQuery.maybeOf(ctx)?.viewInsets.bottom ?? 0.0;
+  static double get insetsTop => isM? 0: MediaQuery.maybeOf(ctx)?.viewInsets.top ?? 0.0;
+  static double get padTop => isM? 0: MediaQuery.maybeOf(ctx)?.viewPadding.top ?? 0.0;
   static SizedBox get safeTop => SizedBox(height: padBottom);
   static SizedBox get safeBottom => SizedBox(height: padBottom);
   static SizedBox resH(
     double height,
     BuildContext context, {
     double? defaultHeight,
-  }) => SizedBox(height: h * (height / (defaultHeight ?? figmaDesignHeight)));
+  }) => SizedBox(height: h(ctx) * (height / (defaultHeight ?? figmaDesignHeight)));
   static SizedBox resW(
     double width,
     BuildContext context, {
     double? defaultWidth,
-  }) => SizedBox(width: w * (width / (defaultWidth ?? figmaDesignWidth)));
+  }) => SizedBox(width: w(ctx) * (width / (defaultWidth ?? figmaDesignWidth)));
   static const SizedBox z = SizedBox.shrink();
   static const Spacer f = Spacer();
   static const SizedBox h3 = SizedBox(height: 3);

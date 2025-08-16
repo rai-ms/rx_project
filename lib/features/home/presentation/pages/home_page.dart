@@ -7,6 +7,7 @@ import '../../../../core/constants/image_constants.dart';
 import '../../../../core/constants/app_text.dart';
 import '../../../../core/routes/app_router.dart';
 import '../../../../core/utils/size_utils.dart';
+import '../../../admin/presentation/manager/projects_bloc/projects_bloc.dart' show ProjectsBloc, FetchProjectsEvent;
 import '../../../widget/common/app_scaffold.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     context.read<ProfileManageBloc>().add(LoadUserProfileEvent());
+    context.read<ProjectsBloc>().add(FetchProjectsEvent());
   }
 
 
@@ -235,8 +237,8 @@ class _HomePageState extends State<HomePage> {
           return [
             SliverToBoxAdapter(
               child: SizedBox(
-                height: Space.h,
-                width: Space.w,
+                height: Space.h(context),
+                width: Space.w(context),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

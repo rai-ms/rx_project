@@ -92,4 +92,35 @@ class AppText {
   // Resume Page
   static const String resumeTitle = 'My Resume';
   static const String resumeLoadError = 'Failed to load resume';
+
+
+  // App name
+  static const String appName = 'RX Project';
+
+  // Common buttons
+  static const String save = 'Save';
+  static const String cancel = 'Cancel';
+  static const String delete = 'Delete';
+  static const String edit = 'Edit';
+  static const String add = 'Add';
+
+  // Project related
+  static const String addProject = 'Add Project';
+  static const String editProject = 'Edit Project';
+  static const String projectName = 'Project Name';
+  static const String projectDescription = 'Description';
+  static const String uploadImage = 'Upload Image';
+  static const String noProjects = 'No projects found';
+
+  // Validation messages
+  static const String fieldRequired = 'This field is required';
+  static const String enterValidEmail = 'Please enter a valid email';
+
+  // Error messages
+  static const String somethingWentWrong = 'Something went wrong';
+  static const String failedToLoadProjects = 'Failed to load projects';
+  static const String failedToAddProject = 'Failed to add project';
+  static const String failedToUpdateProject = 'Failed to update project';
+  static const String failedToDeleteProject = 'Failed to delete project';
+  static const String failedToUploadImage = 'Failed to upload image';
 }

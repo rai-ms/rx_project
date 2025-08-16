@@ -22,7 +22,7 @@ class NoInternetScreen extends StatelessWidget {
                 style: AppStyles.larger.semiBold.white,
               ),
               UtilityHelper.assetImage(
-                width: Space.w,
+                width: Space.w(context),
                 path: AppAssets.noInternet,
                 fit: BoxFit.fitWidth,
               ),

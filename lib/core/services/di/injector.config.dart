@@ -36,10 +36,13 @@ import '../../../features/admin/presentation/manager/home_manage_bloc/home_manag
     as _i855;
 import '../../../features/admin/presentation/manager/profile_manage_bloc/profile_manage_bloc.dart'
     as _i253;
+import '../../../features/admin/presentation/manager/projects_bloc/projects_bloc.dart'
+    as _i977;
 import '../../base/base_client/base_api_micro.dart' as _i609;
 import '../../handler/state_request_handler.dart' as _i140;
 import '../api_service/api_micro_dispatcher.dart' as _i778;
 import '../api_service/api_small_dispatcher.dart' as _i892;
+import '../firebase_service/auth_service.dart' as _i872;
 import '../language_service/language_service.dart' as _i908;
 import '../permissin_service/permission_service.dart' as _i49;
 import '../storage_service/auth_storage_service.dart' as _i561;
@@ -60,6 +63,7 @@ _i174.GetIt injectAllData(
     environmentFilter,
   );
   gh.factory<_i855.HomeManageBloc>(() => _i855.HomeManageBloc());
+  gh.factory<_i977.ProjectsBloc>(() => _i977.ProjectsBloc());
   gh.singleton<_i609.GetApiMicro<dynamic>>(() => _i609.GetApiMicro<dynamic>());
   gh.singleton<_i609.PostApiMicro>(() => _i609.PostApiMicro());
   gh.singleton<_i609.PatchApiMicro>(() => _i609.PatchApiMicro());
@@ -72,6 +76,7 @@ _i174.GetIt injectAllData(
   gh.singleton<_i609.UploadStreamApiMicro>(() => _i609.UploadStreamApiMicro());
   gh.singleton<_i908.AppLanguageService>(() => _i908.AppLanguageService());
   gh.singleton<_i49.PermissionService>(() => _i49.PermissionService());
+  gh.singleton<_i872.AuthService>(() => _i872.AuthService());
   gh.lazySingleton<_i140.StateRequestHandler>(
       () => _i140.StateRequestHandler());
   gh.lazySingleton<_i119.StorageService>(() => _i119.StorageService());
