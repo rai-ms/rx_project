@@ -7,7 +7,8 @@ import '../../../../core/constants/image_constants.dart';
 import '../../../../core/constants/app_text.dart';
 import '../../../../core/routes/app_router.dart';
 import '../../../../core/utils/size_utils.dart';
-import '../../../admin/presentation/manager/projects_bloc/projects_bloc.dart' show ProjectsBloc, FetchProjectsEvent;
+import '../../../admin/presentation/manager/projects_bloc/projects_bloc.dart'
+    show ProjectsBloc, FetchProjectsEvent, ProjectsState;
 import '../../../widget/common/app_scaffold.dart';
 
 class HomePage extends StatefulWidget {
@@ -195,35 +196,30 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildProjectsSection() {
-    return SliverLayoutBuilder(
-      builder: (context, constraints) {
-        final crossAxisCount = (constraints.crossAxisExtent / 300)
-            .floor()
-            .clamp(1, 3);
-        return SliverGrid(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            crossAxisSpacing: 24,
-            mainAxisSpacing: 24,
-            childAspectRatio: 0.7,
-          ),
-          delegate: SliverChildListDelegate([
-            _buildProjectCard(
-              AppText.projectConnectRoamTitle,
-              AppText.projectConnectRoamDesc,
-              ImageConstants.roamApp,
-            ),
-            _buildProjectCard(
-              AppText.projectDwellSpringTitle,
-              AppText.projectDwellSpringDesc,
-              ImageConstants.dwellSpring,
-            ),
-            _buildProjectCard(
-              AppText.projectJarirTitle,
-              AppText.projectJarirDesc,
-              ImageConstants.jarir,
-            ),
-          ]),
+    return BlocBuilder<ProjectsBloc, ProjectsState>(
+      builder: (context, state) {
+        return SliverLayoutBuilder(
+          builder: (context, constraints) {
+            final crossAxisCount = (constraints.crossAxisExtent / 300)
+                .floor()
+                .clamp(1, 3);
+            return SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: 24,
+                mainAxisSpacing: 24,
+                childAspectRatio: 0.7,
+              ),
+              delegate: SliverChildListDelegate([
+                if(state.isLoading) Center(child: CircularProgressIndicator(),),
+                if(state.data?.isNotEmpty ?? false) ...List.generate(state.data?.length ?? 0, (index) => _buildProjectCard(
+                  state.data?[index].name ?? "N/A",
+                  state.data?[index].description ?? "N/A",
+                  state.data?[index].imageUrl ?? "N/A",
+                )),
+              ]),
+            );
+          },
         );
       },
     );
@@ -233,7 +229,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return AppScaffold(
       sliverListBuilder: (_, isWide, isLoading) {
-        if(isLoading){
+        if (isLoading) {
           return [
             SliverToBoxAdapter(
               child: SizedBox(

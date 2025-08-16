@@ -16,5 +16,4 @@ class ImageConstants {
   static const String dwellSpringProjectBg = '${_projectPath}dwell-spring.webp';
   static const String jarirProjectBg = '${_projectPath}jarir-bookstore-vector-logo.webp';
   static const String zitoMediaProjectBg = '${_projectPath}zito-media.webp';
-
 }
