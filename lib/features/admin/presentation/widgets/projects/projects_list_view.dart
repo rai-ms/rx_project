@@ -29,6 +29,7 @@ class ProjectsListView extends StatelessWidget {
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: projects.length,
+      shrinkWrap: true,
       itemBuilder: (context, index) {
         final project = projects[index];
         return _ProjectCard(

@@ -1,4 +1,6 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text.dart';
 import '../../../domain/model/request/home_project_model.dart';
@@ -29,7 +31,8 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
-  String? _imageUrl;
+  final ValueNotifier<String?> _imageUrl = ValueNotifier<String?>(null);
+  Uint8List? localImageBytes; // store picked image in memory (web safe)
 
   @override
   void initState() {
@@ -37,16 +40,14 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
     _nameController = TextEditingController(text: widget.project?.name ?? '');
     _descriptionController =
         TextEditingController(text: widget.project?.description ?? '');
-    _imageUrl = widget.imageUrl ?? widget.project?.imageUrl;
+    _imageUrl.value = widget.imageUrl ?? widget.project?.imageUrl;
   }
 
   @override
   void didUpdateWidget(covariant ProjectFormDialog oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.imageUrl != oldWidget.imageUrl) {
-      setState(() {
-        _imageUrl = widget.imageUrl;
-      });
+      _imageUrl.value = widget.imageUrl;
     }
   }
 
@@ -58,15 +59,18 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
   }
 
   Future<void> _pickImage() async {
-    // final picker = ImagePicker();
-    // final pickedFile = await picker.pickImage(
-    //   source: ImageSource.gallery,
-    //   imageQuality: 85,
-    // );
-    //
-    // if (pickedFile != null) {
-    //   widget.onImageUpload();
-    // }
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
+
+    if (pickedFile != null) {
+      localImageBytes = await pickedFile.readAsBytes();
+      _imageUrl.value = null; // reset any old network URL
+      widget.onImageUpload();
+      setState(() {}); // refresh preview
+    }
   }
 
   void _submitForm() {
@@ -75,7 +79,8 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
         id: widget.project?.id,
         name: _nameController.text.trim(),
         description: _descriptionController.text.trim(),
-        imageUrl: _imageUrl,
+        // save remote URL if exists, else leave null
+        imageUrl: _imageUrl.value,
         status: widget.project?.status ?? 'active',
       );
       widget.onSubmit(project);
@@ -86,9 +91,7 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        widget.project == null
-            ? AppText.addProject
-            : AppText.editProject,
+        widget.project == null ? AppText.addProject : AppText.editProject,
       ),
       content: SingleChildScrollView(
         child: Form(
@@ -107,7 +110,12 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: Colors.grey[300]!),
                   ),
-                  child: _buildImageContent(),
+                  child: ValueListenableBuilder(
+                    valueListenable: _imageUrl,
+                    builder: (context, value, child) {
+                      return _buildImageContent();
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -157,13 +165,13 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
           ),
           child: widget.isLoading
               ? const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  ),
-                )
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: Colors.white,
+            ),
+          )
               : const Text(AppText.save),
         ),
       ],
@@ -175,13 +183,22 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (_imageUrl != null && _imageUrl!.isNotEmpty) {
+    if (localImageBytes != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.memory(
+          localImageBytes!,
+          fit: BoxFit.cover,
+          // remove width: double.infinity
+        ),
+      );
+    } else if (_imageUrl.value?.isNotEmpty == true) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Image.network(
-          _imageUrl!,
+          _imageUrl.value!,
           fit: BoxFit.cover,
-          width: double.infinity,
+          // remove width: double.infinity
           errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
         ),
       );
@@ -189,6 +206,7 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
 
     return _buildPlaceholder();
   }
+
 
   Widget _buildPlaceholder() {
     return const Column(
