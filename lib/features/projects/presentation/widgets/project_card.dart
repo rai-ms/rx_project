@@ -112,30 +112,37 @@ class ProjectCard extends StatelessWidget {
 
                       const SizedBox(height: 12),
 
-                      RichText(
-                        overflow: TextOverflow.ellipsis,
-                        text: TextSpan(
-                          children: 
-                          [
-                            ...project.technologies.map((tech) => WidgetSpan(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.withValues(alpha: 0.2),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Text(
-                                  tech,
-                                  style: GoogleFonts.workSans(
-                                    color: Colors.blue[200],
-                                    fontSize: 12,
+                      Flexible(
+                        child: RichText(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 100,
+                          text: TextSpan(
+                            children: [
+                              ...project.technologies.map(
+                                (tech) => WidgetSpan(
+                                  child: Container(
+                                    margin: const EdgeInsets.all(5),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blue.withValues(alpha: 0.2),
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: Text(
+                                      tech,
+                                      style: GoogleFonts.workSans(
+                                        color: Colors.blue[200],
+                                        fontSize: 12,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            )
-                            )
-                          ]
-                        )
+                            ],
+                          ),
+                        ),
                       ),
 
                       // Technologies
@@ -176,5 +183,3 @@ class ProjectCard extends StatelessWidget {
     );
   }
 }
-
-
