@@ -36,22 +36,24 @@ class AppColors {
   static const Color darkElectricBlue = Color(0xFF5F6876);
   static const Color crayolaYellow = Color(0xFFEFC360);
   static const Color selectiveYellow = Color(0xFFFFB800);
-  static const Color tropicalRainforest=Color(0xFF017660);
-  static const Color brunswickGreen=Color(0xFF1A5151);
+  static const Color tropicalRainforest = Color(0xFF017660);
+  static const Color brunswickGreen = Color(0xFF1A5151);
   static const Color lotion = Color(0xFFF9FAF7);
   static const Color ghostWhite = Color(0xFFF8F8FB);
   static const Color myrtleGreen = Color(0xFF277872);
   static const Color milkColor = Color(0xFFFAFAF5);
   static const Color bubbles = Color(0xFFE9FFF8);
-  static const Color papayaWhip=Color(0xFFFFF3D9);
+  static const Color papayaWhip = Color(0xFFFFF3D9);
   static const Color cultured = Color(0xFFF4F7FA);
   static const Color honeyDew = Color(0xFFEBFAF3);
   static const Color azureishWhite = Color(0xFFDAF0E6);
   static const Color etonBlue = Color(0xFF89BDA5);
-  
+
   // Admin Dashboard Colors
   static const Color darkGrey = Color(0xFF1E1E1E);
-  static const Color primary = Color(0xFF6C63FF); // Purple accent color for admin UI
+  static const Color primary = Color(
+    0xFF6C63FF,
+  ); // Purple accent color for admin UI
   static const Color metallicSilver = Color(0xFF9AB0AB);
   static const Color azureColor = Color(0xFFEEFCFD);
   static const Color walterColor = Color(0xFFCAFBFF);

@@ -144,28 +144,6 @@ class ProjectCard extends StatelessWidget {
                           ),
                         ),
                       ),
-
-                      // Technologies
-                      // if (project.technologies.isNotEmpty)
-                      //     Wrap(
-                      //       spacing: 8,
-                      //       runSpacing: 4,
-                      //       children: project.technologies.take(7).map((tech) => Container(
-                      //         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      //         decoration: BoxDecoration(
-                      //           color: Colors.blue.withValues(alpha: 0.2),
-                      //           borderRadius: BorderRadius.circular(4),
-                      //         ),
-                      //         child: Text(
-                      //           tech,
-                      //           style: GoogleFonts.workSans(
-                      //             color: Colors.blue[200],
-                      //             fontSize: 12,
-                      //           ),
-                      //         ),
-                      //       )
-                      //       ).toList(),
-                      //     ),
                     ],
                   ),
                 ),
