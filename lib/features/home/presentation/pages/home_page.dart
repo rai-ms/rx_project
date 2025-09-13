@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, ReadContext;
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rx_project/core/services/route_service/route_names.dart';
 import 'package:rx_project/features/admin/presentation/manager/profile_manage_bloc/profile_manage_bloc.dart';
 import '../../../../core/constants/image_constants.dart';
 import '../../../../core/constants/app_text.dart';
-import '../../../../core/routes/app_router.dart';
 import '../../../../core/utils/size_utils.dart';
 import '../../../admin/presentation/manager/projects_bloc/projects_bloc.dart'
     show ProjectsBloc, FetchProjectsEvent, ProjectsState;
@@ -19,14 +19,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     super.initState();
     context.read<ProfileManageBloc>().add(LoadUserProfileEvent());
     context.read<ProjectsBloc>().add(FetchProjectsEvent());
   }
-
 
   Widget _buildProjectCard(String title, String description, String imageUrl) {
     return Column(
@@ -77,7 +75,9 @@ class _HomePageState extends State<HomePage> {
               final isWide = constraints.maxWidth >= 864;
               return Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: isWide ? 120 : 80, vertical: 40),
+                  horizontal: isWide ? 120 : 80,
+                  vertical: 40,
+                ),
                 child: Flex(
                   direction: isWide ? Axis.horizontal : Axis.vertical,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                           child: ElevatedButton(
                             onPressed: () {
                               // Action for View My Work button
-                              context.goNamed(RouteNames.projects);
+                              context.goNamed(RouteName.projects);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF262626),
@@ -211,12 +211,16 @@ class _HomePageState extends State<HomePage> {
                 childAspectRatio: 0.7,
               ),
               delegate: SliverChildListDelegate([
-                if(state.isLoading) Center(child: CircularProgressIndicator(),),
-                if(state.data?.isNotEmpty ?? false) ...List.generate(state.data?.length ?? 0, (index) => _buildProjectCard(
-                  state.data?[index].name ?? "N/A",
-                  state.data?[index].description ?? "N/A",
-                  state.data?[index].imageUrl ?? "N/A",
-                )),
+                if (state.isLoading) Center(child: CircularProgressIndicator()),
+                if (state.data?.isNotEmpty ?? false)
+                  ...List.generate(
+                    state.data?.length ?? 0,
+                    (index) => _buildProjectCard(
+                      state.data?[index].name ?? "N/A",
+                      state.data?[index].description ?? "N/A",
+                      state.data?[index].imageUrl ?? "N/A",
+                    ),
+                  ),
               ]),
             );
           },
@@ -238,9 +242,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                  ],
+                  children: [CircularProgressIndicator()],
                 ),
               ),
             ),
@@ -268,28 +270,48 @@ class _HomePageState extends State<HomePage> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 40, top: 20),
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    context.goNamed(RouteNames.projects);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF303030),
-                    minimumSize: const Size(160, 40),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              child: Column(
+                children: [
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.goNamed(RouteName.projects);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF303030),
+                        minimumSize: const Size(160, 40),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        AppText.viewAllProjects,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 0.015,
+                        ),
+                      ),
                     ),
                   ),
-                  child: const Text(
-                    AppText.viewAllProjects,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.015,
+                  const SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () {
+                      context.goNamed(RouteName.privacyPolicy);
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.grey[400],
+                    ),
+                    child: const Text(
+                      'Privacy Policy',
+                      style: TextStyle(
+                        fontSize: 14,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),

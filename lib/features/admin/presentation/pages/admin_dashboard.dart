@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rx_project/core/constants/app_colors.dart';
-import 'package:rx_project/core/routes/app_router.dart';
 import 'package:rx_project/core/services/firebase_service/auth_service.dart';
+import 'package:rx_project/core/services/route_service/route_names.dart';
 import 'package:rx_project/features/widget/common/app_scaffold.dart';
 import '../widgets/widgets.dart';
 
@@ -13,7 +13,8 @@ class AdminDashboard extends StatefulWidget {
   State<AdminDashboard> createState() => _AdminDashboardState();
 }
 
-class _AdminDashboardState extends State<AdminDashboard> with SingleTickerProviderStateMixin {
+class _AdminDashboardState extends State<AdminDashboard>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _currentTabIndex = 0;
 
@@ -61,7 +62,7 @@ class _AdminDashboardState extends State<AdminDashboard> with SingleTickerProvid
     await AuthService().signOut();
     if (confirmed == true) {
       if (mounted) {
-        context.goNamed(RouteNames.home);
+        context.goNamed(RouteName.home);
       }
     }
   }

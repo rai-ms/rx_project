@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rx_project/core/routes/app_router.dart';
 import 'package:rx_project/core/services/firebase_service/auth_service.dart';
+import 'package:rx_project/core/services/route_service/route_names.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -39,10 +39,10 @@ class _LoginPageState extends State<LoginPage> {
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
-      
+
       if (mounted) {
         if (_authService.isAdmin) {
-          context.go(RouteNames.admin);
+          context.goNamed(RouteName.admin);
         } else {
           setState(() {
             _errorMessage = 'Access denied. Admin privileges required.';

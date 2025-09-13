@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rx_project/core/constants/app_colors.dart';
 import 'package:rx_project/core/constants/app_text.dart';
-import 'package:rx_project/core/routes/app_router.dart';
+import 'package:rx_project/core/services/route_service/route_names.dart';
 
 class AppHeader extends StatelessWidget {
   const AppHeader({
@@ -37,7 +37,7 @@ class AppHeader extends StatelessWidget {
               highlightColor: AppColors.transparent,
               focusColor: AppColors.transparent,
               onTap: (){
-                context.go(RouteNames.home);
+                context.go(RouteName.home);
               },
               child: Row(
                 children: [
@@ -61,17 +61,17 @@ class AppHeader extends StatelessWidget {
             if (MediaQuery.of(context).size.width > 600)
               Row(
                 children: [
-                  _buildNavLink(context, AppText.navWork, RouteNames.home),
+                  _buildNavLink(context, AppText.navWork, RouteName.home),
                   const SizedBox(width: 36),
-                  _buildNavLink(context, AppText.navAbout, RouteNames.about),
+                  _buildNavLink(context, AppText.navAbout, RouteName.aboutScreen),
                   const SizedBox(width: 36),
-                  _buildNavLink(context, AppText.navContact, RouteNames.contact),
+                  _buildNavLink(context, AppText.navContact, RouteName.contactScreen),
                   const SizedBox(width: 36),
                   _buildAdminButton(context),
                   const SizedBox(width: 36),
                   // Resume Button
                   ElevatedButton(
-                    onPressed: () => context.go(RouteNames.resume),
+                    onPressed: () => context.go(RouteName.resumeScreen),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF303030),
                       minimumSize: const Size(84, 40),
@@ -132,8 +132,7 @@ class AppHeader extends StatelessWidget {
   Widget _buildAdminButton(BuildContext context) {
     return TextButton(
       onPressed: () {
-        // Navigate to admin dashboard or show admin options
-        context.go(RouteNames.admin);
+        context.goNamed(RouteName.admin);
       },
       style: TextButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

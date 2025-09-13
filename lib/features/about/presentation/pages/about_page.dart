@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rx_project/core/services/route_service/route_names.dart';
 import 'package:rx_project/features/widget/common/app_scaffold.dart';
 import '../../../../core/constants/app_text.dart';
 import '../../../../core/constants/image_constants.dart';
-import '../../../../core/routes/app_router.dart';
 import '../widgets/skill_chip.dart';
 import '../widgets/skill_progress_bar.dart';
 import '../widgets/experience_item.dart';
@@ -17,7 +17,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      sliverListBuilder: (ctx, isWide, isLoading){
+      sliverListBuilder: (ctx, isWide, isLoading) {
         return [
           SliverToBoxAdapter(
             child: Column(
@@ -36,9 +36,7 @@ class AboutPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: const DecorationImage(
-                            image: AssetImage(
-                                ImageConstants.profileImage
-                            ),
+                            image: AssetImage(ImageConstants.profileImage),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -94,10 +92,8 @@ class AboutPage extends StatelessWidget {
                 SectionTitle(title: AppText.skillsTitle),
                 const SizedBox(height: 12),
                 ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxWidth: 500
-                  ),
-                  child:  Column(
+                  constraints: BoxConstraints(maxWidth: 500),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
@@ -106,18 +102,30 @@ class AboutPage extends StatelessWidget {
                         spacing: 12,
                         runSpacing: 12,
                         children: [
-                          for (final skill in AppText.skills.take(4)) SkillChip(label: skill),
+                          for (final skill in AppText.skills.take(4))
+                            SkillChip(label: skill),
                         ],
                       ),
                       // Skill Progress Bars
-                      SkillProgressBar(skill: AppText.uiUxDesign, percentage: 90),
-                      SkillProgressBar(skill: AppText.interactionDesign, percentage: 85),
-                      SkillProgressBar(skill: AppText.visualDesign, percentage: 80),
-                      SkillProgressBar(skill: AppText.prototyping, percentage: 75),
+                      SkillProgressBar(
+                        skill: AppText.uiUxDesign,
+                        percentage: 90,
+                      ),
+                      SkillProgressBar(
+                        skill: AppText.interactionDesign,
+                        percentage: 85,
+                      ),
+                      SkillProgressBar(
+                        skill: AppText.visualDesign,
+                        percentage: 80,
+                      ),
+                      SkillProgressBar(
+                        skill: AppText.prototyping,
+                        percentage: 75,
+                      ),
                     ],
                   ),
                 ),
-
 
                 // Experience Section
                 Row(
@@ -125,9 +133,7 @@ class AboutPage extends StatelessWidget {
                   children: [
                     Flexible(
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            maxWidth: 500
-                        ),
+                        constraints: BoxConstraints(maxWidth: 500),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -165,14 +171,15 @@ class AboutPage extends StatelessWidget {
                   mainAxisSpacing: 12,
                   childAspectRatio: 1,
                   children: [
-                    for (final project in AppText.projectTitles) SkillCard(title: project),
+                    for (final project in AppText.projectTitles)
+                      SkillCard(title: project),
                   ],
                 ),
                 const SizedBox(height: 20),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      context.goNamed(RouteNames.projects);
+                      context.goNamed(RouteName.projects);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF303030),
@@ -196,9 +203,7 @@ class AboutPage extends StatelessWidget {
             ),
           ),
         ];
-      }
+      },
     );
   }
-
-
 }

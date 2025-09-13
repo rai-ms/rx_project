@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'core/routes/app_router.dart';
+import 'package:rx_project/core/services/route_service/app_routing.dart';
 import 'core/theme/app_theme.dart';
 
 class MyApp extends StatelessWidget {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      routerConfig: router,
+      routerConfig: RouteService.routeService.goRouter,
     );
   }
 }
