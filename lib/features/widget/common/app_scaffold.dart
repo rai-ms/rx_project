@@ -9,10 +9,12 @@ class AppScaffold extends StatelessWidget {
     super.key,
     required this.sliverListBuilder,
     this.isAdmin = false,
+    this.showHeader = true,
   });
 
   final SliverListBuilder sliverListBuilder;
   final bool isAdmin;
+  final bool showHeader;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +29,11 @@ class AppScaffold extends StatelessWidget {
                 behavior: ScrollBehavior().copyWith(scrollbars: false),
                 child: CustomScrollView(
                   slivers: [
-                    AppHeader(
-                      padding: padding(isWide),
-                      isAdmin: isAdmin,
-                    ),
+                    if (showHeader)
+                      AppHeader(
+                        padding: padding(isWide),
+                        isAdmin: isAdmin,
+                      ),
                     ...sliverListBuilder(context, isWide, profileManageState.isLoading).map(
                           (widget) =>
                           SliverPadding(

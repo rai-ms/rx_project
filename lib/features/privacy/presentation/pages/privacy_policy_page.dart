@@ -9,6 +9,7 @@ class PrivacyPolicyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      showHeader: false,
       sliverListBuilder: (context, isWide, isLoading) {
         return [
           SliverToBoxAdapter(

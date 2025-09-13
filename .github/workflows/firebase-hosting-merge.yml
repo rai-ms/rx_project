@@ -10,7 +10,8 @@ env:
   CACHE_FLUTTER: '~/.pub-cache'
 
 jobs:
-  build_and_deploy:
+  deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
