@@ -1,4 +1,4 @@
-name: Dart CI & CD
+name: Flutter Web CI/CD
 
 on:
   push:
@@ -9,18 +9,16 @@ on:
 
 permissions:
   contents: read
-  pages: write
+  pages: write 
   id-token: write
 
-# 🛑 Concurrency to cancel previous runs for the same branch
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  # CI: Code Quality & Tests
   analyze-and-test:
-    name: Verifying Code Quality & Running Tests
+    name: Analyze & Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,10 +33,15 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-  # CD: Deploy to GitHub Pages
-  deploy:
-    name: Deploy to GitHub Pages
-    needs: analyze-and-test  # Only deploy if tests pass
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run Tests
+        run: flutter test
+
+  build-and-deploy:
+    name: Build and Deploy
+    needs: analyze-and-test
     if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment:
@@ -56,13 +59,12 @@ jobs:
           cache-key: 'flutter-cache'
 
       - name: Install Dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Build Web
-        run: flutter build web --release --base-href "/rx_project/"
-
-      - name: Remove CNAME (no custom domain)
-        run: rm -f build/web/CNAME
+        run: flutter build web --release --web-renderer html --base-href "/rx_project/"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
