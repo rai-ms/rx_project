@@ -41,7 +41,7 @@ jobs:
           flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Build Web
-        run: flutter build web --release --web-renderer html --base-href "/rx_project/"
+        run: flutter build web --release --base-href "/rx_project/"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
