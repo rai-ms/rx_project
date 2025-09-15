@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rx_project/features/widget/common/app_scaffold.dart';
 import '../../../../core/constants/image_constants.dart';
+import '../../../widget/animation/animated_hover/animated_hover.dart';
 import '../../domain/models/project_model.dart';
 import '../widgets/project_card.dart';
 
@@ -48,11 +49,13 @@ class ProjectsPage extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final project = _projects[index];
-                return ProjectCard(
-                  project: project,
-                  onTap: () {
-                    // Handle project tap
-                  },
+                return HoverCard(
+                  child: ProjectCard(
+                    project: project,
+                    onTap: () {
+                      // Handle project tap
+                    },
+                  ),
                 );
               },
               childCount: _projects.length,

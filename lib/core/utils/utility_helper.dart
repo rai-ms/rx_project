@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rx_project/core/utils/size_utils.dart' show Space;
-import '../../features/widget/animated_loader/glow_loader.dart';
+import '../../features/widget/animation/animated_loader/glow_loader.dart';
 import '../base/logger/app_logger_impl.dart';
 
 class UtilityHelper {
