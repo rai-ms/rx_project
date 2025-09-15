@@ -113,7 +113,7 @@ class PrivacyPolicyPage extends StatelessWidget {
           Text(
             content,
             style: GoogleFonts.workSans(
-              color: AppColors.greyColor.withOpacity(0.7),
+              color: AppColors.greyColor.withValues(alpha: 0.7),
               fontSize: 16,
               fontWeight: FontWeight.normal,
               height: 1.6,

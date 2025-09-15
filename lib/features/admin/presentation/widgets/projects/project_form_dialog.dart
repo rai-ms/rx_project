@@ -1,10 +1,8 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_for_web/image_picker_for_web.dart';
-import 'package:rx_project/features/admin/presentation/manager/projects_bloc/projects_bloc.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/constants/app_text.dart';
 import '../../../domain/model/request/home_project_model.dart';
@@ -73,9 +71,7 @@ class _ProjectFormDialogState extends State<ProjectFormDialog> {
 
 
   Future<void> _pickImage() async {
-    final picker = ImagePicker();
     final pickedFile = await getFile();
-
     if (pickedFile != null) {
       localImageBytes = await pickedFile.readAsBytes();
       file = pickedFile;

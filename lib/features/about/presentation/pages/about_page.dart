@@ -5,11 +5,11 @@ import 'package:rx_project/core/services/route_service/route_names.dart';
 import 'package:rx_project/features/widget/common/app_scaffold.dart';
 import '../../../../core/constants/app_text.dart';
 import '../../../../core/constants/image_constants.dart';
+import '../widgets/skill_card.dart';
 import '../widgets/skill_chip.dart';
 import '../widgets/skill_progress_bar.dart';
 import '../widgets/experience_item.dart';
 import '../widgets/section_title.dart';
-import '../widgets/project_card.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
