@@ -49,13 +49,11 @@ class ProjectsPage extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final project = _projects[index];
-                return HoverCard(
-                  child: ProjectCard(
-                    project: project,
-                    onTap: () {
-                      // Handle project tap
-                    },
-                  ),
+                return ProjectCard(
+                  project: project,
+                  onTap: () {
+                    // Handle project tap
+                  },
                 );
               },
               childCount: _projects.length,
@@ -78,7 +76,8 @@ class ProjectsPage extends StatelessWidget {
         'Cubit', 'REST API', 'Hive', 'Adjust', 'Firebase Storage',
         'Branch IO', 'Google Pay', 'Apple Pay', 'Firebase Analytics',
         'Google Tag Manager', 'Facebook App Events' , 'Tap Payments',
-        'Firebase Crashlytics', 'Firebase Cloud Messaging',
+        'Firebase Crashlytics', 'Firebase Cloud Messaging', 'Adjust',
+        'Firebase Crashlytics', 'Firebase Cloud Messaging', 'Adjust',
       ],
       features: [
         'Bill payments',
