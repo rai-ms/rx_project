@@ -1,5 +1,3 @@
-
-
 import '../../../../../core/base/logger/app_logger_impl.dart';
 
 class HomeProjectModel {
@@ -18,7 +16,7 @@ class HomeProjectModel {
   });
 
   factory HomeProjectModel.fromJson(Map<String, dynamic> json) {
-    log.d("HomeProjectModel fromJson: $json");
+    Log.d("HomeProjectModel fromJson: $json");
     return HomeProjectModel(
       id: json['id'],
       name: json['name'],
@@ -54,6 +52,4 @@ class HomeProjectModel {
       status: status ?? this.status,
     );
   }
-
-
 }

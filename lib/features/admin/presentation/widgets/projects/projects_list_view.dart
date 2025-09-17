@@ -41,7 +41,7 @@ class ProjectsListView extends StatelessWidget {
           onEdit: () {},
           onDelete: () {
             context.read<ProjectsBloc>().add(
-                DeleteProjectsEvent(projectId: project.id ?? '')
+              DeleteProjectsEvent(projectId: project.id ?? ''),
             );
           },
         );
@@ -71,15 +71,14 @@ class _ProjectCard extends StatelessWidget {
         leading: _buildImage(project.imageUrl),
         title: Text(
           project.name ?? 'Untitled Project',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         subtitle: project.description != null
             ? Padding(
                 padding: const EdgeInsets.only(top: 4),
-                child: Text(project.description!), // Non-null assertion safe here
+                child: Text(
+                  project.description!,
+                ), // Non-null assertion safe here
               )
             : null,
         trailing: Row(
@@ -100,7 +99,7 @@ class _ProjectCard extends StatelessWidget {
   }
 
   Widget _buildImage(String? imageUrl) {
-    log.d("image url is $imageUrl");
+    Log.d("image url is $imageUrl");
     if (imageUrl == null || imageUrl.isEmpty) {
       return Container(
         width: 60,
@@ -120,7 +119,8 @@ class _ProjectCard extends StatelessWidget {
         width: 60,
         height: 60,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.broken_image),
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
           return Container(

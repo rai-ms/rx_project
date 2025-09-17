@@ -9,7 +9,7 @@ class AppDialogService extends BaseService<void, void> {
 
   @override
   void init({void param}) {
-    log.d("Route Dialog Service Initialized");
+    Log.d("Route Dialog Service Initialized");
   }
 
   FVoid showAppDialog(

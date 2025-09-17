@@ -29,7 +29,7 @@ class SecureStorageService implements SecureStorageSource {
     try {
       await _secureStorage?.delete(key: key);
     } catch (e, trace) {
-      log.crash(reason: 'secure_storage_clear', error: e, stackTrace: trace);
+      Log.crash(reason: 'secure_storage_clear', error: e, stackTrace: trace);
     }
   }
 
@@ -38,7 +38,7 @@ class SecureStorageService implements SecureStorageSource {
     try {
       return (await _secureStorage?.read(key: key))?.toString();
     } catch (e, trace) {
-      log.crash(reason: 'secure_storage_read', error: e, stackTrace: trace);
+      Log.crash(reason: 'secure_storage_read', error: e, stackTrace: trace);
       return '';
     }
   }
@@ -48,7 +48,7 @@ class SecureStorageService implements SecureStorageSource {
     try {
       await _secureStorage?.write(key: key, value: value);
     } catch (e, trace) {
-      log.crash(reason: 'secure_storage_write', error: e, stackTrace: trace);
+      Log.crash(reason: 'secure_storage_write', error: e, stackTrace: trace);
     }
   }
 

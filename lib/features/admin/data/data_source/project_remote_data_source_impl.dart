@@ -6,7 +6,8 @@ import 'package:injectable/injectable.dart' show LazySingleton;
 import 'package:rx_project/core/error/failures.dart';
 import 'package:rx_project/features/admin/domain/model/request/home_project_model.dart';
 import '../../../../core/base/logger/app_logger_impl.dart';
-import '../../domain/data_source/project_remote_data_source.dart' show ProjectRemoteDataSource;
+import '../../domain/data_source/project_remote_data_source.dart'
+    show ProjectRemoteDataSource;
 
 @LazySingleton(as: ProjectRemoteDataSource)
 class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
@@ -25,27 +26,33 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
           .toList();
       return Right(projects);
     } on FirebaseException catch (e) {
-      return Left(ServerFailure( e.message ?? 'Failed to fetch projects'));
+      return Left(ServerFailure(e.message ?? 'Failed to fetch projects'));
     } catch (e) {
-      return Left(ServerFailure( 'Unexpected error occurred'));
+      return Left(ServerFailure('Unexpected error occurred'));
     }
   }
 
   @override
-  Future<Either<Failure, HomeProjectModel>> createProject(HomeProjectModel project) async {
+  Future<Either<Failure, HomeProjectModel>> createProject(
+    HomeProjectModel project,
+  ) async {
     try {
-      final docRef = await firestore.collection(collectionName).add(project.toJson());
+      final docRef = await firestore
+          .collection(collectionName)
+          .add(project.toJson());
       final createdProject = project.copyWith(id: docRef.id);
       return Right(createdProject);
     } on FirebaseException catch (e) {
-      return Left(ServerFailure( e.message ?? 'Failed to create project'));
+      return Left(ServerFailure(e.message ?? 'Failed to create project'));
     } catch (e) {
-      return Left(ServerFailure( 'Unexpected error occurred'));
+      return Left(ServerFailure('Unexpected error occurred'));
     }
   }
 
   @override
-  Future<Either<Failure, HomeProjectModel>> updateProject(HomeProjectModel project) async {
+  Future<Either<Failure, HomeProjectModel>> updateProject(
+    HomeProjectModel project,
+  ) async {
     try {
       await firestore
           .collection(collectionName)
@@ -53,9 +60,9 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
           .update(project.toJson()..remove('id'));
       return Right(project);
     } on FirebaseException catch (e) {
-      return Left(ServerFailure( e.message ?? 'Failed to update project'));
+      return Left(ServerFailure(e.message ?? 'Failed to update project'));
     } catch (e) {
-      return Left(ServerFailure( 'Unexpected error occurred'));
+      return Left(ServerFailure('Unexpected error occurred'));
     }
   }
 
@@ -65,9 +72,9 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
       await firestore.collection(collectionName).doc(projectId).delete();
       return const Right(null);
     } on FirebaseException catch (e) {
-      return Left(ServerFailure( e.message ?? 'Failed to delete project'));
+      return Left(ServerFailure(e.message ?? 'Failed to delete project'));
     } catch (e) {
-      return Left(ServerFailure( 'Unexpected error occurred'));
+      return Left(ServerFailure('Unexpected error occurred'));
     }
   }
 
@@ -78,18 +85,19 @@ class ProjectRemoteDataSourceImpl implements ProjectRemoteDataSource {
   }) async {
     try {
       final XFile imageFile = file;
-      final String fileName = '${DateTime.now().millisecondsSinceEpoch}_${imageFile.name.replaceAll(" ", "_")}';
+      final String fileName =
+          '${DateTime.now().millisecondsSinceEpoch}_${imageFile.name.replaceAll(" ", "_")}';
       final String path = 'projects/${projectId ?? 'temp'}/$fileName';
-      log.d("image path is $path");
+      Log.d("image path is $path");
       var ref = storage.ref().child(path);
       await ref.putData(await file.readAsBytes());
       var downloadUrl = await ref.getDownloadURL();
       return Right(downloadUrl);
     } on FirebaseException catch (e) {
-      return Left(ServerFailure( e.message ?? 'Failed to upload image'));
+      return Left(ServerFailure(e.message ?? 'Failed to upload image'));
     } catch (e) {
-      log.e("Error uploading image: $e");
-      return Left(ServerFailure( 'Failed to process image'));
+      Log.e("Error uploading image: $e");
+      return Left(ServerFailure('Failed to process image'));
     }
   }
 }

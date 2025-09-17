@@ -35,9 +35,9 @@ class StorageService implements BaseService<FVoid, String> {
       await _registerAdapters();
       await _openBoxes();
     } catch (e) {
-      log.e("Error IN storage init $e");
+      Log.e("Error IN storage init $e");
     }
-    log.d("Storage Service init");
+    Log.d("Storage Service init");
   }
 
   FVoid _openBoxes() async {
@@ -45,9 +45,9 @@ class StorageService implements BaseService<FVoid, String> {
       authBox = await Hive.openBox(HiveBoxName.authBox);
       coreBox = await Hive.openBox(HiveBoxName.appCoreBox);
     } catch (e) {
-      log.e("Error while opening box $e");
+      Log.e("Error while opening box $e");
     }
-    log.d("All boxes opened");
+    Log.d("All boxes opened");
   }
 
   dynamic getAuth({required String key}) {
@@ -58,10 +58,10 @@ class StorageService implements BaseService<FVoid, String> {
     return await authBox
         ?.put(key, value)
         .then((onValue) {
-          log.d("Data Saved to hive: $key");
+          Log.d("Data Saved to hive: $key");
         })
         .onError((error, s) {
-          log.e("Error Saving Data to Auth [$key]: $s - $error");
+          Log.e("Error Saving Data to Auth [$key]: $s - $error");
         });
   }
 
@@ -69,7 +69,7 @@ class StorageService implements BaseService<FVoid, String> {
     try {
       await coreBox?.put(key, value);
     } catch (e) {
-      log.e("Error Saving data to Core BOx $value");
+      Log.e("Error Saving data to Core BOx $value");
     }
   }
 

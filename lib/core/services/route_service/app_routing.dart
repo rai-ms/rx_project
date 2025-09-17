@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rx_project/core/base/base_service/base_service.dart'
     show BaseService;
+import 'package:rx_project/core/services/di/injector.dart';
 import 'package:rx_project/core/utils/app_style.dart'
     show AppStyles, TextStyling;
 import 'package:rx_project/features/privacy/presentation/pages/privacy_policy_page.dart';
@@ -12,6 +13,7 @@ import '../../../features/auth/presentation/pages/login_page.dart';
 import '../../../features/contact/presentation/pages/contact_page.dart';
 import '../../../features/home/presentation/pages/home_page.dart';
 import '../../../features/projects/presentation/pages/projects_page.dart';
+import '../../../features/resume/domain/repository/resume_repository.dart';
 import '../../../features/resume/presentation/pages/resume_page.dart';
 import '../firebase_service/auth_service.dart';
 import 'route_names.dart';
@@ -26,7 +28,7 @@ class RouteService extends BaseService<void, void> {
 
   @override
   void init({void param}) {
-    log.d("RouteService Initialized");
+    Log.d("RouteService Initialized");
   }
 
   final GoRouter goRouter = GoRouter(
@@ -35,7 +37,7 @@ class RouteService extends BaseService<void, void> {
     navigatorKey: navigatorKey,
     observers: [BotToastNavigatorObserver()],
     redirect: (context, state) {
-      log.d(state.uri.path);
+      Log.d(state.uri.path);
       return null;
     },
     errorBuilder: (context, state) {
@@ -59,12 +61,19 @@ class RouteService extends BaseService<void, void> {
       GoRoute(
         path: RouteName.resumeScreen,
         name: RouteName.resumeScreen,
-        pageBuilder: (ctx, state) => NoTransitionPage(child: ResumePage()),
+        pageBuilder: (ctx, state) {
+          final resumeRepository = InjectorService.service
+              .inject<ResumeRepository>();
+          return NoTransitionPage(
+            child: ResumePage(resumeRepository: resumeRepository),
+          );
+        },
       ),
       GoRoute(
         path: RouteName.privacyPolicy,
         name: RouteName.privacyPolicy,
-        pageBuilder: (ctx, state) => NoTransitionPage(child: PrivacyPolicyPage()),
+        pageBuilder: (ctx, state) =>
+            NoTransitionPage(child: PrivacyPolicyPage()),
       ),
       GoRoute(
         path: RouteName.contactScreen,

@@ -48,6 +48,6 @@ class PermissionService extends BaseService<void, void> {
 
   @override
   void init({void param}) {
-    log.d("Initialised Permission Service");
+    Log.d("Initialised Permission Service");
   }
 }

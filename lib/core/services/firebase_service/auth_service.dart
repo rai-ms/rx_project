@@ -17,7 +17,7 @@ class AuthService {
     final user = _auth.currentUser;
     // You can implement your admin check logic here
     // For example, check a custom claim or user document in Firestore
-    return user?.email?.endsWith('@admin.com') ?? false;
+    return user?.email?.contains('ashishraimse') ?? false;
   }
 
   // Sign in with email and password
@@ -31,7 +31,7 @@ class AuthService {
         password: password,
       );
     } catch (e) {
-      log.e("Received error during sign in: $e");
+      Log.e("Received error during sign in: $e");
       rethrow;
     }
   }

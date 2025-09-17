@@ -78,15 +78,15 @@ enum FlavourType {
 
   static FlavourType fromString({String? val}) {
     if (val == null || val.isEmpty) return FlavourType.dev;
-    log.d("Flavour Type $val");
+    Log.d("Flavour Type $val");
     try {
       var fl = FlavourType.values.firstWhere(
         (FlavourType element) => element._flavour == val,
       );
-      log.f("FlavourType is $fl");
+      Log.f("FlavourType is $fl");
       return fl;
     } catch (e) {
-      log.e("Error while getting flavour type $e");
+      Log.e("Error while getting flavour type $e");
       return FlavourType.dev;
     }
   }

@@ -18,7 +18,7 @@ class InternetService extends BaseService<FVoid, void> {
 
   @override
   FVoid init({void param}) async {
-    log.d("Internet Service Initialized");
+    Log.d("Internet Service Initialized");
     netListener.value = await isConnected();
     addListner();
   }

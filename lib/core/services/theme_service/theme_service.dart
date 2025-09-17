@@ -32,7 +32,7 @@ class ThemeService extends BaseService<void, AppTheme> {
 
   @override
   void init({AppTheme? param}) {
-    log.d("ThemeService Initialized");
+    Log.d("ThemeService Initialized");
   }
 
   /// [getThemeType] should call before get theme to update the theme data

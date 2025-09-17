@@ -8,7 +8,7 @@ import 'package:rx_project/core/services/language_service/language_service.dart'
 import 'package:rx_project/core/services/theme_service/theme_service.dart'
     show ThemeService;
 import 'package:rx_project/core/utils/app_enum.dart' show AppTheme;
-import '../../base/logger/app_logger_impl.dart' show log;
+import '../../base/logger/app_logger_impl.dart' show Log;
 
 class MyAppListenerModel {
   final AppTheme theme;
@@ -38,7 +38,7 @@ class MyAppListener extends BaseService<void, void> {
 
   @override
   void init({void param}) {
-    log.d("MyAppListener Initialized");
+    Log.d("MyAppListener Initialized");
     addThemeListener();
     addNetListener();
     addLocaleListener();

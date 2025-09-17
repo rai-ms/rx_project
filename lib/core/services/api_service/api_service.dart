@@ -50,6 +50,6 @@ class ApiService extends BaseService<void, String?> with BaseClientDio {
 
   @override
   void init({String? param}) {
-    log.d("Initializing ApiService");
+    Log.d("Initializing ApiService");
   }
 }

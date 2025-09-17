@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:rx_project/core/utils/config/app_config_impl.dart';
 import 'app_logger.dart' show AppLogger;
 
-AppLogger get log => AppLoggerImpl.I;
+AppLogger get Log => AppLoggerImpl.I;
 
 class AppLoggerImpl extends AppLogger {
   late Logger _logger;
@@ -39,7 +39,8 @@ class AppLoggerImpl extends AppLogger {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    if(configurations.isLoggerEnable)_logger.d(message, time: time, error: error, stackTrace: stackTrace);
+    if (configurations.isLoggerEnable)
+      _logger.d(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   @override
@@ -49,7 +50,8 @@ class AppLoggerImpl extends AppLogger {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    if(configurations.isLoggerEnable)_logger.e(message, time: time, error: error, stackTrace: stackTrace);
+    if (configurations.isLoggerEnable)
+      _logger.e(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   @override
@@ -59,7 +61,8 @@ class AppLoggerImpl extends AppLogger {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    if(configurations.isLoggerEnable)_logger.f(message, time: time, error: error, stackTrace: stackTrace);
+    if (configurations.isLoggerEnable)
+      _logger.f(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   @override
@@ -69,7 +72,8 @@ class AppLoggerImpl extends AppLogger {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    if(configurations.isLoggerEnable)_logger.i(message, time: time, error: error, stackTrace: stackTrace);
+    if (configurations.isLoggerEnable)
+      _logger.i(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   @override
@@ -79,7 +83,8 @@ class AppLoggerImpl extends AppLogger {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    if(configurations.isLoggerEnable)_logger.t(message, time: time, error: error, stackTrace: stackTrace);
+    if (configurations.isLoggerEnable)
+      _logger.t(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   @override
@@ -89,6 +94,7 @@ class AppLoggerImpl extends AppLogger {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    if(configurations.isLoggerEnable)_logger.w(message, time: time, error: error, stackTrace: stackTrace);
+    if (configurations.isLoggerEnable)
+      _logger.w(message, time: time, error: error, stackTrace: stackTrace);
   }
 }

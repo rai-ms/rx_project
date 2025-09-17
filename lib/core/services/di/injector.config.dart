@@ -47,11 +47,18 @@ import '../../../features/admin/presentation/manager/profile_manage_bloc/profile
     as _i253;
 import '../../../features/admin/presentation/manager/projects_bloc/projects_bloc.dart'
     as _i977;
+import '../../../features/resume/data/repository/resume_repository_impl.dart'
+    as _i257;
+import '../../../features/resume/di/resume_module.dart' as _i70;
+import '../../../features/resume/domain/repository/resume_repository.dart'
+    as _i1033;
 import '../../base/base_client/base_api_micro.dart' as _i609;
 import '../../handler/state_request_handler.dart' as _i140;
 import '../api_service/api_micro_dispatcher.dart' as _i778;
 import '../api_service/api_small_dispatcher.dart' as _i892;
 import '../firebase_service/auth_service.dart' as _i872;
+import '../firebase_service/firebase_module.dart' as _i805;
+import '../firebase_service/firebase_storage_service.dart' as _i582;
 import '../language_service/language_service.dart' as _i908;
 import '../permissin_service/permission_service.dart' as _i49;
 import '../storage_service/auth_storage_service.dart' as _i561;
@@ -71,6 +78,8 @@ _i174.GetIt injectAllData(
     environment,
     environmentFilter,
   );
+  final firebaseModule = _$FirebaseModule();
+  final resumeModule = _$ResumeModule();
   gh.factory<_i855.HomeManageBloc>(() => _i855.HomeManageBloc());
   gh.singleton<_i609.GetApiMicro>(() => _i609.GetApiMicro());
   gh.singleton<_i609.PostApiMicro>(() => _i609.PostApiMicro());
@@ -89,6 +98,8 @@ _i174.GetIt injectAllData(
       () => _i140.StateRequestHandler());
   gh.lazySingleton<_i119.StorageService>(() => _i119.StorageService());
   gh.lazySingleton<_i892.SmallApiDispatcher>(() => _i892.SmallApiDispatcher());
+  gh.lazySingleton<_i582.FirebaseStorageService>(
+      () => firebaseModule.firebaseStorageService);
   gh.lazySingleton<_i1065.ProjectRemoteDataSource>(
       () => _i274.ProjectRemoteDataSourceImpl());
   gh.lazySingleton<_i713.ProjectRepository>(() => _i365.ProjectRepositoryImpl(
@@ -109,10 +120,14 @@ _i174.GetIt injectAllData(
       () => _i78.UserProfileRemoteDataSourceImpl());
   gh.lazySingleton<_i592.ProfileRemoteDataSource>(
       () => _i415.ProfileRemoteDataSourceImpl());
+  gh.factory<_i257.ResumeRepositoryImpl>(
+      () => _i257.ResumeRepositoryImpl(gh<_i582.FirebaseStorageService>()));
   gh.lazySingleton<_i829.SecureStorageSource>(
       () => _i167.SecureStorageService());
   gh.lazySingleton<_i375.ProfileRepository>(
       () => _i816.ProfileRepositoryImpl(gh<_i592.ProfileRemoteDataSource>()));
+  gh.lazySingleton<_i1033.ResumeRepository>(() =>
+      resumeModule.provideResumeRepository(gh<_i582.FirebaseStorageService>()));
   gh.lazySingleton<_i561.AuthStorageService>(
       () => _i561.AuthStorageServiceImpl(gh<_i829.SecureStorageSource>()));
   gh.factory<_i510.UpdateProfilePicUseCase>(
@@ -157,3 +172,7 @@ _i174.GetIt injectAllData(
       ));
   return getIt;
 }
+
+class _$FirebaseModule extends _i805.FirebaseModule {}
+
+class _$ResumeModule extends _i70.ResumeModule {}

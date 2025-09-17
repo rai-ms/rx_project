@@ -17,7 +17,7 @@ class FlavourService extends BaseService<Future<String?>, String> {
     String data = const String.fromEnvironment("FLAVOUR");
     FlavourType type = FlavourType.fromString(val: data);
     flavour = await getFlavour(type);
-    log.d(
+    Log.d(
       "Flavour is ${flavour.runtimeType} and base Url is ${flavour.baseUrl}",
     );
     return data;

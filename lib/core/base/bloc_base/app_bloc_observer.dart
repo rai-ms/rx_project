@@ -4,13 +4,13 @@ import '../logger/app_logger_impl.dart';
 class AppBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
-    log.d('$event');
+    Log.d('$event');
     super.onEvent(bloc, event);
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    log.d('$stackTrace');
+    Log.d('$stackTrace');
     super.onError(bloc, error, stackTrace);
   }
 }

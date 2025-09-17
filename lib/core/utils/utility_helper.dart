@@ -12,13 +12,13 @@ class UtilityHelper {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        log.d('connected');
+        Log.d('connected');
         return true;
       } else {
         return false;
       }
     } on SocketException catch (_) {
-      log.d('not connected');
+      Log.d('not connected');
       return false;
     }
   }
@@ -57,39 +57,34 @@ class UtilityHelper {
       width: width,
       memCacheHeight: cachedExtent ? 250 : null,
       memCacheWidth: cachedExtent ? 250 : null,
-      progressIndicatorBuilder: (
-        BuildContext imageContext,
-        String value,
-        DownloadProgress progress,
-      ) {
-        return GlowLoader(
-          repeatPauseDuration: const Duration(milliseconds: 300),
-          glowColor: Theme.of(context).colorScheme.inversePrimary,
-          endRadius: 10,
-          child: Space.z,
-        );
-      },
+      progressIndicatorBuilder:
+          (BuildContext imageContext, String value, DownloadProgress progress) {
+            return GlowLoader(
+              repeatPauseDuration: const Duration(milliseconds: 300),
+              glowColor: Theme.of(context).colorScheme.inversePrimary,
+              endRadius: 10,
+              child: Space.z,
+            );
+          },
       fit: fit ?? BoxFit.contain,
-      errorWidget:
-          (context, url, error) => Container(
-            color: Colors.white,
-            child:
-                file != null
-                    ? Image.file(
-                      file,
-                      height: height ?? 40,
-                      width: width ?? 40,
-                      fit: BoxFit.contain,
-                    )
-                    : placeHolderImage != null
-                    ? Image.asset(
-                      placeHolderImage,
-                      height: height ?? 40,
-                      width: width ?? 40,
-                      fit: BoxFit.contain,
-                    )
-                    : const Icon(Icons.error_outline),
-          ),
+      errorWidget: (context, url, error) => Container(
+        color: Colors.white,
+        child: file != null
+            ? Image.file(
+                file,
+                height: height ?? 40,
+                width: width ?? 40,
+                fit: BoxFit.contain,
+              )
+            : placeHolderImage != null
+            ? Image.asset(
+                placeHolderImage,
+                height: height ?? 40,
+                width: width ?? 40,
+                fit: BoxFit.contain,
+              )
+            : const Icon(Icons.error_outline),
+      ),
     );
   }
 

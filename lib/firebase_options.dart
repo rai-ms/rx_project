@@ -50,12 +50,13 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAGuMr9N5x3z2E51ksqQdaS9iRG_EBLoUk',
-    appId: '1:572035052129:web:38e091378886623267f020',
-    messagingSenderId: '572035052129',
-    projectId: 'groupchat-e7063',
-    authDomain: 'groupchat-e7063.firebaseapp.com',
-    storageBucket: 'groupchat-e7063.appspot.com',
+    apiKey: 'AIzaSyDNnvog2bRuG8uoQh6YzJlTmQ4AOS5MFC8',
+    appId: '1:774746305982:web:c32e25775b55820aa4b5ef',
+    messagingSenderId: '774746305982',
+    projectId: 'rx-project-75f17',
+    authDomain: 'rx-project-75f17.firebaseapp.com',
+    storageBucket: 'rx-project-75f17.firebasestorage.app',
+    measurementId: 'G-G62Y9YSVW6',
   );
 
   static const FirebaseOptions android = FirebaseOptions(

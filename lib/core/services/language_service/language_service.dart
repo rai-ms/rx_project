@@ -37,10 +37,9 @@ class AppLanguageService extends BaseService<FVoid, String?> {
   @override
   FVoid init({String? param}) async {
     // Fetching the device specific language
-    AppLanguage systemLanguage =
-        kIsWeb
-            ? AppLanguage.english
-            : AppLanguage.fromString(Platform.localeName.substring(0, 2));
+    AppLanguage systemLanguage = kIsWeb
+        ? AppLanguage.english
+        : AppLanguage.fromString(Platform.localeName.substring(0, 2));
 
     // Fetching language from local
     String? localLang = await StorageService.service.getCore(
@@ -48,16 +47,16 @@ class AppLanguageService extends BaseService<FVoid, String?> {
     );
 
     if (localLang == null) {
-      log.d("No language found in local");
-      log.d("Now looking for the support of language from device");
+      Log.d("No language found in local");
+      Log.d("Now looking for the support of language from device");
       List<Locale> supportLocals = S.supportedLocales;
       for (var action in supportLocals) {
-        log.d(
+        Log.d(
           "Action Lang ${action.languageCode} and System Lang $systemLanguage",
         );
         if (action.languageCode == systemLanguage.code.substring(0, 2)) {
           localLang = action.languageCode;
-          log.d("Language matched in device");
+          Log.d("Language matched in device");
           break;
         }
       }
@@ -67,7 +66,7 @@ class AppLanguageService extends BaseService<FVoid, String?> {
     lang = AppLanguage.fromString(localLang);
     languageChange = ValueNotifier<Locale>(Locale(localLang));
     MyAppListener.service.addLocaleListener();
-    log.d("AppLanguageService Initialized");
+    Log.d("AppLanguageService Initialized");
   }
 
   /// [changeLanguage] method need to run, when require to update the language
@@ -76,7 +75,7 @@ class AppLanguageService extends BaseService<FVoid, String?> {
 
     // Handling for wrong locale code
     if (language.code.length < 2) {
-      log.d("Not a valid language");
+      Log.d("Not a valid language");
       return;
     }
 
@@ -88,14 +87,13 @@ class AppLanguageService extends BaseService<FVoid, String?> {
 
     var locale = Locale(language.code);
 
-    log.d("Data received for changing lang ${locale.languageCode}");
+    Log.d("Data received for changing lang ${locale.languageCode}");
 
     if (supportLocals.contains(locale)) {
       // Getting the Validate string for the language code
-      localCode =
-          (locale.countryCode?.isEmpty ?? false)
-              ? locale.languageCode
-              : locale.toString();
+      localCode = (locale.countryCode?.isEmpty ?? false)
+          ? locale.languageCode
+          : locale.toString();
 
       // finally Changing the language here after handling the edge-cases
       languageChange.value = Locale(localCode);

@@ -1,36 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:pdfx/pdfx.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:rx_project/features/widget/common/app_scaffold.dart';
+import 'package:rx_project/features/resume/domain/repository/resume_repository.dart';
+import 'package:rx_project/features/resume/presentation/widgets/web_pdf_viewer.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class ResumePage extends StatefulWidget {
-  const ResumePage({super.key});
+  final ResumeRepository resumeRepository;
+  
+  const ResumePage({
+    super.key,
+    required this.resumeRepository,
+  });
 
   @override
   State<ResumePage> createState() => _ResumePageState();
 }
 
 class _ResumePageState extends State<ResumePage> {
-  late final PdfController _pdfController;
   bool _isLoading = true;
   String? _errorMessage;
+  String? _pdfUrl;
 
   @override
   void initState() {
     super.initState();
-    _loadPdf();
+    // Initialize web view for web platform
+    if (kIsWeb) {
+      _loadResume();
+    } else {
+      _errorMessage = 'PDF viewer is only supported on web';
+    }
   }
 
-  Future<void> _loadPdf() async {
+  Future<void> _loadResume() async {
     try {
-      _pdfController = PdfController(
-        document: PdfDocument.openAsset('assets/cv.pdf'),
-      );
       setState(() {
+        _isLoading = true;
+        _errorMessage = null;
+      });
+
+      // Get the resume data from the repository
+      final resumeData = await widget.resumeRepository.getResumeData();
+      
+      if (resumeData.resumeUrl.isEmpty) {
+        throw Exception('No resume URL found in Firestore');
+      }
+
+      setState(() {
+        _pdfUrl = resumeData.resumeUrl;
         _isLoading = false;
       });
     } catch (e) {
+      print('Error loading resume: $e');
       setState(() {
-        _errorMessage = 'Failed to load PDF: $e';
+        _errorMessage = 'Failed to load resume. Please try again later.';
         _isLoading = false;
       });
     }
@@ -38,7 +62,6 @@ class _ResumePageState extends State<ResumePage> {
 
   @override
   void dispose() {
-    _pdfController.dispose();
     super.dispose();
   }
 
@@ -60,19 +83,69 @@ class _ResumePageState extends State<ResumePage> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _errorMessage != null
-                ? Center(child: Text(_errorMessage!))
-                : Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              width: MediaQuery.of(context).size.width * 0.6,
-              margin: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: PdfView(
-                controller: _pdfController,
-              ),
-            ),
+                    ? Center(child: Text(_errorMessage!))
+                    : Column(
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            margin: const EdgeInsets.all(16.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey.shade300),
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.grey[100],
+                            ),
+                            child: _pdfUrl != null
+                                ? WebPdfViewer(
+                                    url: _pdfUrl!,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  )
+                                : const Center(
+                                    child: Text(
+                                      'No PDF available',
+                                      style: TextStyle(color: Colors.grey),
+                                    ),
+                                  ),
+                          ),
+                          const SizedBox(height: 16),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: _pdfUrl != null
+                                    ? () => launchUrlString(
+                                          _pdfUrl!.replaceAll('/preview', '/view'),
+                                          mode: LaunchMode.externalApplication,
+                                        )
+                                    : null,
+                                icon: const Icon(Icons.open_in_new, size: 18),
+                                label: const Text('Open in New Tab'),
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                              if (_pdfUrl != null) ...[
+                                const SizedBox(width: 12),
+                                TextButton.icon(
+                                  onPressed: () async {
+                                    await launchUrlString(
+                                      _pdfUrl!.replaceAll('/preview', '/view?usp=sharing'),
+                                      mode: LaunchMode.externalApplication,
+                                    );
+                                  },
+                                  icon: const Icon(Icons.share, size: 18),
+                                  label: const Text('Share'),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ],
+                      ),
           ),
         ];
       },

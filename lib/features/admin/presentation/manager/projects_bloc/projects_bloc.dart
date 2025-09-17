@@ -44,7 +44,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     Emitter<ProjectsState> emit,
   ) async {
     if (state.data != null && state.isLoading) {
-      log.d("Projects already loaded, skipping...");
+      Log.d("Projects already loaded, skipping...");
       return;
     }
 
@@ -53,11 +53,11 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
 
     result.fold(
       (failure) {
-        log.e("GetProjectsUseCase failure: ${failure.message}");
+        Log.e("GetProjectsUseCase failure: ${failure.message}");
         emit(state.copyWith(error: failure.message, state: state.failed));
       },
       (projects) {
-        log.d("GetProjectsUseCase success: ${projects.length} projects loaded");
+        Log.d("GetProjectsUseCase success: ${projects.length} projects loaded");
         emit(state.copyWith(data: projects, state: state.success));
       },
     );
@@ -65,14 +65,16 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
 
   FVoid _addProject(AddProjectsEvent event, Emitter<ProjectsState> emit) async {
     emit(state.copyWith(state: state.loading, event: event));
-    final result = await _createProjectUseCase(params: event.project.copyWith(imageUrl: state.selectedImageUrl));
+    final result = await _createProjectUseCase(
+      params: event.project.copyWith(imageUrl: state.selectedImageUrl),
+    );
     result.fold(
       (failure) {
-        log.e("AddProjectUseCase failure: ${failure.message}");
+        Log.e("AddProjectUseCase failure: ${failure.message}");
         emit(state.copyWith(error: failure.message, state: state.failed));
       },
       (project) {
-        log.d("AddProjectUseCase success: ${project.toJson()}");
+        Log.d("AddProjectUseCase success: ${project.toJson()}");
         final updatedProjects = [...?state.data, project];
         emit(state.copyWith(data: updatedProjects, state: state.success));
       },
@@ -88,11 +90,11 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
 
     result.fold(
       (failure) {
-        log.e("UpdateProjectUseCase failure: ${failure.message}");
+        Log.e("UpdateProjectUseCase failure: ${failure.message}");
         emit(state.copyWith(error: failure.message, state: state.failed));
       },
       (updatedProject) {
-        log.d("UpdateProjectUseCase success: ${updatedProject.toJson()}");
+        Log.d("UpdateProjectUseCase success: ${updatedProject.toJson()}");
         final updatedProjects = state.data
             ?.map((p) => p.id == updatedProject.id ? updatedProject : p)
             .toList();
@@ -110,11 +112,11 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
 
     result.fold(
       (failure) {
-        log.e("DeleteProjectUseCase failure: ${failure.message}");
+        Log.e("DeleteProjectUseCase failure: ${failure.message}");
         emit(state.copyWith(error: failure.message, state: state.failed));
       },
       (_) {
-        log.d("DeleteProjectUseCase success");
+        Log.d("DeleteProjectUseCase success");
         final updatedProjects = state.data
             ?.where((p) => p.id != event.projectId)
             .toList();
@@ -134,11 +136,11 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
 
     result.fold(
       (failure) {
-        log.e("UploadProjectImageUseCase failure: ${failure.message}");
+        Log.e("UploadProjectImageUseCase failure: ${failure.message}");
         emit(state.copyWith(error: failure.message, isUploadingImage: false));
       },
       (imageUrl) {
-        log.d("UploadProjectImageUseCase success: $imageUrl");
+        Log.d("UploadProjectImageUseCase success: $imageUrl");
         emit(
           state.copyWith(selectedImageUrl: imageUrl, isUploadingImage: false),
         );
@@ -153,11 +155,11 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     );
     String? link;
     result.fold(
-          (failure) {
-        log.e("UploadProjectImageUseCase failure: ${failure.message}");
+      (failure) {
+        Log.e("UploadProjectImageUseCase failure: ${failure.message}");
       },
-          (imageUrl) {
-        log.d("UploadProjectImageUseCase success: $imageUrl");
+      (imageUrl) {
+        Log.d("UploadProjectImageUseCase success: $imageUrl");
         link = imageUrl;
       },
     );
