@@ -5,6 +5,8 @@ class AppText {
   static const String navAbout = 'About';
   static const String navContact = 'Contact';
   static const String navResume = 'Resume';
+  static const String navAdmin = 'Admin';
+  static const String menu = 'Menu';
 
   // Home Page
   static const String homeTitle = 'Ashish Rai';
