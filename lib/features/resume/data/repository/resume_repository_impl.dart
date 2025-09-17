@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rx_project/core/base/logger/app_logger_impl.dart';
 import 'package:rx_project/core/services/firebase_service/firebase_storage_service.dart';
 import 'package:rx_project/features/resume/domain/models/resume_data_model.dart';
 import 'package:rx_project/features/resume/domain/repository/resume_repository.dart';
@@ -20,18 +19,15 @@ class ResumeRepositoryImpl implements ResumeRepository {
   @override
   Future<ResumeDataModel> getResumeData() async {
     try {
-      final doc = await _firestore
-          .collection(_collectionPath)
-          .doc(_documentId)
-          .get();
-
-      Log.d("Received data of resume is ${doc.data()}");
-
-      if (!doc.exists) {
-        return const ResumeDataModel(resumeUrl: '');
-      }
-
-      return ResumeDataModel.fromMap(doc.data() ?? {});
+      final doc = await _firestore.collection(_collectionPath).doc(_documentId).get();
+      if (!doc.exists) return const ResumeDataModel();
+      
+      final data = doc.data() as Map<String, dynamic>;
+      return ResumeDataModel.fromMap({
+        'resumeUrl': data['resumeUrl'] ?? '',
+        'profileImageUrl': data['profileImageUrl'],
+        'showResumeViaLink': data['showResumeViaLink'] ?? false,
+      });
     } catch (e) {
       throw Exception('Failed to fetch resume data: $e');
     }
@@ -43,7 +39,13 @@ class ResumeRepositoryImpl implements ResumeRepository {
       await _firestore
           .collection(_collectionPath)
           .doc(_documentId)
-          .set(resumeData.toMap(), SetOptions(merge: true));
+          .set({
+            'resumeUrl': resumeData.resumeUrl,
+            if (resumeData.profileImageUrl != null) 
+              'profileImageUrl': resumeData.profileImageUrl,
+            'showResumeViaLink': resumeData.showResumeViaLink,
+            'updatedAt': FieldValue.serverTimestamp(),
+          }, SetOptions(merge: true));
     } catch (e) {
       throw Exception('Failed to update resume data: $e');
     }

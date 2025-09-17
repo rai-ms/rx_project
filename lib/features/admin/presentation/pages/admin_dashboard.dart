@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rx_project/core/constants/app_colors.dart';
 import 'package:rx_project/core/services/firebase_service/auth_service.dart';
+import 'package:rx_project/core/services/firebase_service/firestore_service.dart';
 import 'package:rx_project/core/services/route_service/route_names.dart';
 import 'package:rx_project/features/widget/common/app_scaffold.dart';
-import '../widgets/widgets.dart';
+import 'package:rx_project/features/admin/presentation/widgets/sections/home_section.dart';
+import 'package:rx_project/features/admin/presentation/widgets/sections/about_section.dart';
+import 'package:rx_project/features/admin/presentation/widgets/sections/resume_section.dart' show ResumeSettings;
+import 'package:rx_project/features/admin/presentation/widgets/sections/contact_section.dart';
+import 'package:rx_project/features/admin/presentation/widgets/projects/projects_tab.dart';
+import 'package:rx_project/features/widget/common/custom_text_field.dart';
+import 'package:rx_project/features/widget/common/primary_button.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -21,7 +28,7 @@ class _AdminDashboardState extends State<AdminDashboard>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 6, vsync: this);
     _tabController.addListener(_handleTabSelection);
   }
 
@@ -62,6 +69,7 @@ class _AdminDashboardState extends State<AdminDashboard>
     await AuthService().signOut();
     if (confirmed == true) {
       if (mounted) {
+        
         context.goNamed(RouteName.home);
       }
     }
@@ -140,17 +148,19 @@ class _AdminDashboardState extends State<AdminDashboard>
   Widget _buildCurrentTab() {
     switch (_currentTabIndex) {
       case 0:
-        return const HomeTab();
+        return const HomeSection();
       case 1:
-        return const AboutTab();
+        return const AboutSection();
       case 2:
-        return const ResumeTab();
+        return const ResumeSettings();
       case 3:
-        return const ContactTab();
+        return const ContactSection();
       case 4:
         return const ProjectsTab();
       default:
-        return const SizedBox.shrink();
+        return const Center(
+          child: Text('Tab not implemented yet'),
+        );
     }
   }
 }

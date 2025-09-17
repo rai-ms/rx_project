@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:rx_project/features/widget/common/app_scaffold.dart';
 import 'package:rx_project/features/resume/domain/repository/resume_repository.dart';
+import 'package:rx_project/features/resume/domain/models/resume_data_model.dart';
 import 'package:rx_project/features/resume/presentation/widgets/web_pdf_viewer.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -20,7 +21,7 @@ class ResumePage extends StatefulWidget {
 class _ResumePageState extends State<ResumePage> {
   bool _isLoading = true;
   String? _errorMessage;
-  String? _pdfUrl;
+  late ResumeDataModel _resumeData;
 
   @override
   void initState() {
@@ -48,7 +49,7 @@ class _ResumePageState extends State<ResumePage> {
       }
 
       setState(() {
-        _pdfUrl = resumeData.resumeUrl;
+        _resumeData = resumeData;
         _isLoading = false;
       });
     } catch (e) {
@@ -58,6 +59,87 @@ class _ResumePageState extends State<ResumePage> {
         _isLoading = false;
       });
     }
+  }
+
+  Widget _buildResumeContent(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          height: MediaQuery.of(context).size.height * 0.8,
+          width: MediaQuery.of(context).size.width * 0.9,
+          margin: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.grey[100],
+          ),
+          child: _resumeData.showResumeViaLink
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.picture_as_pdf, size: 64, color: Colors.grey),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Resume Available for Download',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      ElevatedButton.icon(
+                        onPressed: () => _launchResumeUrl(),
+                        icon: const Icon(Icons.download),
+                        label: const Text('Download Resume'),
+                      ),
+                    ],
+                  ),
+                )
+              : WebPdfViewer(
+                  url: _resumeData.resumeUrl,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton.icon(
+              onPressed: _launchResumeUrl,
+              icon: const Icon(Icons.open_in_new, size: 18),
+              label: const Text('Open in New Tab'),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+            TextButton.icon(
+              onPressed: _shareResume,
+              icon: const Icon(Icons.share, size: 18),
+              label: const Text('Share'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Future<void> _launchResumeUrl() async {
+    final url = _resumeData.resumeUrl.replaceAll('/preview', '/view');
+    await launchUrlString(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
+  Future<void> _shareResume() async {
+    final url = _resumeData.resumeUrl.replaceAll('/preview', '/view?usp=sharing');
+    await launchUrlString(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
   }
 
   @override
@@ -79,73 +161,13 @@ class _ResumePageState extends State<ResumePage> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
+          SliverFillRemaining(
+            hasScrollBody: false,
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _errorMessage != null
                     ? Center(child: Text(_errorMessage!))
-                    : Column(
-                        children: [
-                          Container(
-                            height: MediaQuery.of(context).size.height * 0.8,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            margin: const EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.grey[100],
-                            ),
-                            child: _pdfUrl != null
-                                ? WebPdfViewer(
-                                    url: _pdfUrl!,
-                                    width: double.infinity,
-                                    height: double.infinity,
-                                  )
-                                : const Center(
-                                    child: Text(
-                                      'No PDF available',
-                                      style: TextStyle(color: Colors.grey),
-                                    ),
-                                  ),
-                          ),
-                          const SizedBox(height: 16),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton.icon(
-                                onPressed: _pdfUrl != null
-                                    ? () => launchUrlString(
-                                          _pdfUrl!.replaceAll('/preview', '/view'),
-                                          mode: LaunchMode.externalApplication,
-                                        )
-                                    : null,
-                                icon: const Icon(Icons.open_in_new, size: 18),
-                                label: const Text('Open in New Tab'),
-                                style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ),
-                              if (_pdfUrl != null) ...[
-                                const SizedBox(width: 12),
-                                TextButton.icon(
-                                  onPressed: () async {
-                                    await launchUrlString(
-                                      _pdfUrl!.replaceAll('/preview', '/view?usp=sharing'),
-                                      mode: LaunchMode.externalApplication,
-                                    );
-                                  },
-                                  icon: const Icon(Icons.share, size: 18),
-                                  label: const Text('Share'),
-                                ),
-                              ],
-                            ],
-                          ),
-                        ],
-                      ),
+                    : _buildResumeContent(context),
           ),
         ];
       },
