@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rx_project/core/constants/app_colors.dart';
 import 'package:rx_project/core/services/firebase_service/auth_service.dart';
-import 'package:rx_project/core/services/firebase_service/firestore_service.dart';
 import 'package:rx_project/core/services/route_service/route_names.dart';
 import 'package:rx_project/features/widget/common/app_scaffold.dart';
 import 'package:rx_project/features/admin/presentation/widgets/sections/home_section.dart';
@@ -10,8 +9,6 @@ import 'package:rx_project/features/admin/presentation/widgets/sections/about_se
 import 'package:rx_project/features/admin/presentation/widgets/sections/resume_section.dart' show ResumeSettings;
 import 'package:rx_project/features/admin/presentation/widgets/sections/contact_section.dart';
 import 'package:rx_project/features/admin/presentation/widgets/projects/projects_tab.dart';
-import 'package:rx_project/features/widget/common/custom_text_field.dart';
-import 'package:rx_project/features/widget/common/primary_button.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
