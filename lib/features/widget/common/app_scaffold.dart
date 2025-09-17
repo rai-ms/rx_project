@@ -59,7 +59,7 @@ class _AppScaffoldState extends State<AppScaffold> {
               title: Text(AppText.navWork, style: TextStyle(color: Colors.white)),
               onTap: () {
                 _scaffoldKey.currentState?.closeDrawer();
-                context.go(RouteName.home);
+                context.go(RouteName.projects);
               },
             ),
             ListTile(
