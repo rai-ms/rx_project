@@ -29,4 +29,10 @@ splash_gen:
 build_apk:
 	 fvm flutter clean && fvm flutter pub get && fvm flutter build apk --release --no-tree-shake-icons --split-per-abi
 
+buildWeb:
+	fvm flutter clean && fvm flutter pub get && fvm flutter build web --release
+
+firebaseDeploy:
+	firebase deploy --only hosting
+
 
