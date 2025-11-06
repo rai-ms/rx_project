@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rx_project/features/widget/common/app_scaffold.dart';
+
 import '../../../../core/constants/image_constants.dart';
-import '../../../widget/animation/animated_hover/animated_hover.dart';
 import '../../domain/models/project_model.dart';
 import '../widgets/project_card.dart';
 
@@ -46,22 +46,17 @@ class ProjectsPage extends StatelessWidget {
               crossAxisSpacing: 16.0,
               childAspectRatio: 0.7,
             ),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final project = _projects[index];
-                return ProjectCard(
-                  project: project,
-                  onTap: () {
-                    // Handle project tap
-                  },
-                );
-              },
-              childCount: _projects.length,
-            ),
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final project = _projects[index];
+              return ProjectCard(
+                project: project,
+                onTap: () {
+                  // Handle project tap
+                },
+              );
+            }, childCount: _projects.length),
           ),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 60),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 60)),
         ];
       },
     );
@@ -71,13 +66,25 @@ class ProjectsPage extends StatelessWidget {
     Project(
       title: 'Connect Roam',
       imageUrl: ImageConstants.connectRoamBg,
-      description: 'A mobile application for managing telecom services with bill payments and data pack management.',
+      description:
+          'A mobile application for managing telecom services with bill payments and data pack management.',
       technologies: [
-        'Cubit', 'REST API', 'Hive', 'Adjust', 'Firebase Storage',
-        'Branch IO', 'Google Pay', 'Apple Pay', 'Firebase Analytics',
-        'Google Tag Manager', 'Facebook App Events' , 'Tap Payments',
-        'Firebase Crashlytics', 'Firebase Cloud Messaging', 'Adjust',
-        'Firebase Crashlytics', 'Firebase Cloud Messaging', 'Adjust',
+        'Cubit',
+        'REST API',
+        'Hive',
+        'Adjust',
+        'Amplitude',
+        'Dynatrace',
+        'Firebase Storage',
+        'Branch IO',
+        'Google Pay',
+        'Apple Pay',
+        'Firebase Analytics',
+        'Google Tag Manager',
+        'Facebook App Events',
+        'Tap Payments',
+        'Firebase Crashlytics',
+        'Firebase Cloud Messaging',
       ],
       features: [
         'Bill payments',
@@ -85,16 +92,23 @@ class ProjectsPage extends StatelessWidget {
         'Customer support chat',
         'Usage analytics',
       ],
-      projectUrl: "https://roam.virginconnect.com/"
+      projectUrl: "https://roam.virginconnect.com/",
     ),
     Project(
       title: 'DwellSpring',
-      imageUrl:  ImageConstants.dwellSpringProjectBg,
-      description: 'A full-featured e-commerce application with product catalog, cart, and payment integration.',
+      imageUrl: ImageConstants.dwellSpringProjectBg,
+      description:
+          'A full-featured e-commerce application with product catalog, cart, and payment integration.',
       technologies: [
-        'Bloc', 'just_audio' , 'Tap Payments', 'Hive', 'Secure Storage',
-        'Firebase Analytics', 'App Tracking Transparency',
-        'Firebase Crashlytics', 'Firebase Cloud Messaging',
+        'Bloc',
+        'just_audio',
+        'Tap Payments',
+        'Hive',
+        'Secure Storage',
+        'Firebase Analytics',
+        'App Tracking Transparency',
+        'Firebase Crashlytics',
+        'Firebase Cloud Messaging',
       ],
       features: [
         'Product catalog',
@@ -107,10 +121,15 @@ class ProjectsPage extends StatelessWidget {
     Project(
       title: 'Jarir Bookstore',
       imageUrl: ImageConstants.jarirProjectBg,
-      description: 'An online bookstore application with a wide range of books, user reviews, and purchase options.',
+      description:
+          'An online bookstore application with a wide range of books, user reviews, and purchase options.',
       technologies: [
-        'Flutter', 'GetX', 'SQLite', 'Firebase Analytics',
-        'Firebase Crashlytics', 'Firebase Cloud Messaging',
+        'Flutter',
+        'GetX',
+        'SQLite',
+        'Firebase Analytics',
+        'Firebase Crashlytics',
+        'Firebase Cloud Messaging',
       ],
       features: [
         'Stream music online',
@@ -118,15 +137,20 @@ class ProjectsPage extends StatelessWidget {
         'Playlist management',
         'Audio equalizer',
       ],
-      projectUrl: "https://www.jarir.com/"
+      projectUrl: "https://www.jarir.com/",
     ),
     Project(
       title: 'ZitoMedia',
       imageUrl: ImageConstants.zitoMediaProjectBg,
-      description: 'A music streaming application that allows users to listen to their favorite tracks online and offline.',
+      description:
+          'A music streaming application that allows users to listen to their favorite tracks online and offline.',
       technologies: [
-        'Flutter', 'Provider', 'Health Kit', 'Firebase',
-        'Firebase Crashlytics', 'Firebase Cloud Messaging',
+        'Flutter',
+        'Provider',
+        'Health Kit',
+        'Firebase',
+        'Firebase Crashlytics',
+        'Firebase Cloud Messaging',
       ],
       features: [
         'Workout tracking',
@@ -134,7 +158,7 @@ class ProjectsPage extends StatelessWidget {
         'Custom workout plans',
         'Health data sync',
       ],
-      projectUrl: "https://www.zitomedia.net/"
+      projectUrl: "https://www.zitomedia.net/",
     ),
   ];
 }

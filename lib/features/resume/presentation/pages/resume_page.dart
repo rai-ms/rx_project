@@ -1,18 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:rx_project/features/widget/common/app_scaffold.dart';
-import 'package:rx_project/features/resume/domain/repository/resume_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:rx_project/features/resume/domain/models/resume_data_model.dart';
+import 'package:rx_project/features/resume/domain/repository/resume_repository.dart';
 import 'package:rx_project/features/resume/presentation/widgets/web_pdf_viewer.dart';
+import 'package:rx_project/features/widget/common/app_scaffold.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class ResumePage extends StatefulWidget {
   final ResumeRepository resumeRepository;
-  
-  const ResumePage({
-    super.key,
-    required this.resumeRepository,
-  });
+
+  const ResumePage({super.key, required this.resumeRepository});
 
   @override
   State<ResumePage> createState() => _ResumePageState();
@@ -43,7 +40,7 @@ class _ResumePageState extends State<ResumePage> {
 
       // Get the resume data from the repository
       final resumeData = await widget.resumeRepository.getResumeData();
-      
+
       if (resumeData.resumeUrl.isEmpty) {
         throw Exception('No resume URL found in Firestore');
       }
@@ -78,7 +75,11 @@ class _ResumePageState extends State<ResumePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.picture_as_pdf, size: 64, color: Colors.grey),
+                      const Icon(
+                        Icons.picture_as_pdf,
+                        size: 64,
+                        color: Colors.grey,
+                      ),
                       const SizedBox(height: 16),
                       Text(
                         'Resume Available for Download',
@@ -108,7 +109,10 @@ class _ResumePageState extends State<ResumePage> {
               icon: const Icon(Icons.open_in_new, size: 18),
               label: const Text('Open in New Tab'),
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -128,18 +132,15 @@ class _ResumePageState extends State<ResumePage> {
 
   Future<void> _launchResumeUrl() async {
     final url = _resumeData.resumeUrl.replaceAll('/preview', '/view');
-    await launchUrlString(
-      url,
-      mode: LaunchMode.externalApplication,
-    );
+    await launchUrlString(url, mode: LaunchMode.externalApplication);
   }
 
   Future<void> _shareResume() async {
-    final url = _resumeData.resumeUrl.replaceAll('/preview', '/view?usp=sharing');
-    await launchUrlString(
-      url,
-      mode: LaunchMode.externalApplication,
+    final url = _resumeData.resumeUrl.replaceAll(
+      '/preview',
+      '/view?usp=sharing',
     );
+    await launchUrlString(url, mode: LaunchMode.externalApplication);
   }
 
   @override
@@ -166,8 +167,8 @@ class _ResumePageState extends State<ResumePage> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _errorMessage != null
-                    ? Center(child: Text(_errorMessage!))
-                    : _buildResumeContent(context),
+                ? Center(child: Text(_errorMessage!))
+                : _buildResumeContent(context),
           ),
         ];
       },
