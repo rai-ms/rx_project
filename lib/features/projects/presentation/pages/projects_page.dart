@@ -64,6 +64,56 @@ class ProjectsPage extends StatelessWidget {
 
   final List<Project> _projects = [
     Project(
+      title: 'Bloom Employee App',
+      imageUrl: null,
+      description:
+          'Enterprise employee app built from scratch in React Native + Expo (TypeScript) for iOS and Android — SSO, push notifications, internationalization and offline-first storage.',
+      technologies: [
+        'React Native',
+        'TypeScript',
+        'Expo',
+        'Zustand',
+        'React Query',
+        'Reanimated',
+        'Azure AD SSO',
+        'Push Notifications',
+        'i18next',
+        'MMKV',
+        'Keychain',
+        'Dynatrace',
+        'Jest',
+      ],
+      features: [
+        'Azure AD single sign-on',
+        'Push notifications (cold-start on tap)',
+        'Full internationalization (i18n)',
+        'Offline storage & secure tokens',
+      ],
+    ),
+    Project(
+      title: 'Bloom Partner App',
+      imageUrl: null,
+      description:
+          'Companion Partner app in React Native (iOS & Android), sharing the design system and architecture with the Employee app. Live on the App Store and Google Play.',
+      technologies: [
+        'React Native',
+        'TypeScript',
+        'Zustand',
+        'React Query',
+        'REST API',
+        'Push Notifications',
+        'i18next',
+      ],
+      features: [
+        'Role-based flows',
+        'Shared design system',
+        'Offline caching',
+        'Live on App Store & Google Play',
+      ],
+      projectUrl:
+          "https://play.google.com/store/apps/details?id=com.bloomholding.connect",
+    ),
+    Project(
       title: 'Connect Roam',
       imageUrl: ImageConstants.connectRoamBg,
       description:
@@ -95,30 +145,6 @@ class ProjectsPage extends StatelessWidget {
       projectUrl: "https://roam.virginconnect.com/",
     ),
     Project(
-      title: 'DwellSpring',
-      imageUrl: ImageConstants.dwellSpringProjectBg,
-      description:
-          'A full-featured e-commerce application with product catalog, cart, and payment integration.',
-      technologies: [
-        'Bloc',
-        'just_audio',
-        'Tap Payments',
-        'Hive',
-        'Secure Storage',
-        'Firebase Analytics',
-        'App Tracking Transparency',
-        'Firebase Crashlytics',
-        'Firebase Cloud Messaging',
-      ],
-      features: [
-        'Product catalog',
-        'Shopping cart',
-        'Payment processing',
-        'Order tracking',
-      ],
-      projectUrl: "https://dwellspring.io/",
-    ),
-    Project(
       title: 'Jarir Bookstore',
       imageUrl: ImageConstants.jarirProjectBg,
       description:
@@ -132,33 +158,12 @@ class ProjectsPage extends StatelessWidget {
         'Firebase Cloud Messaging',
       ],
       features: [
-        'Stream music online',
-        'Offline playback',
-        'Playlist management',
-        'Audio equalizer',
+        'Product catalog & search',
+        'Secure payment gateways',
+        'Localization (Arabic/English)',
+        'Order tracking',
       ],
       projectUrl: "https://www.jarir.com/",
-    ),
-    Project(
-      title: 'ZitoMedia',
-      imageUrl: ImageConstants.zitoMediaProjectBg,
-      description:
-          'A music streaming application that allows users to listen to their favorite tracks online and offline.',
-      technologies: [
-        'Flutter',
-        'Provider',
-        'Health Kit',
-        'Firebase',
-        'Firebase Crashlytics',
-        'Firebase Cloud Messaging',
-      ],
-      features: [
-        'Workout tracking',
-        'Progress analytics',
-        'Custom workout plans',
-        'Health data sync',
-      ],
-      projectUrl: "https://www.zitomedia.net/",
     ),
   ];
 }

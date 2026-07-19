@@ -10,40 +10,45 @@ class AppText {
 
   // Home Page
   static const String homeTitle = 'Ashish Rai';
-  static const String homeSubtitle = 'Flutter Developer';
+  static const String homeSubtitle = 'React Native Developer';
   static const String viewWorkButton = 'View My Work';
   static const String experienceText =
-      'Flutter Developer with 2+ years of experience building scalable, cross-platform applications using Flutter and Dart.';
+      'React Native Developer with 3 years of experience building scalable, cross-platform mobile apps — currently shipping production React Native apps with TypeScript, Expo and Zustand, backed by a strong Flutter foundation.';
   static const String featuredProjects = 'Featured Projects';
   static const String viewAllProjects = 'View All Projects';
 
   // Project Cards
   // About Page
   static const String aboutName = 'Ashish Rai';
-  static const String aboutTitle = 'Software Developer';
-  static const String aboutJobTitle = 'Software Developer';
+  static const String aboutTitle = 'React Native Developer';
+  static const String aboutJobTitle = 'React Native Developer';
   static const String aboutLocation = 'Based in Noida, India';
   static const String aboutBio =
-      "I’m a Flutter developer passionate about crafting seamless, high-performance apps across mobile and web. With expertise in state management, clean architecture, and modern frameworks, I focus on delivering scalable solutions that combine elegant design with robust functionality.";
+      "I’m a React Native developer who builds fast, production-grade mobile apps for iOS and Android. I work day to day with React Native, TypeScript, Expo, Zustand and React Query — shipping features like SSO, push notifications, internationalization and offline storage. I also bring a solid Flutter/Dart background, which makes me comfortable across any cross-platform stack.";
 
   // Skills Section
   static const String skillsTitle = 'Skills';
   static const List<String> skills = [
+    'React Native',
+    'TypeScript',
+    'JavaScript',
+    'Expo',
+    'Zustand / Redux',
+    'React Query',
+    'Reanimated',
+    'REST APIs',
+    'Firebase',
+    'Clean Architecture',
     'Flutter',
     'Dart',
-    'Firebase',
-    'UI/UX Design',
-    'State Management',
-    'API Integration',
-    'Clean Architecture',
     'Git',
   ];
 
   // Skill Progress
-  static const String uiUxDesign = 'UI/UX Design';
-  static const String interactionDesign = 'Interaction Design';
-  static const String visualDesign = 'Visual Design';
-  static const String prototyping = 'Prototyping';
+  static const String skillReactNative = 'React Native';
+  static const String skillTypeScript = 'TypeScript / JavaScript';
+  static const String skillMobilePlatforms = 'iOS & Android';
+  static const String skillFlutter = 'Flutter / Dart';
 
   // Experience Section
   static const String experienceTitle = 'Experience';
@@ -51,16 +56,16 @@ class AppText {
   static const String exp1Period = '2020 - Present';
   static const String exp2Title = 'UI/UX Designer at Creative Solutions Co.';
   static const String exp2Period = '2018 - 2020';
-  static const String exp3Title = 'Flutter Developer @Appinventiv';
+  static const String exp3Title = 'React Native Developer @Appinventiv';
   static const String exp3Period = '2023 - Present';
 
   // Projects Section
   static const String projectsTitle = 'Projects';
   static const String viewAllProjectsButton = 'View All Projects';
   static const List<String> projectTitles = [
-    'Telecom Mobile App (2)',
-    'E-Commerce App (1)',
-    'Music App (1)',
+    'React Native Apps (2)',
+    'Enterprise Mobile (1)',
+    'Flutter Apps (2)',
   ];
 
   // Contact Page

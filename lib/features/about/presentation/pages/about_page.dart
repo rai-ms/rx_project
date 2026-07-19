@@ -102,26 +102,26 @@ class AboutPage extends StatelessWidget {
                         spacing: 12,
                         runSpacing: 12,
                         children: [
-                          for (final skill in AppText.skills.take(4))
+                          for (final skill in AppText.skills.take(6))
                             SkillChip(label: skill),
                         ],
                       ),
                       // Skill Progress Bars
                       SkillProgressBar(
-                        skill: AppText.uiUxDesign,
+                        skill: AppText.skillReactNative,
                         percentage: 90,
                       ),
                       SkillProgressBar(
-                        skill: AppText.interactionDesign,
+                        skill: AppText.skillTypeScript,
                         percentage: 85,
                       ),
                       SkillProgressBar(
-                        skill: AppText.visualDesign,
-                        percentage: 80,
+                        skill: AppText.skillMobilePlatforms,
+                        percentage: 85,
                       ),
                       SkillProgressBar(
-                        skill: AppText.prototyping,
-                        percentage: 75,
+                        skill: AppText.skillFlutter,
+                        percentage: 60,
                       ),
                     ],
                   ),
